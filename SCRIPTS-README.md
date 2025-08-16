@@ -192,11 +192,11 @@ pnpm install
 
 ## 🔗 Links Úteis
 
-* [Prettier Documentation](https://prettier.io/)
-* [ESLint Documentation](https://eslint.org/)
-* [Remark Documentation](https://remark.js.org/)
-* [TypeScript Documentation](https://www.typescriptlang.org/)
+- [Prettier Documentation](https://prettier.io/)
+- [ESLint Documentation](https://eslint.org/)
+- [Remark Documentation](https://remark.js.org/)
+- [TypeScript Documentation](https://www.typescriptlang.org/)
 
-***
+---
 
 **🎯 Agora você tem um sistema completo de formatação e qualidade!**

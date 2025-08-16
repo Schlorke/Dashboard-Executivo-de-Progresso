@@ -16,204 +16,7 @@ import {
   Cell,
   CartesianGrid,
 } from "recharts"
-
-const convertOklchToRgb = (element: HTMLElement) => {
-  const walker = document.createTreeWalker(
-    element,
-    NodeFilter.SHOW_ELEMENT,
-    null
-  )
-
-  const elements: HTMLElement[] = []
-  let node = walker.nextNode()
-  while (node) {
-    elements.push(node as HTMLElement)
-    node = walker.nextNode()
-  }
-
-  elements.forEach(el => {
-    const computedStyle = window.getComputedStyle(el)
-    const properties = [
-      "color",
-      "backgroundColor",
-      "borderColor",
-      "borderTopColor",
-      "borderRightColor",
-      "borderBottomColor",
-      "borderLeftColor",
-    ]
-
-    properties.forEach(prop => {
-      const value = computedStyle.getPropertyValue(prop)
-      if (value && value.includes("oklch")) {
-        // Convert common oklch colors to RGB equivalents
-        const oklchToRgb: { [key: string]: string } = {
-          "oklch(0.7 0.15 270)": "#8b5cf6", // purple-500
-          "oklch(0.75 0.12 270)": "#a78bfa", // purple-400
-          "oklch(0.8 0.1 270)": "#c4b5fd", // purple-300
-          "oklch(0.85 0.08 270)": "#ddd6fe", // purple-200
-          "oklch(0.9 0.05 270)": "#ede9fe", // purple-100
-          "oklch(0.95 0.02 270)": "#f3f4f6", // gray-100
-          "oklch(1 0 0)": "#ffffff", // white
-          "oklch(0 0 0)": "#000000", // black
-        }
-
-        let rgbValue = value
-        Object.entries(oklchToRgb).forEach(([oklch, rgb]) => {
-          rgbValue = rgbValue.replace(
-            new RegExp(oklch.replace(/[()]/g, "\\$&"), "g"),
-            rgb
-          )
-        })
-
-        if (rgbValue !== value) {
-          const styleElement = el as HTMLElement
-          if (prop === "color") styleElement.style.color = rgbValue
-          else if (prop === "backgroundColor")
-            styleElement.style.backgroundColor = rgbValue
-          else if (prop === "borderColor")
-            styleElement.style.borderColor = rgbValue
-          else if (prop === "borderTopColor")
-            styleElement.style.borderTopColor = rgbValue
-          else if (prop === "borderRightColor")
-            styleElement.style.borderRightColor = rgbValue
-          else if (prop === "borderBottomColor")
-            styleElement.style.borderBottomColor = rgbValue
-          else if (prop === "borderLeftColor")
-            styleElement.style.borderLeftColor = rgbValue
-        }
-      }
-    })
-  })
-}
-
-const exportToPDF = async (
-  elementRef: React.RefObject<HTMLDivElement | null>
-) => {
-  let loadingDiv: HTMLElement | null = null
-  try {
-    const html2canvas = (await import("html2canvas")).default
-    const jsPDF = (await import("jspdf")).default
-
-    if (!elementRef.current) return
-
-    loadingDiv = document.createElement("div")
-    loadingDiv.innerHTML = `
-      <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 9999; color: white; font-family: system-ui;">
-        <div style="text-align: center;">
-          <div style="width: 40px; height: 40px; border: 4px solid #8b5cf6; border-top: 4px solid transparent; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 16px;"></div>
-          <div>Gerando PDF com alta qualidade...</div>
-        </div>
-      </div>
-      <style>
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-      </style>
-    `
-    document.body.appendChild(loadingDiv)
-
-    const clonedElement = elementRef.current.cloneNode(true) as HTMLElement
-    clonedElement.style.position = "absolute"
-    clonedElement.style.left = "-9999px"
-    clonedElement.style.top = "0"
-    document.body.appendChild(clonedElement)
-
-    // Convert oklch colors to RGB
-    convertOklchToRgb(clonedElement)
-
-    const canvas = await html2canvas(clonedElement, {
-      scale: 2,
-      useCORS: true,
-      allowTaint: true,
-      backgroundColor: "#000000",
-      width: clonedElement.scrollWidth,
-      height: clonedElement.scrollHeight,
-      scrollX: 0,
-      scrollY: 0,
-      windowWidth: 1920,
-      windowHeight: 1080,
-    })
-
-    if (clonedElement.parentNode) {
-      clonedElement.parentNode.removeChild(clonedElement)
-    }
-
-    const pdf = new jsPDF("p", "mm", "a4")
-    const pdfWidth = pdf.internal.pageSize.getWidth()
-    const pdfHeight = pdf.internal.pageSize.getHeight()
-
-    const canvasWidth = canvas.width
-    const canvasHeight = canvas.height
-    const ratio = canvasWidth / canvasHeight
-
-    const imgWidth = pdfWidth - 20
-    const imgHeight = imgWidth / ratio
-
-    const maxHeight = pdfHeight - 20
-
-    if (imgHeight <= maxHeight) {
-      const imgData = canvas.toDataURL("image/png", 1.0)
-      pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight)
-    } else {
-      const pageHeight = maxHeight
-      const totalPages = Math.ceil(imgHeight / pageHeight)
-
-      for (let i = 0; i < totalPages; i++) {
-        if (i > 0) pdf.addPage()
-
-        const pageCanvas = document.createElement("canvas")
-        const pageCtx = pageCanvas.getContext("2d")
-
-        const sourceY = (i * pageHeight * canvasHeight) / imgHeight
-        const sourceHeight = Math.min(
-          (pageHeight * canvasHeight) / imgHeight,
-          canvasHeight - sourceY
-        )
-
-        pageCanvas.width = canvasWidth
-        pageCanvas.height = sourceHeight
-
-        if (pageCtx) {
-          pageCtx.drawImage(
-            canvas,
-            0,
-            sourceY,
-            canvasWidth,
-            sourceHeight,
-            0,
-            0,
-            canvasWidth,
-            sourceHeight
-          )
-          const pageImgData = pageCanvas.toDataURL("image/png", 1.0)
-          const actualPageHeight = (sourceHeight * imgWidth) / canvasWidth
-          pdf.addImage(pageImgData, "PNG", 10, 10, imgWidth, actualPageHeight)
-        }
-      }
-    }
-
-    pdf.setProperties({
-      title: "GB Locações - Dashboard Executivo",
-      subject: "Relatório de Progresso do Projeto",
-      author: "GB Locações",
-      creator: "Dashboard Executivo v2.0",
-      keywords: "dashboard, progresso, orçamento, desenvolvimento",
-    })
-
-    const fileName = `GB_Locacoes_Dashboard_${new Date().toISOString().split("T")[0]}.pdf`
-    pdf.save(fileName)
-
-    if (loadingDiv && loadingDiv.parentNode) {
-      loadingDiv.parentNode.removeChild(loadingDiv)
-    }
-  } catch (error) {
-    console.error("Erro ao gerar PDF:", error)
-    alert("Erro ao gerar PDF. Tente novamente.")
-
-    if (loadingDiv && loadingDiv.parentNode) {
-      loadingDiv.parentNode.removeChild(loadingDiv)
-    }
-  }
-}
+import PDFExport from "./pdf-export"
 
 const BarChartIcon = () => (
   <svg
@@ -309,22 +112,6 @@ const ZapIcon = () => (
       fillRule="evenodd"
       d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z"
       clipRule="evenodd"
-    />
-  </svg>
-)
-
-const ExportIcon = () => (
-  <svg
-    className="h-4 w-4 text-purple-300"
-    fill="none"
-    stroke="currentColor"
-    viewBox="0 0 24 24"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
     />
   </svg>
 )
@@ -736,16 +523,13 @@ export default function GBLBudgetPresentation() {
             </p>
           </div>
           <div className="flex gap-3">
-            <button
-              className="group relative overflow-hidden rounded-2xl border border-purple-300/25 bg-gradient-to-r from-purple-900/40 to-violet-900/30 px-6 py-3 text-sm font-medium text-white backdrop-blur-3xl transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-purple-400/20"
-              onClick={() => exportToPDF(dashboardRef)}
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-400/15 to-violet-400/15 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-              <span className="relative z-10 flex items-center gap-2">
-                <ExportIcon />
-                Exportar PDF
-              </span>
-            </button>
+            <PDFExport
+              modules={modules}
+              totalInvestment={totalPlanned}
+              totalPaid={totalPaid}
+              totalRemaining={totalRemaining}
+              progressPercentage={percentPaid}
+            />
           </div>
         </div>
       </header>
