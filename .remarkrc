@@ -1,6 +1,17 @@
 {
   "plugins": [
-    "remark-preset-prettier",
-    "remark-preset-lint-markdown-style-guide"
-  ]
+    "remark-preset-prettier"
+  ],
+  "settings": {
+    "remark-lint": {
+      "maximum-line-length": false,
+      "list-item-indent": false,
+      "list-item-spacing": false,
+      "ordered-list-marker-value": false,
+      "emphasis-marker": false,
+      "rule-style": false,
+      "no-literal-urls": false,
+      "maximum-heading-length": false
+    }
+  }
 }

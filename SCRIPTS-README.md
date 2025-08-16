@@ -1,37 +1,37 @@
-# 🛠️ Guia de Comandos de Formatação e Qualidade
+# ðŸ› ï¸ Guia de Comandos de FormataÃ§Ã£o e Qualidade
 
-Este documento explica todos os comandos disponíveis para formatação, linting e correção automática
-de código e Markdown.
+Este documento explica todos os comandos disponÃ­veis para formataÃ§Ã£o, linting e correÃ§Ã£o
+automÃ¡tica de cÃ³digo e Markdown.
 
-## 🚀 Comandos Principais (pnpm)
+## ðŸš€ Comandos Principais (pnpm)
 
-### Formatação Completa
+### FormataÃ§Ã£o Completa
 
 ```bash
-# Formatar TODO o projeto (código + Markdown)
+# Formatar TODO o projeto (cÃ³digo + Markdown)
 pnpm run format:all
 
-# Formatar apenas código
+# Formatar apenas cÃ³digo
 pnpm run format
 
 # Formatar apenas Markdown
 pnpm run format:md
 ```
 
-### Correção Automática
+### CorreÃ§Ã£o AutomÃ¡tica
 
 ```bash
-# Corrigir TUDO automaticamente (formatação + linting + Markdown)
+# Corrigir TUDO automaticamente (formataÃ§Ã£o + linting + Markdown)
 pnpm run fix:all
 
-# Corrigir apenas problemas de código
+# Corrigir apenas problemas de cÃ³digo
 pnpm run lint:fix
 
 # Corrigir apenas problemas de Markdown
 pnpm run lint:md:fix
 ```
 
-### Verificação de Qualidade
+### VerificaÃ§Ã£o de Qualidade
 
 ```bash
 # Verificar TUDO sem modificar
@@ -40,54 +40,54 @@ pnpm run quality:check
 # Verificar e corrigir TUDO automaticamente
 pnpm run quality:fix
 
-# Verificar apenas código
+# Verificar apenas cÃ³digo
 pnpm run lint
 
 # Verificar apenas Markdown
 pnpm run lint:md
 ```
 
-## 📁 Scripts PowerShell (Windows)
+## ðŸ“ Scripts PowerShell (Windows)
 
-### Formatação PowerShell
+### FormataÃ§Ã£o PowerShell
 
 ```powershell
-# Executar script de formatação
+# Executar script de formataÃ§Ã£o
 .\scripts\format-all.ps1
 ```
 
-### Correção PowerShell
+### CorreÃ§Ã£o PowerShell
 
 ```powershell
-# Executar script de correção
+# Executar script de correÃ§Ã£o
 .\scripts\fix-all.ps1
 ```
 
-### Verificação PowerShell
+### VerificaÃ§Ã£o PowerShell
 
 ```powershell
-# Executar script de verificação
+# Executar script de verificaÃ§Ã£o
 .\scripts\quality-check.ps1
 ```
 
-## 🐧 Scripts Bash (Linux/Mac)
+## ðŸ§ Scripts Bash (Linux/Mac)
 
-### Formatação Bash
+### FormataÃ§Ã£o Bash
 
 ```bash
-# Executar script de formatação
+# Executar script de formataÃ§Ã£o
 ./scripts/format-all.sh
 
-# Dar permissão de execução (primeira vez)
+# Dar permissÃ£o de execuÃ§Ã£o (primeira vez)
 chmod +x ./scripts/format-all.sh
 ```
 
-## 🎯 Fluxo de Trabalho Recomendado
+## ðŸŽ¯ Fluxo de Trabalho Recomendado
 
-### Desenvolvimento Diário
+### Desenvolvimento DiÃ¡rio
 
 ```bash
-# Formatar código antes de commitar
+# Formatar cÃ³digo antes de commitar
 pnpm run format:all
 ```
 
@@ -101,29 +101,29 @@ pnpm run quality:check
 pnpm run quality:fix
 ```
 
-### Manutenção do Projeto
+### ManutenÃ§Ã£o do Projeto
 
 ```bash
-# Correção completa periódica
+# CorreÃ§Ã£o completa periÃ³dica
 pnpm run fix:all
 ```
 
-## 🔧 Comandos Individuais
+## ðŸ”§ Comandos Individuais
 
-### Prettier (Formatação)
+### Prettier (FormataÃ§Ã£o)
 
 ```bash
 # Formatar tudo
 npx prettier --write .
 
-# Verificar formatação
+# Verificar formataÃ§Ã£o
 npx prettier --check .
 
-# Formatar arquivo específico
+# Formatar arquivo especÃ­fico
 npx prettier --write README.md
 ```
 
-### ESLint (Linting de Código)
+### ESLint (Linting de CÃ³digo)
 
 ```bash
 # Verificar problemas
@@ -143,60 +143,60 @@ npx remark . --output
 npx remark . --output --use remark-preset-prettier
 ```
 
-### TypeScript (Verificação de Tipos)
+### TypeScript (VerificaÃ§Ã£o de Tipos)
 
 ```bash
 # Verificar tipos sem gerar arquivos
 npx tsc --noEmit
 ```
 
-## 📊 Status dos Comandos
+## ðŸ“Š Status dos Comandos
 
-| Comando         | Status | Descrição                     |
+| Comando         | Status | DescriÃ§Ã£o                   |
 | --------------- | ------ | ----------------------------- |
-| `format:all`    | ✅     | Formata código + Markdown     |
-| `fix:all`       | ✅     | Corrige tudo automaticamente  |
-| `quality:check` | ✅     | Verifica qualidade completa   |
-| `quality:fix`   | ✅     | Verifica e corrige tudo       |
-| `lint:fix`      | ✅     | Corrige problemas de código   |
-| `lint:md:fix`   | ✅     | Corrige problemas de Markdown |
+| `format:all`    | âœ…    | Formata cÃ³digo + Markdown    |
+| `fix:all`       | âœ…    | Corrige tudo automaticamente  |
+| `quality:check` | âœ…    | Verifica qualidade completa   |
+| `quality:fix`   | âœ…    | Verifica e corrige tudo       |
+| `lint:fix`      | âœ…    | Corrige problemas de cÃ³digo  |
+| `lint:md:fix`   | âœ…    | Corrige problemas de Markdown |
 
-## 🚨 Solução de Problemas
+## ðŸš¨ SoluÃ§Ã£o de Problemas
 
-### Erro de Permissão (Linux/Mac)
+### Erro de PermissÃ£o (Linux/Mac)
 
 ```bash
 chmod +x ./scripts/*.sh
 ```
 
-### Erro de Execução de Scripts (Windows)
+### Erro de ExecuÃ§Ã£o de Scripts (Windows)
 
 ```powershell
 # Executar no PowerShell como administrador
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 ```
 
-### Dependências Faltando
+### DependÃªncias Faltando
 
 ```bash
 pnpm install
 ```
 
-## 💡 Dicas de Uso
+## ðŸ’¡ Dicas de Uso
 
-1. **Use `format:all`** para formatação rápida
-2. **Use `fix:all`** para correção automática completa
+1. **Use `format:all`** para formataÃ§Ã£o rÃ¡pida
+2. **Use `fix:all`** para correÃ§Ã£o automÃ¡tica completa
 3. **Use `quality:check`** antes de commitar
 4. **Configure seu editor** para formatar ao salvar
-5. **Use os scripts PowerShell/Bash** para automação
+5. **Use os scripts PowerShell/Bash** para automaÃ§Ã£o
 
-## 🔗 Links Úteis
+## ðŸ”— Links Ãšteis
 
-- [Prettier Documentation](https://prettier.io/)
-- [ESLint Documentation](https://eslint.org/)
-- [Remark Documentation](https://remark.js.org/)
-- [TypeScript Documentation](https://www.typescriptlang.org/)
+* [Prettier Documentation](https://prettier.io/)
+* [ESLint Documentation](https://eslint.org/)
+* [Remark Documentation](https://remark.js.org/)
+* [TypeScript Documentation](https://www.typescriptlang.org/)
 
----
+***
 
-**🎯 Agora você tem um sistema completo de formatação e qualidade!**
+**ðŸŽ¯ Agora vocÃª tem um sistema completo de formataÃ§Ã£o e qualidade!**

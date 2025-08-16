@@ -5,7 +5,7 @@
 Este documento fornece informações técnicas detalhadas para desenvolvedores que trabalham no projeto
 **GB Locações - Dashboard Executivo de Progresso**.
 
----
+***
 
 ## 🏗️ Arquitetura do Sistema
 
@@ -13,24 +13,24 @@ Este documento fornece informações técnicas detalhadas para desenvolvedores q
 
 #### **App Router (Next.js 15)**
 
-- **Estrutura**: Baseada em diretórios e arquivos
-- **Roteamento**: Sistema de roteamento automático
-- **Layouts**: Layouts aninhados e compartilhados
-- **Loading States**: Estados de carregamento automáticos
+* **Estrutura**: Baseada em diretórios e arquivos
+* **Roteamento**: Sistema de roteamento automático
+* **Layouts**: Layouts aninhados e compartilhados
+* **Loading States**: Estados de carregamento automáticos
 
 #### **Component-Based Architecture**
 
-- **Reutilização**: Componentes modulares e reutilizáveis
-- **Composição**: Composição de componentes complexos
-- **Props Interface**: Interfaces TypeScript bem definidas
-- **State Management**: Gerenciamento de estado local
+* **Reutilização**: Componentes modulares e reutilizáveis
+* **Composição**: Composição de componentes complexos
+* **Props Interface**: Interfaces TypeScript bem definidas
+* **State Management**: Gerenciamento de estado local
 
 #### **Type-Safe Development**
 
-- **TypeScript Strict**: Configuração rigorosa de tipos
-- **Interface Definitions**: Interfaces bem definidas
-- **Type Guards**: Verificações de tipo em runtime
-- **Generic Types**: Tipos genéricos para reutilização
+* **TypeScript Strict**: Configuração rigorosa de tipos
+* **Interface Definitions**: Interfaces bem definidas
+* **Type Guards**: Verificações de tipo em runtime
+* **Generic Types**: Tipos genéricos para reutilização
 
 ### 🏛️ **Estrutura de Camadas**
 
@@ -66,7 +66,7 @@ Este documento fornece informações técnicas detalhadas para desenvolvedores q
 └─────────────────────────────────────┘
 ```
 
----
+***
 
 ## 🛠️ Stack Tecnológica
 
@@ -85,10 +85,10 @@ const nextConfig = {
 
 **Características:**
 
-- **App Router**: Sistema de roteamento moderno
-- **Server Components**: Componentes renderizados no servidor
-- **Static Generation**: Geração estática otimizada
-- **API Routes**: Endpoints de API integrados
+* **App Router**: Sistema de roteamento moderno
+* **Server Components**: Componentes renderizados no servidor
+* **Static Generation**: Geração estática otimizada
+* **API Routes**: Endpoints de API integrados
 
 #### **React 19**
 
@@ -105,10 +105,10 @@ useEffect(() => {
 
 **Funcionalidades:**
 
-- **Hooks**: useState, useEffect, useRef
-- **Concurrent Features**: Renderização concorrente
-- **Suspense**: Suspensão de componentes
-- **Error Boundaries**: Tratamento de erros
+* **Hooks**: useState, useEffect, useRef
+* **Concurrent Features**: Renderização concorrente
+* **Suspense**: Suspensão de componentes
+* **Error Boundaries**: Tratamento de erros
 
 #### **TypeScript 5**
 
@@ -127,10 +127,10 @@ useEffect(() => {
 
 **Recursos:**
 
-- **Strict Mode**: Modo rigoroso habilitado
-- **Type Inference**: Inferência automática de tipos
-- **Generic Types**: Tipos genéricos avançados
-- **Utility Types**: Tipos utilitários
+* **Strict Mode**: Modo rigoroso habilitado
+* **Type Inference**: Inferência automática de tipos
+* **Generic Types**: Tipos genéricos avançados
+* **Utility Types**: Tipos utilitários
 
 ### 🎨 **Styling & UI**
 
@@ -160,10 +160,10 @@ module.exports = {
 
 **Características:**
 
-- **Utility-First**: Abordagem utility-first CSS
-- **Custom Design System**: Sistema de design personalizado
-- **Responsive Design**: Design responsivo integrado
-- **Animation Support**: Suporte a animações
+* **Utility-First**: Abordagem utility-first CSS
+* **Custom Design System**: Sistema de design personalizado
+* **Responsive Design**: Design responsivo integrado
+* **Animation Support**: Suporte a animações
 
 #### **CSS Variables & Custom Properties**
 
@@ -196,10 +196,10 @@ module.exports = {
 
 **Tipos de Gráficos:**
 
-- **BarChart**: Gráfico de barras empilhadas
-- **LineChart**: Gráfico de linha temporal
-- **PieChart**: Gráfico de pizza
-- **ResponsiveContainer**: Container responsivo
+* **BarChart**: Gráfico de barras empilhadas
+* **LineChart**: Gráfico de linha temporal
+* **PieChart**: Gráfico de pizza
+* **ResponsiveContainer**: Container responsivo
 
 ### 🖨️ **Export & Utilities**
 
@@ -230,7 +230,7 @@ pdf.setProperties({
 })
 ```
 
----
+***
 
 ## 📁 Estrutura do Projeto
 
@@ -298,7 +298,7 @@ module.exports = {
 }
 ```
 
----
+***
 
 ## 📊 Componentes Principais
 
@@ -456,7 +456,7 @@ const Section = ({ title, children, delay = 0 }: {
 )
 ```
 
----
+***
 
 ## 🎨 Design System
 
@@ -568,7 +568,7 @@ import { GeistMono } from "geist/font/mono"
 }
 ```
 
----
+***
 
 ## 📱 Responsividade
 
@@ -629,7 +629,7 @@ xl: 1280px  /* Extra large devices */
 </p>
 ```
 
----
+***
 
 ## 🔒 Segurança
 
@@ -676,7 +676,7 @@ const sanitizeContent = (content: string): string => {
 }
 ```
 
----
+***
 
 ## 📈 Performance
 
@@ -738,7 +738,7 @@ pnpm run build
 # Verificar output/.next/static/chunks/
 ```
 
----
+***
 
 ## 🧪 Qualidade de Código
 
@@ -810,7 +810,7 @@ const TOTAL_MODULES = 8
 const DEFAULT_DELAY = 100
 ```
 
----
+***
 
 ## 🚀 Deploy e CI/CD
 
@@ -882,7 +882,7 @@ jobs:
 }
 ```
 
----
+***
 
 ## 📚 Recursos Adicionais
 
@@ -890,32 +890,32 @@ jobs:
 
 #### **Documentação Oficial**
 
-- [Next.js Documentation](https://nextjs.org/docs)
-- [React Documentation](https://react.dev/)
-- [TypeScript Handbook](https://www.typescriptlang.org/docs/)
-- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+* [Next.js Documentation](https://nextjs.org/docs)
+* [React Documentation](https://react.dev/)
+* [TypeScript Handbook](https://www.typescriptlang.org/docs/)
+* [Tailwind CSS Documentation](https://tailwindcss.com/docs)
 
 #### **Ferramentas de Desenvolvimento**
 
-- [ESLint](https://eslint.org/)
-- [Prettier](https://prettier.io/)
-- [Recharts](https://recharts.org/)
-- [html2canvas](https://html2canvas.hertzen.com/)
+* [ESLint](https://eslint.org/)
+* [Prettier](https://prettier.io/)
+* [Recharts](https://recharts.org/)
+* [html2canvas](https://html2canvas.hertzen.com/)
 
 ### 📖 **Artigos e Tutoriais**
 
 #### **Performance**
 
-- [Web Vitals](https://web.dev/vitals/)
-- [Core Web Vitals](https://web.dev/learn-web-vitals/)
-- [Next.js Performance](https://nextjs.org/docs/advanced-features/measuring-performance)
+* [Web Vitals](https://web.dev/vitals/)
+* [Core Web Vitals](https://web.dev/learn-web-vitals/)
+* [Next.js Performance](https://nextjs.org/docs/advanced-features/measuring-performance)
 
 #### **TypeScript**
 
-- [TypeScript Best Practices](https://github.com/typescript-eslint/typescript-eslint)
-- [Advanced Types](https://www.typescriptlang.org/docs/handbook/advanced-types.html)
+* [TypeScript Best Practices](https://github.com/typescript-eslint/typescript-eslint)
+* [Advanced Types](https://www.typescriptlang.org/docs/handbook/advanced-types.html)
 
----
+***
 
 ## 🤝 Contribuição
 
@@ -934,10 +934,10 @@ jobs:
 
 #### **Padrões de Contribuição**
 
-- **Code Style**: Seguir padrões ESLint + Prettier
-- **TypeScript**: Usar tipagem adequada
-- **Testing**: Incluir testes para novas funcionalidades
-- **Documentation**: Atualizar documentação relevante
+* **Code Style**: Seguir padrões ESLint + Prettier
+* **TypeScript**: Usar tipagem adequada
+* **Testing**: Incluir testes para novas funcionalidades
+* **Documentation**: Atualizar documentação relevante
 
 ### 🐛 **Reportando Bugs**
 
@@ -966,7 +966,7 @@ Descrição clara e concisa do bug.
 Se aplicável, adicione screenshots para explicar o problema.
 ```
 
----
+***
 
 ## 📞 Suporte e Contato
 
@@ -974,24 +974,24 @@ Se aplicável, adicione screenshots para explicar o problema.
 
 #### **GitHub**
 
-- **Issues**:
+* **Issues**:
   [GitHub Issues](https://github.com/seu-usuario/dashboard-executivo-de-progresso/issues)
-- **Discussions**:
+* **Discussions**:
   [GitHub Discussions](https://github.com/seu-usuario/dashboard-executivo-de-progresso/discussions)
-- **Wiki**: [Wiki do Projeto](https://github.com/seu-usuario/dashboard-executivo-de-progresso/wiki)
+* **Wiki**: [Wiki do Projeto](https://github.com/seu-usuario/dashboard-executivo-de-progresso/wiki)
 
 #### **Contato Direto**
 
-- **Email**: <suporte@gb-locacoes.com>
-- **Website**: [gb-locacoes.com](https://gb-locacoes.com)
-- **Documentação**: [docs.gb-locacoes.com](https://docs.gb-locacoes.com)
+* **Email**: <suporte@gb-locacoes.com>
+* **Website**: [gb-locacoes.com](https://gb-locacoes.com)
+* **Documentação**: [docs.gb-locacoes.com](https://docs.gb-locacoes.com)
 
----
+***
 
 <div align="center">
 
 ## 🔧 Para mais informações técnicas
 
-_Construído com ❤️ pela equipe GB Locações_
+*Construído com ❤️ pela equipe GB Locações*
 
 </div>

@@ -1,11 +1,11 @@
-# 🚀 GB Locações - Dashboard Executivo de Progresso
+# ðŸš€ GB LocaÃ§Ãµes - Dashboard Executivo de Progresso
 
 <div align="center">
 
-![Next.js](https://img.shields.io/badge/Next.js-15.2.4-black?style=for-the-badge&logo=next.js)
-![React](https://img.shields.io/badge/React-19-blue?style=for-the-badge&logo=react)
-![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=for-the-badge&logo=typescript)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1.12-38B2AC?style=for-the-badge&logo=tailwind-css)
+![Next.js](https://img.shields.io/badge/Next.js-15.2.4-black?style=for-the-badge\&logo=next.js)
+![React](https://img.shields.io/badge/React-19-blue?style=for-the-badge\&logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=for-the-badge\&logo=typescript)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1.12-38B2AC?style=for-the-badge\&logo=tailwind-css)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![Code Style: Prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=for-the-badge)](https://prettier.io/)
@@ -13,263 +13,263 @@
 
 ## Dashboard Executivo de Progresso
 
-_Uma solução enterprise-grade para acompanhamento de progresso, métricas e roadmap de projetos de
-TI_
+*Uma soluÃ§Ã£o enterprise-grade para acompanhamento de progresso, mÃ©tricas e roadmap de projetos
+de TI*
 
 </div>
 
----
+***
 
-## 📋 Índice
+## ðŸ“‹ Ãndice
 
-- [🎯 Visão Geral](#-visão-geral)
-- [✨ Funcionalidades](#-funcionalidades)
-- [🏗️ Arquitetura](#️-arquitetura)
-- [🛠️ Stack Tecnológica](#️-stack-tecnológica)
-- [🚀 Quick Start](#-quick-start)
-- [📁 Estrutura do Projeto](#-estrutura-do-projeto)
-- [🔧 Scripts Disponíveis](#-scripts-disponíveis)
-- [📊 Componentes Principais](#-componentes-principais)
-- [🎨 Design System](#-design-system)
-- [📱 Responsividade](#-responsividade)
-- [🔒 Segurança](#-segurança)
-- [📈 Performance](#-performance)
-- [🧪 Qualidade de Código](#-qualidade-de-código)
-- [📚 Documentação](#-documentação)
-- [🤝 Contribuição](#-contribuição)
-- [📄 Licença](#-licença)
+* [ðŸŽ¯ VisÃ£o Geral](#-visÃ£o-geral)
+* [âœ¨ Funcionalidades](#-funcionalidades)
+* [ðŸ—ï¸ Arquitetura](#ï¸-arquitetura)
+* [ðŸ› ï¸ Stack TecnolÃ³gica](#ï¸-stack-tecnolÃ³gica)
+* [ðŸš€ Quick Start](#-quick-start)
+* [ðŸ“ Estrutura do Projeto](#-estrutura-do-projeto)
+* [ðŸ”§ Scripts DisponÃ­veis](#-scripts-disponÃ­veis)
+* [ðŸ“Š Componentes Principais](#-componentes-principais)
+* [ðŸŽ¨ Design System](#-design-system)
+* [ðŸ“± Responsividade](#-responsividade)
+* [ðŸ”’ SeguranÃ§a](#-seguranÃ§a)
+* [ðŸ“ˆ Performance](#-performance)
+* [ðŸ§ª Qualidade de CÃ³digo](#-qualidade-de-cÃ³digo)
+* [ðŸ“š DocumentaÃ§Ã£o](#-documentaÃ§Ã£o)
+* [ðŸ¤ ContribuiÃ§Ã£o](#-contribuiÃ§Ã£o)
+* [ðŸ“„ LicenÃ§a](#-licenÃ§a)
 
----
+***
 
-## 🎯 Visão Geral
+## ðŸŽ¯ VisÃ£o Geral
 
-O **GB Locações - Dashboard Executivo de Progresso** é uma aplicação web moderna e sofisticada
+O **GB LocaÃ§Ãµes - Dashboard Executivo de Progresso** Ã© uma aplicaÃ§Ã£o web moderna e sofisticada
 desenvolvida para gestores de projetos de TI acompanharem o progresso de desenvolvimento de software
 de forma visual, intuitiva e executiva.
 
-### 🎖️ Características Enterprise
+### ðŸŽ–ï¸ CaracterÃ­sticas Enterprise
 
-- **Dashboard Executivo**: Interface de alto nível para tomada de decisões estratégicas
-- **Métricas em Tempo Real**: Indicadores de progresso, custos e cronogramas
-- **Roadmap Visual**: Mapeamento completo de etapas e dependências
-- **Exportação Profissional**: Geração de relatórios em PDF para apresentações executivas
-- **Design System Consistente**: Interface unificada e profissional
-- **Arquitetura Escalável**: Base sólida para futuras expansões
+* **Dashboard Executivo**: Interface de alto nÃ­vel para tomada de decisÃµes estratÃ©gicas
+* **MÃ©tricas em Tempo Real**: Indicadores de progresso, custos e cronogramas
+* **Roadmap Visual**: Mapeamento completo de etapas e dependÃªncias
+* **ExportaÃ§Ã£o Profissional**: GeraÃ§Ã£o de relatÃ³rios em PDF para apresentaÃ§Ãµes executivas
+* **Design System Consistente**: Interface unificada e profissional
+* **Arquitetura EscalÃ¡vel**: Base sÃ³lida para futuras expansÃµes
 
----
+***
 
-## ✨ Funcionalidades
+## âœ¨ Funcionalidades
 
-### 📊 **Dashboard Executivo**
+### ðŸ“Š **Dashboard Executivo**
 
-- **Visão Geral**: Métricas consolidadas de progresso e investimento
-- **Indicadores KPI**: Percentual de conclusão, valores recebidos e pendentes
-- **Status em Tempo Real**: Estado atual de cada etapa do projeto
+* **VisÃ£o Geral**: MÃ©tricas consolidadas de progresso e investimento
+* **Indicadores KPI**: Percentual de conclusÃ£o, valores recebidos e pendentes
+* **Status em Tempo Real**: Estado atual de cada etapa do projeto
 
-### 📈 **Gráficos e Visualizações**
+### ðŸ“ˆ **GrÃ¡ficos e VisualizaÃ§Ãµes**
 
-- **Gráfico de Barras**: Progresso por etapa (Pago vs Restante)
-- **Gráfico de Linha**: Acumulado planejado vs recebido
-- **Gráfico de Pizza**: Distribuição geral de investimentos
-- **Comparativo de Mercado**: Benchmark com outras soluções
+* **GrÃ¡fico de Barras**: Progresso por etapa (Pago vs Restante)
+* **GrÃ¡fico de Linha**: Acumulado planejado vs recebido
+* **GrÃ¡fico de Pizza**: DistribuiÃ§Ã£o geral de investimentos
+* **Comparativo de Mercado**: Benchmark com outras soluÃ§Ãµes
 
-### 🗺️ **Roadmap Detalhado**
+### ðŸ—ºï¸ **Roadmap Detalhado**
 
-- **8 Etapas Estruturadas**: Desde apresentação funcional até IA avançada
-- **Subetapas Detalhadas**: Breakdown completo de cada fase
-- **Justificativas Técnicas**: Explicações para cada investimento
-- **Status Visual**: Indicadores visuais de progresso
+* **8 Etapas Estruturadas**: Desde apresentaÃ§Ã£o funcional atÃ© IA avanÃ§ada
+* **Subetapas Detalhadas**: Breakdown completo de cada fase
+* **Justificativas TÃ©cnicas**: ExplicaÃ§Ãµes para cada investimento
+* **Status Visual**: Indicadores visuais de progresso
 
-### 📄 **Exportação e Relatórios**
+### ðŸ“„ **ExportaÃ§Ã£o e RelatÃ³rios**
 
-- **PDF Profissional**: Geração de relatórios executivos
-- **Alta Qualidade**: Renderização em 2x para máxima nitidez
-- **Metadados Completos**: Informações estruturadas do projeto
-- **Formatação Executiva**: Layout otimizado para apresentações
+* **PDF Profissional**: GeraÃ§Ã£o de relatÃ³rios executivos
+* **Alta Qualidade**: RenderizaÃ§Ã£o em 2x para mÃ¡xima nitidez
+* **Metadados Completos**: InformaÃ§Ãµes estruturadas do projeto
+* **FormataÃ§Ã£o Executiva**: Layout otimizado para apresentaÃ§Ãµes
 
----
+***
 
-## 🏗️ Arquitetura
+## ðŸ—ï¸ Arquitetura
 
-### 🎯 **Padrões Arquiteturais**
+### ðŸŽ¯ **PadrÃµes Arquiteturais**
 
-- **App Router**: Arquitetura moderna do Next.js 15
-- **Component-Based**: Arquitetura baseada em componentes React
-- **Type-Safe**: TypeScript em todo o projeto
-- **Utility-First**: CSS com abordagem Tailwind CSS
+* **App Router**: Arquitetura moderna do Next.js 15
+* **Component-Based**: Arquitetura baseada em componentes React
+* **Type-Safe**: TypeScript em todo o projeto
+* **Utility-First**: CSS com abordagem Tailwind CSS
 
-### 🏛️ **Estrutura de Camadas**
+### ðŸ›ï¸ **Estrutura de Camadas**
 
 ```mermaid
-┌─────────────────────────────────────┐
-│           Presentation Layer        │ ← React Components + Tailwind
-├─────────────────────────────────────┤
-│           Business Logic            │ ← TypeScript + Custom Hooks
-├─────────────────────────────────────┤
-│           Data Layer                │ ← Static Data + State Management
-├─────────────────────────────────────┤
-│           Infrastructure            │ ← Next.js + Build Tools
-└─────────────────────────────────────┘
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚           Presentation Layer        â”‚ â† React Components + Tailwind
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+â”‚           Business Logic            â”‚ â† TypeScript + Custom Hooks
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+â”‚           Data Layer                â”‚ â† Static Data + State Management
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+â”‚           Infrastructure            â”‚ â† Next.js + Build Tools
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 ```
 
-### 🔄 **Fluxo de Dados**
+### ðŸ”„ **Fluxo de Dados**
 
 1. **Estado Local**: React hooks para gerenciamento de estado
-2. **Props Drilling**: Comunicação entre componentes
-3. **Event Handlers**: Interações do usuário
-4. **Renderização**: Atualização da interface
+2. **Props Drilling**: ComunicaÃ§Ã£o entre componentes
+3. **Event Handlers**: InteraÃ§Ãµes do usuÃ¡rio
+4. **RenderizaÃ§Ã£o**: AtualizaÃ§Ã£o da interface
 
----
+***
 
-## 🛠️ Stack Tecnológica
+## ðŸ› ï¸ Stack TecnolÃ³gica
 
-### 🎨 **Frontend Framework**
+### ðŸŽ¨ **Frontend Framework**
 
-- **Next.js 15.2.4**: Framework React com App Router
-- **React 19**: Biblioteca de interface do usuário
-- **TypeScript 5**: Tipagem estática e desenvolvimento seguro
+* **Next.js 15.2.4**: Framework React com App Router
+* **React 19**: Biblioteca de interface do usuÃ¡rio
+* **TypeScript 5**: Tipagem estÃ¡tica e desenvolvimento seguro
 
-### 🎨 **Styling & UI**
+### ðŸŽ¨ **Styling & UI**
 
-- **Tailwind CSS 4.1.12**: Framework CSS utility-first
-- **Tailwind CSS Animate**: Animações e transições
-- **CSS Variables**: Sistema de design tokens
-- **Responsive Design**: Mobile-first approach
+* **Tailwind CSS 4.1.12**: Framework CSS utility-first
+* **Tailwind CSS Animate**: AnimaÃ§Ãµes e transiÃ§Ãµes
+* **CSS Variables**: Sistema de design tokens
+* **Responsive Design**: Mobile-first approach
 
-### 📊 **Data Visualization**
+### ðŸ“Š **Data Visualization**
 
-- **Recharts**: Biblioteca de gráficos React
-- **Chart Types**: Barras, linhas, pizza e mais
-- **Responsive Charts**: Adaptação automática ao viewport
-- **Custom Styling**: Temas e cores personalizados
+* **Recharts**: Biblioteca de grÃ¡ficos React
+* **Chart Types**: Barras, linhas, pizza e mais
+* **Responsive Charts**: AdaptaÃ§Ã£o automÃ¡tica ao viewport
+* **Custom Styling**: Temas e cores personalizados
 
-### 🖨️ **Export & Utilities**
+### ðŸ–¨ï¸ **Export & Utilities**
 
-- **html2canvas**: Captura de tela para PDF
-- **jsPDF**: Geração de documentos PDF
-- **Canvas API**: Manipulação de imagens
-- **File Download**: Download automático de relatórios
+* **html2canvas**: Captura de tela para PDF
+* **jsPDF**: GeraÃ§Ã£o de documentos PDF
+* **Canvas API**: ManipulaÃ§Ã£o de imagens
+* **File Download**: Download automÃ¡tico de relatÃ³rios
 
-### 🛠️ **Development Tools**
+### ðŸ› ï¸ **Development Tools**
 
-- **ESLint**: Linting de código JavaScript/TypeScript
-- **Prettier**: Formatação automática de código
-- **PostCSS**: Processamento de CSS
-- **Autoprefixer**: Compatibilidade cross-browser
+* **ESLint**: Linting de cÃ³digo JavaScript/TypeScript
+* **Prettier**: FormataÃ§Ã£o automÃ¡tica de cÃ³digo
+* **PostCSS**: Processamento de CSS
+* **Autoprefixer**: Compatibilidade cross-browser
 
----
+***
 
-## 🚀 Quick Start
+## ðŸš€ Quick Start
 
-### 📋 **Pré-requisitos**
+### ðŸ“‹ **PrÃ©-requisitos**
 
-- **Node.js**: Versão 18.17 ou superior
-- **pnpm**: Gerenciador de pacotes (recomendado)
-- **Git**: Controle de versão
+* **Node.js**: VersÃ£o 18.17 ou superior
+* **pnpm**: Gerenciador de pacotes (recomendado)
+* **Git**: Controle de versÃ£o
 
-### ⚡ **Instalação Rápida**
+### âš¡ **InstalaÃ§Ã£o RÃ¡pida**
 
 ```bash
-# 1. Clone o repositório
+# 1. Clone o repositÃ³rio
 git clone https://github.com/seu-usuario/dashboard-executivo-de-progresso.git
 cd dashboard-executivo-de-progresso
 
-# 2. Instale as dependências
+# 2. Instale as dependÃªncias
 pnpm install
 
 # 3. Execute em modo desenvolvimento
 pnpm run dev
 
-# 4. Acesse a aplicação
+# 4. Acesse a aplicaÃ§Ã£o
 open http://localhost:3000
 ```
 
-### 🏗️ **Build de Produção**
+### ðŸ—ï¸ **Build de ProduÃ§Ã£o**
 
 ```bash
-# Build otimizado para produção
+# Build otimizado para produÃ§Ã£o
 pnpm run build
 
-# Iniciar servidor de produção
+# Iniciar servidor de produÃ§Ã£o
 pnpm run start
 
-# Verificar qualidade do código
+# Verificar qualidade do cÃ³digo
 pnpm run lint
 pnpm run format:check
 ```
 
----
+***
 
-## 📁 Estrutura do Projeto
+## ðŸ“ Estrutura do Projeto
 
 ```tree
 dashboard-executivo-de-progresso/
-├── 📁 app/                          # App Router (Next.js 15)
-│   ├── 📄 layout.tsx               # Layout principal da aplicação
-│   ├── 📄 page.tsx                 # Página inicial
-│   └── 📄 globals.css              # Estilos globais
-├── 📁 components/                   # Componentes React reutilizáveis
-│   ├── 📄 gb-locacoes-complete.tsx # Dashboard principal
-│   └── 📄 theme-provider.tsx       # Provedor de tema
-├── 📁 lib/                         # Utilitários e helpers
-│   └── 📄 utils.ts                 # Funções utilitárias
-├── 📁 public/                      # Assets estáticos
-│   ├── 📄 placeholder-logo.png     # Logo placeholder
-│   ├── 📄 placeholder-logo.svg     # Logo SVG
-│   └── 📄 placeholder-user.jpg     # Avatar placeholder
-├── 📁 styles/                      # Estilos adicionais
-│   └── 📄 globals.css              # CSS global alternativo
-├── 📄 .eslintrc.json               # Configuração ESLint
-├── 📄 .prettierrc                  # Configuração Prettier
-├── 📄 components.json              # Configuração shadcn/ui
-├── 📄 next.config.mjs              # Configuração Next.js
-├── 📄 package.json                 # Dependências e scripts
-├── 📄 tailwind.config.js           # Configuração Tailwind CSS
-└── 📄 tsconfig.json                # Configuração TypeScript
+â”œâ”€â”€ ðŸ“ app/                          # App Router (Next.js 15)
+â”‚   â”œâ”€â”€ ðŸ“„ layout.tsx               # Layout principal da aplicaÃ§Ã£o
+â”‚   â”œâ”€â”€ ðŸ“„ page.tsx                 # PÃ¡gina inicial
+â”‚   â””â”€â”€ ðŸ“„ globals.css              # Estilos globais
+â”œâ”€â”€ ðŸ“ components/                   # Componentes React reutilizÃ¡veis
+â”‚   â”œâ”€â”€ ðŸ“„ gb-locacoes-complete.tsx # Dashboard principal
+â”‚   â””â”€â”€ ðŸ“„ theme-provider.tsx       # Provedor de tema
+â”œâ”€â”€ ðŸ“ lib/                         # UtilitÃ¡rios e helpers
+â”‚   â””â”€â”€ ðŸ“„ utils.ts                 # FunÃ§Ãµes utilitÃ¡rias
+â”œâ”€â”€ ðŸ“ public/                      # Assets estÃ¡ticos
+â”‚   â”œâ”€â”€ ðŸ“„ placeholder-logo.png     # Logo placeholder
+â”‚   â”œâ”€â”€ ðŸ“„ placeholder-logo.svg     # Logo SVG
+â”‚   â””â”€â”€ ðŸ“„ placeholder-user.jpg     # Avatar placeholder
+â”œâ”€â”€ ðŸ“ styles/                      # Estilos adicionais
+â”‚   â””â”€â”€ ðŸ“„ globals.css              # CSS global alternativo
+â”œâ”€â”€ ðŸ“„ .eslintrc.json               # ConfiguraÃ§Ã£o ESLint
+â”œâ”€â”€ ðŸ“„ .prettierrc                  # ConfiguraÃ§Ã£o Prettier
+â”œâ”€â”€ ðŸ“„ components.json              # ConfiguraÃ§Ã£o shadcn/ui
+â”œâ”€â”€ ðŸ“„ next.config.mjs              # ConfiguraÃ§Ã£o Next.js
+â”œâ”€â”€ ðŸ“„ package.json                 # DependÃªncias e scripts
+â”œâ”€â”€ ðŸ“„ tailwind.config.js           # ConfiguraÃ§Ã£o Tailwind CSS
+â””â”€â”€ ðŸ“„ tsconfig.json                # ConfiguraÃ§Ã£o TypeScript
 ```
 
----
+***
 
-## 🔧 Scripts Disponíveis
+## ðŸ”§ Scripts DisponÃ­veis
 
-### 🚀 **Desenvolvimento**
+### ðŸš€ **Desenvolvimento**
 
 ```bash
 pnpm run dev          # Servidor de desenvolvimento
-pnpm run build        # Build de produção
-pnpm run start        # Servidor de produção
+pnpm run build        # Build de produÃ§Ã£o
+pnpm run start        # Servidor de produÃ§Ã£o
 ```
 
-### 🧹 **Qualidade de Código**
+### ðŸ§¹ **Qualidade de CÃ³digo**
 
 ```bash
-pnpm run lint         # Verificação ESLint
-pnpm run format       # Formatação com Prettier
-pnpm run format:check # Verificação de formatação
+pnpm run lint         # VerificaÃ§Ã£o ESLint
+pnpm run format       # FormataÃ§Ã£o com Prettier
+pnpm run format:check # VerificaÃ§Ã£o de formataÃ§Ã£o
 ```
 
-### 📊 **Análise e Monitoramento**
+### ðŸ“Š **AnÃ¡lise e Monitoramento**
 
 ```bash
-pnpm run analyze      # Análise de bundle (se configurado)
-pnpm run test         # Execução de testes (se configurado)
+pnpm run analyze      # AnÃ¡lise de bundle (se configurado)
+pnpm run test         # ExecuÃ§Ã£o de testes (se configurado)
 pnpm run test:watch   # Testes em modo watch (se configurado)
 ```
 
----
+***
 
-## 📊 Componentes Principais
+## ðŸ“Š Componentes Principais
 
-### 🎯 **GBBudgetPresentation**
+### ðŸŽ¯ **GBBudgetPresentation**
 
 Componente principal que renderiza o dashboard executivo completo.
 
-**Características:**
+**CaracterÃ­sticas:**
 
-- **Estado Global**: Gerenciamento de estado da aplicação
-- **Animações**: Transições suaves e efeitos visuais
-- **Responsividade**: Adaptação automática a diferentes dispositivos
-- **Interatividade**: Hover effects e feedback visual
+* **Estado Global**: Gerenciamento de estado da aplicaÃ§Ã£o
+* **AnimaÃ§Ãµes**: TransiÃ§Ãµes suaves e efeitos visuais
+* **Responsividade**: AdaptaÃ§Ã£o automÃ¡tica a diferentes dispositivos
+* **Interatividade**: Hover effects e feedback visual
 
 **Props e Estado:**
 
@@ -295,25 +295,25 @@ interface Substep {
 }
 ```
 
-### 📈 **Componentes de Gráficos**
+### ðŸ“ˆ **Componentes de GrÃ¡ficos**
 
-- **BarChart**: Progresso por etapa
-- **LineChart**: Acumulado planejado vs recebido
-- **PieChart**: Distribuição geral
-- **ResponsiveContainer**: Adaptação automática ao viewport
+* **BarChart**: Progresso por etapa
+* **LineChart**: Acumulado planejado vs recebido
+* **PieChart**: DistribuiÃ§Ã£o geral
+* **ResponsiveContainer**: AdaptaÃ§Ã£o automÃ¡tica ao viewport
 
-### 🎨 **Componentes de UI**
+### ðŸŽ¨ **Componentes de UI**
 
-- **Stat**: Cards de métricas principais
-- **Section**: Seções organizacionais
-- **ChartContainer**: Containers para gráficos
-- **Icon Components**: Sistema de ícones SVG
+* **Stat**: Cards de mÃ©tricas principais
+* **Section**: SeÃ§Ãµes organizacionais
+* **ChartContainer**: Containers para grÃ¡ficos
+* **Icon Components**: Sistema de Ã­cones SVG
 
----
+***
 
-## 🎨 Design System
+## ðŸŽ¨ Design System
 
-### 🎨 **Paleta de Cores**
+### ðŸŽ¨ **Paleta de Cores**
 
 ```css
 /* Cores Principais */
@@ -323,25 +323,25 @@ interface Substep {
   --red-400: #f87171 /* Error */ --blue-400: #60a5fa /* Info */;
 ```
 
-### 🎭 **Tipografia**
+### ðŸŽ­ **Tipografia**
 
-- **Fonte Principal**: Geist Sans (moderna e legível)
-- **Fonte Mono**: Geist Mono (para código e dados)
-- **Hierarquia**: Sistema de tamanhos consistente
-- **Responsividade**: Escala automática por dispositivo
+* **Fonte Principal**: Geist Sans (moderna e legÃ­vel)
+* **Fonte Mono**: Geist Mono (para cÃ³digo e dados)
+* **Hierarquia**: Sistema de tamanhos consistente
+* **Responsividade**: Escala automÃ¡tica por dispositivo
 
-### 🎪 **Animações e Transições**
+### ðŸŽª **AnimaÃ§Ãµes e TransiÃ§Ãµes**
 
-- **Entrada**: Fade-in com translate para elementos
-- **Hover**: Efeitos de escala e sombra
-- **Transições**: Durações consistentes (300ms, 500ms, 700ms)
-- **Easing**: Funções de suavização naturais
+* **Entrada**: Fade-in com translate para elementos
+* **Hover**: Efeitos de escala e sombra
+* **TransiÃ§Ãµes**: DuraÃ§Ãµes consistentes (300ms, 500ms, 700ms)
+* **Easing**: FunÃ§Ãµes de suavizaÃ§Ã£o naturais
 
----
+***
 
-## 📱 Responsividade
+## ðŸ“± Responsividade
 
-### 📱 **Breakpoints**
+### ðŸ“± **Breakpoints**
 
 ```css
 /* Mobile First Approach */
@@ -352,85 +352,85 @@ xl: 1280px  /* Extra large devices */
 2xl: 1536px /* 2X large devices */
 ```
 
-### 📐 **Grid System**
+### ðŸ“ **Grid System**
 
-- **Mobile**: 1 coluna
-- **Tablet**: 2 colunas
-- **Desktop**: 4 colunas para stats, 2 para gráficos
-- **Adaptativo**: Layout flexível baseado em conteúdo
+* **Mobile**: 1 coluna
+* **Tablet**: 2 colunas
+* **Desktop**: 4 colunas para stats, 2 para grÃ¡ficos
+* **Adaptativo**: Layout flexÃ­vel baseado em conteÃºdo
 
-### 🎯 **Componentes Responsivos**
+### ðŸŽ¯ **Componentes Responsivos**
 
-- **Cards**: Redimensionamento automático
-- **Gráficos**: Adaptação ao container
-- **Texto**: Escala automática de tamanho
-- **Espaçamento**: Margens e paddings adaptativos
+* **Cards**: Redimensionamento automÃ¡tico
+* **GrÃ¡ficos**: AdaptaÃ§Ã£o ao container
+* **Texto**: Escala automÃ¡tica de tamanho
+* **EspaÃ§amento**: Margens e paddings adaptativos
 
----
+***
 
-## 🔒 Segurança
+## ðŸ”’ SeguranÃ§a
 
-### 🛡️ **Práticas de Segurança**
+### ðŸ›¡ï¸ **PrÃ¡ticas de SeguranÃ§a**
 
-- **TypeScript Strict**: Verificação de tipos rigorosa
-- **ESLint Rules**: Regras de segurança configuradas
-- **Input Validation**: Validação de dados de entrada
-- **XSS Prevention**: Sanitização de conteúdo dinâmico
+* **TypeScript Strict**: VerificaÃ§Ã£o de tipos rigorosa
+* **ESLint Rules**: Regras de seguranÃ§a configuradas
+* **Input Validation**: ValidaÃ§Ã£o de dados de entrada
+* **XSS Prevention**: SanitizaÃ§Ã£o de conteÃºdo dinÃ¢mico
 
-### 🔐 **Configurações de Segurança**
+### ðŸ” **ConfiguraÃ§Ãµes de SeguranÃ§a**
 
-- **Content Security Policy**: Headers de segurança
-- **HTTPS Only**: Redirecionamento para HTTPS
-- **Secure Headers**: Headers de segurança configurados
-- **Dependency Scanning**: Verificação de vulnerabilidades
+* **Content Security Policy**: Headers de seguranÃ§a
+* **HTTPS Only**: Redirecionamento para HTTPS
+* **Secure Headers**: Headers de seguranÃ§a configurados
+* **Dependency Scanning**: VerificaÃ§Ã£o de vulnerabilidades
 
----
+***
 
-## 📈 Performance
+## ðŸ“ˆ Performance
 
-### ⚡ **Otimizações Implementadas**
+### âš¡ **OtimizaÃ§Ãµes Implementadas**
 
-- **Code Splitting**: Carregamento sob demanda
-- **Lazy Loading**: Importação dinâmica de componentes
-- **Image Optimization**: Otimização automática de imagens
-- **Bundle Analysis**: Análise de tamanho de bundle
+* **Code Splitting**: Carregamento sob demanda
+* **Lazy Loading**: ImportaÃ§Ã£o dinÃ¢mica de componentes
+* **Image Optimization**: OtimizaÃ§Ã£o automÃ¡tica de imagens
+* **Bundle Analysis**: AnÃ¡lise de tamanho de bundle
 
-### 📊 **Métricas de Performance**
+### ðŸ“Š **MÃ©tricas de Performance**
 
-- **First Contentful Paint (FCP)**: < 1.5s
-- **Largest Contentful Paint (LCP)**: < 2.5s
-- **Cumulative Layout Shift (CLS)**: < 0.1
-- **First Input Delay (FID)**: < 100ms
+* **First Contentful Paint (FCP)**: < 1.5s
+* **Largest Contentful Paint (LCP)**: < 2.5s
+* **Cumulative Layout Shift (CLS)**: < 0.1
+* **First Input Delay (FID)**: < 100ms
 
-### 🚀 **Estratégias de Performance**
+### ðŸš€ **EstratÃ©gias de Performance**
 
-- **Static Generation**: Geração estática quando possível
-- **Incremental Static Regeneration**: Atualizações incrementais
-- **Edge Caching**: Cache na edge para melhor performance
-- **Bundle Optimization**: Otimização de dependências
+* **Static Generation**: GeraÃ§Ã£o estÃ¡tica quando possÃ­vel
+* **Incremental Static Regeneration**: AtualizaÃ§Ãµes incrementais
+* **Edge Caching**: Cache na edge para melhor performance
+* **Bundle Optimization**: OtimizaÃ§Ã£o de dependÃªncias
 
----
+***
 
-## 🧪 Qualidade de Código
+## ðŸ§ª Qualidade de CÃ³digo
 
-### 🔍 **Linting e Formatação**
+### ðŸ” **Linting e FormataÃ§Ã£o**
 
-- **ESLint**: Regras Next.js + TypeScript
-- **Prettier**: Formatação automática de código
-- **TypeScript**: Verificação de tipos em tempo de compilação
-- **Husky**: Hooks de pre-commit (se configurado)
+* **ESLint**: Regras Next.js + TypeScript
+* **Prettier**: FormataÃ§Ã£o automÃ¡tica de cÃ³digo
+* **TypeScript**: VerificaÃ§Ã£o de tipos em tempo de compilaÃ§Ã£o
+* **Husky**: Hooks de pre-commit (se configurado)
 
-### 📏 **Padrões de Código**
+### ðŸ“ **PadrÃµes de CÃ³digo**
 
-- **Conventional Commits**: Padrão de mensagens de commit
-- **Component Structure**: Estrutura consistente de componentes
-- **Naming Conventions**: Convenções de nomenclatura
-- **File Organization**: Organização lógica de arquivos
+* **Conventional Commits**: PadrÃ£o de mensagens de commit
+* **Component Structure**: Estrutura consistente de componentes
+* **Naming Conventions**: ConvenÃ§Ãµes de nomenclatura
+* **File Organization**: OrganizaÃ§Ã£o lÃ³gica de arquivos
 
-### 🧪 **Testes (Recomendado)**
+### ðŸ§ª **Testes (Recomendado)**
 
 ```bash
-# Instalar dependências de teste
+# Instalar dependÃªncias de teste
 pnpm add -D jest @testing-library/react @testing-library/jest-dom
 
 # Executar testes
@@ -439,112 +439,112 @@ pnpm run test:watch
 pnpm run test:coverage
 ```
 
----
+***
 
-## 📚 Documentação
+## ðŸ“š DocumentaÃ§Ã£o
 
-### 📖 **Documentação Técnica**
+### ðŸ“– **DocumentaÃ§Ã£o TÃ©cnica**
 
-- **API Reference**: Documentação de componentes
-- **Architecture Guide**: Guia de arquitetura
-- **Component Library**: Biblioteca de componentes
-- **Style Guide**: Guia de estilo e design
+* **API Reference**: DocumentaÃ§Ã£o de componentes
+* **Architecture Guide**: Guia de arquitetura
+* **Component Library**: Biblioteca de componentes
+* **Style Guide**: Guia de estilo e design
 
-### 🎯 **Documentação de Usuário**
+### ðŸŽ¯ **DocumentaÃ§Ã£o de UsuÃ¡rio**
 
-- **User Manual**: Manual do usuário
-- **Feature Guide**: Guia de funcionalidades
-- **Troubleshooting**: Solução de problemas
-- **FAQ**: Perguntas frequentes
+* **User Manual**: Manual do usuÃ¡rio
+* **Feature Guide**: Guia de funcionalidades
+* **Troubleshooting**: SoluÃ§Ã£o de problemas
+* **FAQ**: Perguntas frequentes
 
----
+***
 
-## 🤝 Contribuição
+## ðŸ¤ ContribuiÃ§Ã£o
 
-### 🌟 **Como Contribuir**
+### ðŸŒŸ **Como Contribuir**
 
 1. **Fork** o projeto
 2. **Clone** seu fork localmente
 3. **Crie** uma branch para sua feature
 4. **Desenvolva** sua funcionalidade
-5. **Teste** suas mudanças
+5. **Teste** suas mudanÃ§as
 6. **Commit** seguindo Conventional Commits
 7. **Push** para sua branch
 8. **Abra** um Pull Request
 
-### 📝 **Padrões de Contribuição**
+### ðŸ“ **PadrÃµes de ContribuiÃ§Ã£o**
 
-- **Code Style**: Seguir padrões ESLint + Prettier
-- **TypeScript**: Usar tipagem adequada
-- **Testing**: Incluir testes para novas funcionalidades
-- **Documentation**: Atualizar documentação relevante
+* **Code Style**: Seguir padrÃµes ESLint + Prettier
+* **TypeScript**: Usar tipagem adequada
+* **Testing**: Incluir testes para novas funcionalidades
+* **Documentation**: Atualizar documentaÃ§Ã£o relevante
 
-### 🐛 **Reportando Bugs**
+### ðŸ› **Reportando Bugs**
 
-- **Issue Template**: Usar template de issue
-- **Reprodução**: Incluir passos para reproduzir
-- **Environment**: Especificar ambiente
-- **Screenshots**: Incluir capturas de tela quando relevante
+* **Issue Template**: Usar template de issue
+* **ReproduÃ§Ã£o**: Incluir passos para reproduzir
+* **Environment**: Especificar ambiente
+* **Screenshots**: Incluir capturas de tela quando relevante
 
----
+***
 
-## 📄 Licença
+## ðŸ“„ LicenÃ§a
 
-Este projeto está licenciado sob a **MIT License** - veja o arquivo [LICENSE](LICENSE) para
+Este projeto estÃ¡ licenciado sob a **MIT License** - veja o arquivo [LICENSE](LICENSE) para
 detalhes.
 
-### 📋 **Termos da Licença**
+### ðŸ“‹ **Termos da LicenÃ§a**
 
-- **Uso Comercial**: ✅ Permitido
-- **Modificação**: ✅ Permitido
-- **Distribuição**: ✅ Permitido
-- **Uso Privado**: ✅ Permitido
-- **Responsabilidade**: ❌ Não há garantias
+* **Uso Comercial**: âœ… Permitido
+* **ModificaÃ§Ã£o**: âœ… Permitido
+* **DistribuiÃ§Ã£o**: âœ… Permitido
+* **Uso Privado**: âœ… Permitido
+* **Responsabilidade**: âŒ NÃ£o hÃ¡ garantias
 
----
+***
 
-## 🏆 Reconhecimentos
+## ðŸ† Reconhecimentos
 
-### 👨‍💻 **Desenvolvedores**
+### ðŸ‘¨â€ðŸ’» **Desenvolvedores**
 
-- **Equipe GB Locações**: Visão e requisitos do projeto
-- **Arquitetos de Software**: Design da arquitetura
-- **Designers UX/UI**: Interface e experiência do usuário
-- **QA Engineers**: Garantia de qualidade
+* **Equipe GB LocaÃ§Ãµes**: VisÃ£o e requisitos do projeto
+* **Arquitetos de Software**: Design da arquitetura
+* **Designers UX/UI**: Interface e experiÃªncia do usuÃ¡rio
+* **QA Engineers**: Garantia de qualidade
 
-### 🛠️ **Tecnologias e Ferramentas**
+### ðŸ› ï¸ **Tecnologias e Ferramentas**
 
-- **Next.js Team**: Framework React de ponta
-- **Vercel**: Plataforma de deploy e hosting
-- **Tailwind CSS**: Framework CSS utility-first
-- **Recharts**: Biblioteca de gráficos React
+* **Next.js Team**: Framework React de ponta
+* **Vercel**: Plataforma de deploy e hosting
+* **Tailwind CSS**: Framework CSS utility-first
+* **Recharts**: Biblioteca de grÃ¡ficos React
 
----
+***
 
-## 📞 Suporte e Contato
+## ðŸ“ž Suporte e Contato
 
-### 🆘 **Canais de Suporte**
+### ðŸ†˜ **Canais de Suporte**
 
-- **Issues**:
+* **Issues**:
   [GitHub Issues](https://github.com/seu-usuario/dashboard-executivo-de-progresso/issues)
-- **Discussions**:
+* **Discussions**:
   [GitHub Discussions](https://github.com/seu-usuario/dashboard-executivo-de-progresso/discussions)
-- **Email**: <suporte@gb-locacoes.com>
-- **Documentação**:
+* **Email**: <suporte@gb-locacoes.com>
+* **DocumentaÃ§Ã£o**:
   [Wiki do Projeto](https://github.com/seu-usuario/dashboard-executivo-de-progresso/wiki)
 
-### 🌐 **Links Úteis**
+### ðŸŒ **Links Ãšteis**
 
-- **Website**: [gb-locacoes.com](https://gb-locacoes.com)
-- **Documentação**: [docs.gb-locacoes.com](https://docs.gb-locacoes.com)
-- **Status**: [status.gb-locacoes.com](https://status.gb-locacoes.com)
+* **Website**: [gb-locacoes.com](https://gb-locacoes.com)
+* **DocumentaÃ§Ã£o**: [docs.gb-locacoes.com](https://docs.gb-locacoes.com)
+* **Status**: [status.gb-locacoes.com](https://status.gb-locacoes.com)
 
----
+***
 
 <div align="center">
 
-## ⭐ Se este projeto foi útil, considere dar uma estrela! ⭐
+## â­ Se este projeto foi Ãºtil, considere dar uma estrela! â­
 
-_Construído com ❤️ pela equipe GB Locações_
+*ConstruÃ­do com â¤ï¸ pela equipe GB LocaÃ§Ãµes*
 
 </div>
