@@ -42,261 +42,144 @@ const PDFExport: React.FC<PDFExportProps> = props => {
 
     try {
       // Dynamic import apenas quando necessário
-      const { Document, Page, Text, View, StyleSheet, Font, renderToStream } =
-        await import("@react-pdf/renderer")
+      const { jsPDF } = await import("jspdf")
 
-      // Registrar fontes
-      Font.register({
-        family: "Inter",
-        src: "https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2",
+      // Criar o PDF usando jsPDF
+      const doc = new jsPDF()
+
+      // Configurar fonte e tamanhos
+      doc.setFont("helvetica")
+      doc.setFontSize(24)
+
+      // Título principal
+      doc.text("Dashboard Executivo de Progresso", 105, 30, { align: "center" })
+      doc.setFontSize(14)
+      doc.setTextColor(107, 114, 128)
+      doc.text("GB Locações - Relatório de Projeto", 105, 45, {
+        align: "center",
       })
 
-      // Estilos para o PDF
-      const styles = StyleSheet.create({
-        page: {
-          flexDirection: "column",
-          backgroundColor: "#ffffff",
-          padding: 30,
-          fontSize: 10,
-          fontFamily: "Inter",
+      // Métricas principais
+      doc.setFontSize(16)
+      doc.setTextColor(31, 41, 55)
+      doc.text("📊 Métricas Executivas", 20, 70)
+
+      // Grid de métricas
+      const metrics = [
+        {
+          label: "Investimento Total",
+          value: `R$ ${props.totalInvestment.toLocaleString("pt-BR")}`,
         },
-        header: {
-          marginBottom: 20,
-          textAlign: "center",
+        {
+          label: "Valor Pago",
+          value: `R$ ${props.totalPaid.toLocaleString("pt-BR")}`,
         },
-        title: {
-          fontSize: 24,
-          marginBottom: 10,
-          color: "#1f2937",
-          fontWeight: "bold",
+        {
+          label: "Valor Pendente",
+          value: `R$ ${props.totalRemaining.toLocaleString("pt-BR")}`,
         },
-        subtitle: {
-          fontSize: 14,
-          color: "#6b7280",
-          marginBottom: 20,
+        {
+          label: "Progresso Geral",
+          value: `${props.progressPercentage.toFixed(1)}%`,
         },
-        section: {
-          marginBottom: 20,
-        },
-        sectionTitle: {
-          fontSize: 16,
-          fontWeight: "bold",
-          marginBottom: 10,
-          color: "#1f2937",
-          borderBottom: "1px solid #e5e7eb",
-          paddingBottom: 5,
-        },
-        statsGrid: {
-          flexDirection: "row",
-          justifyContent: "space-between",
-          marginBottom: 20,
-        },
-        statCard: {
-          flex: 1,
-          margin: 5,
-          padding: 15,
-          backgroundColor: "#f9fafb",
-          borderRadius: 8,
-          border: "1px solid #e5e7eb",
-        },
-        statValue: {
-          fontSize: 20,
-          fontWeight: "bold",
-          color: "#1f2937",
-          marginBottom: 5,
-        },
-        statLabel: {
-          fontSize: 12,
-          color: "#6b7280",
-        },
-        roadmapSection: {
-          marginBottom: 20,
-        },
-        roadmapItem: {
-          marginBottom: 15,
-          padding: 15,
-          backgroundColor: "#f9fafb",
-          borderRadius: 8,
-          border: "1px solid #e5e7eb",
-        },
-        roadmapTitle: {
-          fontSize: 14,
-          fontWeight: "bold",
-          marginBottom: 8,
-          color: "#1f2937",
-        },
-        roadmapProgress: {
-          flexDirection: "row",
-          justifyContent: "space-between",
-          marginBottom: 8,
-        },
-        progressBar: {
-          flex: 1,
-          height: 8,
-          backgroundColor: "#e5e7eb",
-          borderRadius: 4,
-          marginRight: 10,
-        },
-        progressFill: {
-          height: "100%",
-          backgroundColor: "#8b5cf6",
-          borderRadius: 4,
-        },
-        progressText: {
-          fontSize: 10,
-          color: "#6b7280",
-          minWidth: 60,
-        },
-        substepsList: {
-          marginLeft: 20,
-        },
-        substepItem: {
-          flexDirection: "row",
-          justifyContent: "space-between",
-          marginBottom: 5,
-          paddingVertical: 3,
-        },
-        substepName: {
-          fontSize: 10,
-          color: "#374151",
-          flex: 1,
-        },
-        substepValue: {
-          fontSize: 10,
-          color: "#059669",
-          fontWeight: "bold",
-          marginLeft: 10,
-        },
-        footer: {
-          position: "absolute",
-          bottom: 30,
-          left: 30,
-          right: 30,
-          textAlign: "center",
-          borderTop: "1px solid #e5e7eb",
-          paddingTop: 15,
-        },
-        footerText: {
-          fontSize: 10,
-          color: "#6b7280",
-        },
+      ]
+
+      let yPos = 85
+      metrics.forEach((metric, index) => {
+        const xPos = 20 + (index % 2) * 85
+        if (index > 0 && index % 2 === 0) yPos += 25
+
+        doc.setFillColor(249, 250, 251)
+        doc.rect(xPos, yPos - 15, 80, 20, "F")
+        doc.setDrawColor(229, 231, 235)
+        doc.rect(xPos, yPos - 15, 80, 20, "S")
+
+        doc.setFontSize(16)
+        doc.setTextColor(31, 41, 55)
+        doc.text(metric.value, xPos + 40, yPos - 5, { align: "center" })
+        doc.setFontSize(10)
+        doc.setTextColor(107, 114, 128)
+        doc.text(metric.label, xPos + 40, yPos + 5, { align: "center" })
       })
 
-      // Componente PDF
-      const DashboardPDF = () => (
-        <Document>
-          <Page size="A4" style={styles.page}>
-            {/* Header */}
-            <View style={styles.header}>
-              <Text style={styles.title}>Dashboard Executivo de Progresso</Text>
-              <Text style={styles.subtitle}>
-                GB Locações - Relatório de Projeto
-              </Text>
-            </View>
+      // Roadmap do projeto
+      yPos += 40
+      doc.setFontSize(16)
+      doc.setTextColor(31, 41, 55)
+      doc.text("🗺️ Roadmap do Projeto", 20, yPos)
+      yPos += 20
 
-            {/* Métricas Principais */}
-            <View style={styles.section}>
-              <Text style={styles.sectionTitle}>📊 Métricas Executivas</Text>
-              <View style={styles.statsGrid}>
-                <View style={styles.statCard}>
-                  <Text style={styles.statValue}>
-                    R$ {props.totalInvestment.toLocaleString("pt-BR")}
-                  </Text>
-                  <Text style={styles.statLabel}>Investimento Total</Text>
-                </View>
-                <View style={styles.statCard}>
-                  <Text style={styles.statValue}>
-                    R$ {props.totalPaid.toLocaleString("pt-BR")}
-                  </Text>
-                  <Text style={styles.statLabel}>Valor Pago</Text>
-                </View>
-                <View style={styles.statCard}>
-                  <Text style={styles.statValue}>
-                    R$ {props.totalRemaining.toLocaleString("pt-BR")}
-                  </Text>
-                  <Text style={styles.statLabel}>Valor Pendente</Text>
-                </View>
-                <View style={styles.statCard}>
-                  <Text style={styles.statValue}>
-                    {props.progressPercentage.toFixed(1)}%
-                  </Text>
-                  <Text style={styles.statLabel}>Progresso Geral</Text>
-                </View>
-              </View>
-            </View>
+      props.modules.forEach((module, index) => {
+        const moduleProgress = (module.paid / module.total) * 100
 
-            {/* Roadmap Detalhado */}
-            <View style={styles.roadmapSection}>
-              <Text style={styles.sectionTitle}>🗺️ Roadmap do Projeto</Text>
-              {props.modules.map((module, index) => {
-                const moduleProgress = (module.paid / module.total) * 100
-                const progressWidth = `${Math.min(moduleProgress, 100)}%`
+        // Título do módulo
+        doc.setFontSize(12)
+        doc.setTextColor(31, 41, 55)
+        doc.text(`${index + 1}. ${module.title}`, 20, yPos)
 
-                return (
-                  <View key={module.id} style={styles.roadmapItem}>
-                    <Text style={styles.roadmapTitle}>
-                      {index + 1}. {module.title}
-                    </Text>
+        // Barra de progresso
+        const progressWidth = 100
+        const progressX = 20
+        const progressY = yPos + 5
 
-                    <View style={styles.roadmapProgress}>
-                      <View style={styles.progressBar}>
-                        <View
-                          style={[
-                            styles.progressFill,
-                            { width: progressWidth },
-                          ]}
-                        />
-                      </View>
-                      <Text style={styles.progressText}>
-                        {moduleProgress.toFixed(1)}%
-                      </Text>
-                    </View>
+        doc.setFillColor(229, 231, 235)
+        doc.rect(progressX, progressY, progressWidth, 8, "F")
+        doc.setFillColor(139, 92, 246)
+        doc.rect(
+          progressX,
+          progressY,
+          (progressWidth * moduleProgress) / 100,
+          8,
+          "F"
+        )
 
-                    <View style={styles.substepsList}>
-                      {module.substeps.map((substep, subIndex) => (
-                        <View key={subIndex} style={styles.substepItem}>
-                          <Text style={styles.substepName}>
-                            • {substep.name}
-                          </Text>
-                          <Text style={styles.substepValue}>
-                            R$ {substep.value.toLocaleString("pt-BR")}
-                          </Text>
-                        </View>
-                      ))}
-                    </View>
-                  </View>
-                )
-              })}
-            </View>
+        // Texto de progresso
+        doc.setFontSize(10)
+        doc.setTextColor(107, 114, 128)
+        doc.text(
+          `${moduleProgress.toFixed(1)}%`,
+          progressX + progressWidth + 10,
+          progressY + 6
+        )
 
-            {/* Footer */}
-            <View style={styles.footer}>
-              <Text style={styles.footerText}>
-                Relatório gerado em {new Date().toLocaleDateString("pt-BR")} às{" "}
-                {new Date().toLocaleTimeString("pt-BR")}
-              </Text>
-              <Text style={styles.footerText}>
-                GB Locações - Dashboard Executivo de Progresso
-              </Text>
-            </View>
-          </Page>
-        </Document>
+        // Substeps
+        yPos += 25
+        module.substeps.forEach(substep => {
+          doc.setFontSize(10)
+          doc.setTextColor(55, 65, 81)
+          doc.text(`• ${substep.name}`, 30, yPos)
+          doc.setTextColor(5, 150, 105)
+          doc.text(`R$ ${substep.value.toLocaleString("pt-BR")}`, 150, yPos)
+          yPos += 8
+        })
+
+        yPos += 10
+      })
+
+      // Footer
+      const footerY = 280
+      doc.setDrawColor(229, 231, 235)
+      doc.line(20, footerY, 190, footerY)
+
+      doc.setFontSize(10)
+      doc.setTextColor(107, 114, 128)
+      doc.text(
+        `Relatório gerado em ${new Date().toLocaleDateString("pt-BR")} às ${new Date().toLocaleTimeString("pt-BR")}`,
+        105,
+        footerY + 10,
+        { align: "center" }
+      )
+      doc.text(
+        "GB Locações - Dashboard Executivo de Progresso",
+        105,
+        footerY + 20,
+        { align: "center" }
       )
 
-      // Criar o link de download
-      const stream = await renderToStream(<DashboardPDF />)
-      const chunks: Uint8Array[] = []
-
-      for await (const chunk of stream) {
-        chunks.push(chunk as Uint8Array)
-      }
-
-      const buffer = Buffer.concat(chunks)
-      const blob = new Blob([buffer], { type: "application/pdf" })
-      const downloadLink = document.createElement("a")
-      downloadLink.href = URL.createObjectURL(blob)
-      downloadLink.download = `dashboard-executivo-${new Date().toISOString().split("T")[0]}.pdf`
-      downloadLink.click()
+      // Salvar o PDF
+      doc.save(
+        `dashboard-executivo-${new Date().toISOString().split("T")[0]}.pdf`
+      )
     } catch (error) {
       console.error("Erro ao gerar PDF:", error)
       alert("Erro ao gerar PDF. Tente novamente.")
@@ -309,12 +192,13 @@ const PDFExport: React.FC<PDFExportProps> = props => {
   if (!isClient) {
     return (
       <button
-        className="inline-flex transform items-center justify-center rounded-md border border-transparent bg-purple-600 px-6 py-3 text-base font-medium text-white shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:bg-purple-700 hover:shadow-xl focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:outline-none"
+        className="group relative overflow-hidden rounded-2xl border border-purple-300/25 bg-gradient-to-r from-purple-900/40 to-violet-900/30 px-6 py-3 text-sm font-medium text-white backdrop-blur-3xl transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-purple-400/20"
         disabled
       >
-        <div className="flex items-center space-x-2">
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-400/15 to-violet-400/15 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+        <span className="relative z-10 flex items-center gap-2">
           <svg
-            className="mr-3 -ml-1 h-5 w-5 animate-spin text-white"
+            className="h-4 w-4 animate-spin text-white"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -333,8 +217,8 @@ const PDFExport: React.FC<PDFExportProps> = props => {
               d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
             ></path>
           </svg>
-          <span>Carregando...</span>
-        </div>
+          Carregando...
+        </span>
       </button>
     )
   }
@@ -344,13 +228,14 @@ const PDFExport: React.FC<PDFExportProps> = props => {
     <button
       onClick={handleExportPDF}
       disabled={isLoading}
-      className="inline-flex transform items-center justify-center rounded-md border border-transparent bg-purple-600 px-6 py-3 text-base font-medium text-white shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:bg-purple-700 hover:shadow-xl focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+      className="group relative overflow-hidden rounded-2xl border border-purple-300/25 bg-gradient-to-r from-purple-900/40 to-violet-900/30 px-6 py-3 text-sm font-medium text-white backdrop-blur-3xl transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-purple-400/20"
     >
-      <div className="flex items-center space-x-2">
+      <div className="absolute inset-0 bg-gradient-to-r from-purple-400/15 to-violet-400/15 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+      <span className="relative z-10 flex items-center gap-2">
         {isLoading ? (
           <>
             <svg
-              className="mr-3 -ml-1 h-5 w-5 animate-spin text-white"
+              className="h-4 w-4 animate-spin text-white"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -369,12 +254,12 @@ const PDFExport: React.FC<PDFExportProps> = props => {
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
               ></path>
             </svg>
-            <span>Gerando PDF...</span>
+            Gerando PDF...
           </>
         ) : (
           <>
             <svg
-              className="h-5 w-5"
+              className="h-4 w-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -387,10 +272,10 @@ const PDFExport: React.FC<PDFExportProps> = props => {
                 d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
               />
             </svg>
-            <span>Exportar PDF</span>
+            Exportar PDF
           </>
         )}
-      </div>
+      </span>
     </button>
   )
 }
