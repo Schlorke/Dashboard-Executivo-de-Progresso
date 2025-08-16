@@ -7,8 +7,19 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "lint:fix": "next lint --fix",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "format:md": "prettier --write \"**/*.md\"",
+    "format:md:check": "prettier --check \"**/*.md\"",
+    "lint:md": "remark . --output",
+    "lint:md:fix": "remark . --output --use remark-preset-prettier",
+    "format:all": "prettier --write . && remark . --output --use remark-preset-prettier",
+    "lint:all": "next lint && remark . --output",
+    "lint:all:fix": "next lint --fix && remark . --output --use remark-preset-prettier",
+    "fix:all": "prettier --write . && next lint --fix && remark . --output --use remark-preset-prettier",
+    "quality:check": "prettier --check . && next lint && remark . --output",
+    "quality:fix": "prettier --write . && next lint --fix && remark . --output --use remark-preset-prettier"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",
@@ -18,6 +29,7 @@
     "jspdf": "latest",
     "lucide-react": "^0.454.0",
     "next": "15.2.4",
+    "next-themes": "^0.4.6",
     "react": "^19",
     "react-dom": "^19",
     "recharts": "latest",
@@ -25,6 +37,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@prettier/plugin-xml": "^3.4.2",
     "@tailwindcss/postcss": "^4.1.12",
     "@types/node": "^22",
     "@types/react": "^19",
@@ -34,6 +47,10 @@
     "eslint-config-next": "15.4.6",
     "postcss": "^8.5",
     "prettier": "^3.3.3",
+    "prettier-plugin-tailwindcss": "^0.6.14",
+    "remark-cli": "^12.0.1",
+    "remark-preset-lint-markdown-style-guide": "^6.0.1",
+    "remark-preset-prettier": "^2.0.2",
     "tailwindcss": "^4.1.12",
     "typescript": "^5"
   }

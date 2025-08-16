@@ -21,8 +21,7 @@ const convertOklchToRgb = (element: HTMLElement) => {
   const walker = document.createTreeWalker(
     element,
     NodeFilter.SHOW_ELEMENT,
-    null,
-    false
+    null
   )
 
   const elements: HTMLElement[] = []
@@ -68,15 +67,29 @@ const convertOklchToRgb = (element: HTMLElement) => {
         })
 
         if (rgbValue !== value) {
-          ;(el as HTMLElement).style[prop as keyof CSSStyleDeclaration] =
-            rgbValue
+          const styleElement = el as HTMLElement
+          if (prop === "color") styleElement.style.color = rgbValue
+          else if (prop === "backgroundColor")
+            styleElement.style.backgroundColor = rgbValue
+          else if (prop === "borderColor")
+            styleElement.style.borderColor = rgbValue
+          else if (prop === "borderTopColor")
+            styleElement.style.borderTopColor = rgbValue
+          else if (prop === "borderRightColor")
+            styleElement.style.borderRightColor = rgbValue
+          else if (prop === "borderBottomColor")
+            styleElement.style.borderBottomColor = rgbValue
+          else if (prop === "borderLeftColor")
+            styleElement.style.borderLeftColor = rgbValue
         }
       }
     })
   })
 }
 
-const exportToPDF = async (elementRef: React.RefObject<HTMLDivElement>) => {
+const exportToPDF = async (
+  elementRef: React.RefObject<HTMLDivElement | null>
+) => {
   let loadingDiv: HTMLElement | null = null
   try {
     const html2canvas = (await import("html2canvas")).default
@@ -204,7 +217,7 @@ const exportToPDF = async (elementRef: React.RefObject<HTMLDivElement>) => {
 
 const BarChartIcon = () => (
   <svg
-    className="w-6 h-6 text-purple-300"
+    className="h-6 w-6 text-purple-300"
     fill="currentColor"
     viewBox="0 0 20 20"
   >
@@ -214,7 +227,7 @@ const BarChartIcon = () => (
 
 const TrendingUpIcon = () => (
   <svg
-    className="w-6 h-6 text-purple-300"
+    className="h-6 w-6 text-purple-300"
     fill="none"
     stroke="currentColor"
     viewBox="0 0 24 24"
@@ -230,7 +243,7 @@ const TrendingUpIcon = () => (
 
 const PieChartIcon = () => (
   <svg
-    className="w-6 h-6 text-purple-300"
+    className="h-6 w-6 text-purple-300"
     fill="currentColor"
     viewBox="0 0 20 20"
   >
@@ -240,7 +253,7 @@ const PieChartIcon = () => (
 
 const MapIcon = () => (
   <svg
-    className="w-6 h-6 text-purple-300"
+    className="h-6 w-6 text-purple-300"
     fill="none"
     stroke="currentColor"
     viewBox="0 0 24 24"
@@ -256,7 +269,7 @@ const MapIcon = () => (
 
 const ClipboardListIcon = () => (
   <svg
-    className="w-6 h-6 text-purple-300"
+    className="h-6 w-6 text-purple-300"
     fill="none"
     stroke="currentColor"
     viewBox="0 0 24 24"
@@ -272,7 +285,7 @@ const ClipboardListIcon = () => (
 
 const CheckIcon = () => (
   <svg
-    className="w-5 h-5 text-green-400"
+    className="h-5 w-5 text-green-400"
     fill="none"
     stroke="currentColor"
     viewBox="0 0 24 24"
@@ -288,7 +301,7 @@ const CheckIcon = () => (
 
 const ZapIcon = () => (
   <svg
-    className="w-5 h-5 text-yellow-400"
+    className="h-5 w-5 text-yellow-400"
     fill="currentColor"
     viewBox="0 0 20 20"
   >
@@ -302,7 +315,7 @@ const ZapIcon = () => (
 
 const ExportIcon = () => (
   <svg
-    className="w-4 h-4 text-purple-300"
+    className="h-4 w-4 text-purple-300"
     fill="none"
     stroke="currentColor"
     viewBox="0 0 24 24"
@@ -318,7 +331,7 @@ const ExportIcon = () => (
 
 const BuildingIcon = () => (
   <svg
-    className="w-6 h-6 text-purple-300"
+    className="h-6 w-6 text-purple-300"
     fill="none"
     stroke="currentColor"
     viewBox="0 0 24 24"
@@ -637,22 +650,19 @@ export default function GBLBudgetPresentation() {
     delay?: number
   }) => (
     <div
-      className={`group relative rounded-3xl border border-purple-300/15 p-6 shadow-2xl bg-gradient-to-br from-purple-900/30 via-violet-900/20 to-purple-800/15 backdrop-blur-3xl hover:shadow-3xl hover:shadow-purple-400/20 hover:scale-105 transition-all duration-500 ease-out cursor-pointer overflow-hidden ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-      style={{
-        transitionDelay: `${delay}ms`,
-      }}
+      className={`group hover:shadow-3xl relative cursor-pointer overflow-hidden rounded-3xl border border-purple-300/15 bg-gradient-to-br from-purple-900/30 via-violet-900/20 to-purple-800/15 p-6 shadow-2xl backdrop-blur-3xl transition-all duration-500 ease-out hover:scale-105 hover:shadow-purple-400/20 ${isLoaded ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"} delay-${delay}`}
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-400/8 via-transparent to-violet-400/8 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-400/8 via-transparent to-violet-400/8 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
       <div className="relative z-10">
-        <div className="text-sm font-medium text-purple-200 mb-2">{label}</div>
-        <div className="text-3xl font-bold tracking-tight bg-gradient-to-r from-white via-purple-100 to-violet-200 bg-clip-text text-transparent mb-1">
+        <div className="mb-2 text-sm font-medium text-purple-200">{label}</div>
+        <div className="mb-1 bg-gradient-to-r from-white via-purple-100 to-violet-200 bg-clip-text text-3xl font-bold tracking-tight text-transparent">
           {value}
         </div>
         {hint && (
           <div className="text-xs text-purple-300 opacity-80">{hint}</div>
         )}
       </div>
-      <div className="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br from-purple-300/15 to-violet-300/15 rounded-full blur-xl group-hover:scale-150 transition-transform duration-700" />
+      <div className="absolute -top-4 -right-4 h-24 w-24 rounded-full bg-gradient-to-br from-purple-300/15 to-violet-300/15 blur-xl transition-transform duration-700 group-hover:scale-150" />
     </div>
   )
 
@@ -666,10 +676,9 @@ export default function GBLBudgetPresentation() {
     delay?: number
   }) => (
     <section
-      className={`space-y-6 transition-all duration-700 ease-out ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
-      style={{ transitionDelay: `${delay}ms` }}
+      className={`space-y-6 transition-all duration-700 ease-out ${isLoaded ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"} delay-${delay}`}
     >
-      <h2 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-white via-purple-100 to-violet-200 bg-clip-text text-transparent">
+      <h2 className="bg-gradient-to-r from-white via-purple-100 to-violet-200 bg-clip-text text-2xl font-bold tracking-tight text-transparent">
         {title}
       </h2>
       {children}
@@ -684,7 +693,7 @@ export default function GBLBudgetPresentation() {
     className?: string
   }) => (
     <div
-      className={`relative h-80 rounded-3xl border border-purple-300/15 p-6 shadow-2xl bg-gradient-to-br from-purple-900/30 via-violet-900/20 to-purple-800/15 backdrop-blur-3xl hover:shadow-3xl hover:shadow-purple-400/20 transition-all duration-500 overflow-hidden ${className}`}
+      className={`hover:shadow-3xl relative h-80 overflow-hidden rounded-3xl border border-purple-300/15 bg-gradient-to-br from-purple-900/30 via-violet-900/20 to-purple-800/15 p-6 shadow-2xl backdrop-blur-3xl transition-all duration-500 hover:shadow-purple-400/20 ${className}`}
     >
       <div className="absolute inset-0 bg-gradient-to-br from-purple-400/5 via-transparent to-violet-400/5" />
       <div className="relative z-10 h-full">{children}</div>
@@ -694,43 +703,31 @@ export default function GBLBudgetPresentation() {
   return (
     <div
       ref={dashboardRef}
-      className="min-h-screen w-full bg-black relative overflow-hidden"
+      className="relative min-h-screen w-full overflow-hidden bg-black"
     >
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-purple-400/20 to-violet-500/15 rounded-full blur-3xl animate-pulse" />
-        <div
-          className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-violet-400/15 to-purple-500/20 rounded-full blur-3xl animate-pulse"
-          style={{ animationDelay: "1s" }}
-        />
-        <div
-          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-purple-300/12 to-violet-300/8 rounded-full blur-3xl animate-pulse"
-          style={{ animationDelay: "2s" }}
-        />
-        <div
-          className="absolute top-20 left-20 w-60 h-60 bg-gradient-to-br from-violet-500/18 to-purple-400/15 rounded-full blur-2xl animate-pulse"
-          style={{ animationDelay: "3s" }}
-        />
-        <div
-          className="absolute bottom-20 right-20 w-60 h-60 bg-gradient-to-br from-violet-500/15 to-purple-400/12 rounded-full blur-2xl animate-pulse"
-          style={{ animationDelay: "4s" }}
-        />
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 h-80 w-80 animate-pulse rounded-full bg-gradient-to-br from-purple-400/20 to-violet-500/15 blur-3xl" />
+        <div className="animation-delay-1s absolute -bottom-40 -left-40 h-80 w-80 animate-pulse rounded-full bg-gradient-to-br from-violet-400/15 to-purple-500/20 blur-3xl" />
+        <div className="animation-delay-2s absolute top-1/2 left-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 transform animate-pulse rounded-full bg-gradient-to-br from-purple-300/12 to-violet-300/8 blur-3xl" />
+        <div className="animation-delay-3s absolute top-20 left-20 h-60 w-60 animate-pulse rounded-full bg-gradient-to-br from-violet-500/18 to-purple-400/15 blur-2xl" />
+        <div className="animation-delay-4s absolute right-20 bottom-20 h-60 w-60 animate-pulse rounded-full bg-gradient-to-br from-violet-500/15 to-purple-400/12 blur-2xl" />
       </div>
 
       <header className="relative z-10 mx-auto max-w-7xl px-6 pt-12 pb-8">
         <div
-          className={`flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between transition-all duration-1000 ease-out ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-8"}`}
+          className={`flex flex-col gap-6 transition-all duration-1000 ease-out sm:flex-row sm:items-end sm:justify-between ${isLoaded ? "translate-y-0 opacity-100" : "-translate-y-8 opacity-0"}`}
         >
           <div className="space-y-3">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-400/15 to-violet-400/15 border border-purple-300/25 backdrop-blur-2xl">
-              <div className="w-2 h-2 bg-purple-300 rounded-full animate-pulse" />
+            <div className="inline-flex items-center gap-2 rounded-full border border-purple-300/25 bg-gradient-to-r from-purple-400/15 to-violet-400/15 px-4 py-2 backdrop-blur-2xl">
+              <div className="h-2 w-2 animate-pulse rounded-full bg-purple-300" />
               <span className="text-sm font-medium text-purple-200">
                 Projeto em Andamento
               </span>
             </div>
-            <h1 className="text-4xl sm:text-5xl font-black tracking-tight bg-gradient-to-r from-white via-purple-200 to-violet-300 bg-clip-text text-transparent">
+            <h1 className="bg-gradient-to-r from-white via-purple-200 to-violet-300 bg-clip-text text-4xl font-black tracking-tight text-transparent sm:text-5xl">
               GB Locações
             </h1>
-            <p className="text-lg text-gray-300 font-medium">
+            <p className="text-lg font-medium text-gray-300">
               Dashboard Executivo de Progresso
             </p>
             <p className="text-sm text-gray-400">
@@ -740,10 +737,10 @@ export default function GBLBudgetPresentation() {
           </div>
           <div className="flex gap-3">
             <button
-              className="group relative px-6 py-3 rounded-2xl border border-purple-300/25 bg-gradient-to-r from-purple-900/40 to-violet-900/30 backdrop-blur-3xl text-sm font-medium text-white hover:shadow-xl hover:shadow-purple-400/20 hover:scale-105 transition-all duration-300 overflow-hidden"
+              className="group relative overflow-hidden rounded-2xl border border-purple-300/25 bg-gradient-to-r from-purple-900/40 to-violet-900/30 px-6 py-3 text-sm font-medium text-white backdrop-blur-3xl transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-purple-400/20"
               onClick={() => exportToPDF(dashboardRef)}
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-400/15 to-violet-400/15 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-400/15 to-violet-400/15 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
               <span className="relative z-10 flex items-center gap-2">
                 <ExportIcon />
                 Exportar PDF
@@ -753,8 +750,8 @@ export default function GBLBudgetPresentation() {
         </div>
       </header>
 
-      <main className="relative z-10 mx-auto max-w-7xl px-6 pb-20 space-y-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <main className="relative z-10 mx-auto max-w-7xl space-y-12 px-6 pb-20">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           <Stat
             label="Total Planejado"
             value={brl.format(totalPlanned)}
@@ -781,7 +778,7 @@ export default function GBLBudgetPresentation() {
           />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
           <Section
             title={
               <div className="flex items-center gap-2">
@@ -1048,7 +1045,7 @@ export default function GBLBudgetPresentation() {
           }
           delay={900}
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
             {modules.map((m, index) => {
               const progress = Math.round((m.paid / m.total) * 100)
               const isCompleted = m.paid >= m.total
@@ -1057,29 +1054,28 @@ export default function GBLBudgetPresentation() {
               return (
                 <div
                   key={m.id}
-                  className={`group relative rounded-3xl border border-purple-300/15 p-8 shadow-2xl bg-gradient-to-br from-purple-900/30 via-violet-900/20 to-purple-800/15 backdrop-blur-3xl hover:shadow-3xl hover:scale-[1.02] transition-all duration-500 cursor-pointer overflow-hidden ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-                  style={{ transitionDelay: `${1000 + index * 100}ms` }}
+                  className={`group hover:shadow-3xl relative cursor-pointer overflow-hidden rounded-3xl border border-purple-300/15 bg-gradient-to-br from-purple-900/30 via-violet-900/20 to-purple-800/15 p-8 shadow-2xl backdrop-blur-3xl transition-all duration-500 hover:scale-[1.02] ${isLoaded ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"} delay-${1000 + index * 100}`}
                   onMouseEnter={() => setActiveCard(m.id)}
                   onMouseLeave={() => setActiveCard(null)}
                 >
                   <div className="absolute top-6 right-6 z-20">
                     {isCompleted ? (
-                      <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-purple-400/25 to-violet-500/25 border border-purple-300/35 backdrop-blur-xl">
-                        <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                      <div className="flex items-center gap-2 rounded-full border border-purple-300/35 bg-gradient-to-r from-purple-400/25 to-violet-500/25 px-3 py-1 backdrop-blur-xl">
+                        <div className="h-2 w-2 animate-pulse rounded-full bg-green-400" />
                         <span className="text-xs font-medium text-white">
                           Concluída
                         </span>
                       </div>
                     ) : isActive ? (
-                      <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-violet-400/25 to-purple-500/25 border border-violet-300/35 backdrop-blur-xl">
-                        <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" />
+                      <div className="flex items-center gap-2 rounded-full border border-violet-300/35 bg-gradient-to-r from-violet-400/25 to-purple-500/25 px-3 py-1 backdrop-blur-xl">
+                        <div className="h-2 w-2 animate-pulse rounded-full bg-blue-400" />
                         <span className="text-xs font-medium text-white">
                           Em Andamento
                         </span>
                       </div>
                     ) : (
-                      <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-gray-500/25 to-gray-600/25 border border-gray-400/35 backdrop-blur-xl">
-                        <div className="w-2 h-2 bg-red-400 rounded-full" />
+                      <div className="flex items-center gap-2 rounded-full border border-gray-400/35 bg-gradient-to-r from-gray-500/25 to-gray-600/25 px-3 py-1 backdrop-blur-xl">
+                        <div className="h-2 w-2 rounded-full bg-red-400" />
                         <span className="text-xs font-medium text-white">
                           Pendente
                         </span>
@@ -1102,12 +1098,12 @@ export default function GBLBudgetPresentation() {
                   </div>
 
                   <div className="relative z-10">
-                    <div className="flex items-start justify-between gap-4 mb-6 pr-32">
-                      <div className="space-y-2 flex-1">
-                        <div className="text-sm font-bold text-purple-300 tracking-wider">
+                    <div className="mb-6 flex items-start justify-between gap-4 pr-32">
+                      <div className="flex-1 space-y-2">
+                        <div className="text-sm font-bold tracking-wider text-purple-300">
                           {m.key}
                         </div>
-                        <h3 className="text-xl font-bold tracking-tight leading-tight text-white pr-4">
+                        <h3 className="pr-4 text-xl leading-tight font-bold tracking-tight text-white">
                           {m.title}
                         </h3>
                       </div>
@@ -1115,31 +1111,31 @@ export default function GBLBudgetPresentation() {
 
                     <div className="absolute top-8 right-6 z-10">
                       <div className="text-right">
-                        <div className="text-2xl font-bold bg-gradient-to-r from-white to-purple-100 bg-clip-text text-transparent">
+                        <div className="bg-gradient-to-r from-white to-purple-100 bg-clip-text text-2xl font-bold text-transparent">
                           {brl.format(m.total)}
                         </div>
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-3 gap-4 mb-6">
-                      <div className="rounded-2xl bg-gradient-to-br from-purple-800/30 to-purple-700/20 p-4 border border-purple-400/25 backdrop-blur-2xl">
-                        <div className="text-xs text-purple-200 font-medium mb-1">
+                    <div className="mb-6 grid grid-cols-3 gap-4">
+                      <div className="rounded-2xl border border-purple-400/25 bg-gradient-to-br from-purple-800/30 to-purple-700/20 p-4 backdrop-blur-2xl">
+                        <div className="mb-1 text-xs font-medium text-purple-200">
                           Recebido
                         </div>
                         <div className="text-lg font-bold text-white">
                           {brl.format(m.paid)}
                         </div>
                       </div>
-                      <div className="rounded-2xl bg-gradient-to-br from-violet-800/30 to-violet-700/20 p-4 border border-violet-400/25 backdrop-blur-2xl">
-                        <div className="text-xs text-violet-200 font-medium mb-1">
+                      <div className="rounded-2xl border border-violet-400/25 bg-gradient-to-br from-violet-800/30 to-violet-700/20 p-4 backdrop-blur-2xl">
+                        <div className="mb-1 text-xs font-medium text-violet-200">
                           Restante
                         </div>
                         <div className="text-lg font-bold text-white">
                           {brl.format(Math.max(0, m.total - m.paid))}
                         </div>
                       </div>
-                      <div className="rounded-2xl bg-gradient-to-br from-purple-800/30 to-purple-800/30 p-4 border border-purple-400/25 backdrop-blur-xl">
-                        <div className="text-xs text-purple-200 font-medium mb-1">
+                      <div className="rounded-2xl border border-purple-400/25 bg-gradient-to-br from-purple-800/30 to-purple-800/30 p-4 backdrop-blur-xl">
+                        <div className="mb-1 text-xs font-medium text-purple-200">
                           Progresso
                         </div>
                         <div className="text-lg font-bold text-white">
@@ -1152,23 +1148,23 @@ export default function GBLBudgetPresentation() {
                       {m.substeps.map((s, i) => (
                         <div
                           key={i}
-                          className="group/substep flex items-start gap-4 p-4 rounded-2xl bg-gradient-to-r from-purple-800/15 to-transparent hover:from-purple-700/25 hover:to-violet-800/15 transition-all duration-300 border border-transparent hover:border-purple-400/25 backdrop-blur-xl"
+                          className="group/substep flex items-start gap-4 rounded-2xl border border-transparent bg-gradient-to-r from-purple-800/15 to-transparent p-4 backdrop-blur-xl transition-all duration-300 hover:border-purple-400/25 hover:from-purple-700/25 hover:to-violet-800/15"
                         >
                           <div
-                            className="mt-2 w-3 h-3 rounded-full shadow-lg flex-shrink-0"
+                            className="mt-2 h-3 w-3 flex-shrink-0 rounded-full shadow-lg"
                             style={{
                               background: `linear-gradient(135deg, ${["#a78bfa", "#c4b5fd", "#ddd6fe", "#ede9fe"][i % 4]}, ${["#8b5cf6", "#a855f7", "#c4b5fd", "#ddd6fe"][i % 4]})`,
                             }}
                           />
-                          <div className="flex-1 min-w-0">
-                            <div className="text-sm font-semibold text-white mb-1">
+                          <div className="min-w-0 flex-1">
+                            <div className="mb-1 text-sm font-semibold text-white">
                               {s.name}
                             </div>
-                            <p className="text-xs text-purple-200 leading-relaxed">
+                            <p className="text-xs leading-relaxed text-purple-200">
                               {s.justification}
                             </p>
                           </div>
-                          <div className="text-sm font-bold text-white whitespace-nowrap bg-gradient-to-r from-purple-800/50 to-violet-800/50 px-3 py-1 rounded-full border border-purple-400/25 backdrop-blur-xl">
+                          <div className="rounded-full border border-purple-400/25 bg-gradient-to-r from-purple-800/50 to-violet-800/50 px-3 py-1 text-sm font-bold whitespace-nowrap text-white backdrop-blur-xl">
                             {brl.format(s.value)}
                           </div>
                         </div>
@@ -1176,7 +1172,7 @@ export default function GBLBudgetPresentation() {
                     </div>
                   </div>
 
-                  <div className="absolute -top-6 -right-6 w-32 h-32 bg-gradient-to-br from-purple-300/12 to-violet-300/12 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700" />
+                  <div className="absolute -top-6 -right-6 h-32 w-32 rounded-full bg-gradient-to-br from-purple-300/12 to-violet-300/12 blur-2xl transition-transform duration-700 group-hover:scale-150" />
                 </div>
               )
             })}
@@ -1191,13 +1187,13 @@ export default function GBLBudgetPresentation() {
           }
           delay={1800}
         >
-          <div className="rounded-3xl border border-purple-300/15 p-8 shadow-2xl bg-gradient-to-br from-purple-900/30 via-violet-900/20 to-purple-800/15 backdrop-blur-3xl relative overflow-hidden">
+          <div className="relative overflow-hidden rounded-3xl border border-purple-300/15 bg-gradient-to-br from-purple-900/30 via-violet-900/20 to-purple-800/15 p-8 shadow-2xl backdrop-blur-3xl">
             <div className="absolute inset-0 bg-gradient-to-br from-purple-400/5 via-transparent to-violet-400/5" />
             <div className="relative z-10 space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
                 <div className="space-y-4">
-                  <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                    <span className="w-2 h-2 bg-purple-300 rounded-full animate-pulse" />
+                  <h3 className="flex items-center gap-2 text-lg font-bold text-white">
+                    <span className="h-2 w-2 animate-pulse rounded-full bg-purple-300" />
                     Status Atual
                   </h3>
                   <ul className="space-y-3 text-sm leading-relaxed">
@@ -1227,8 +1223,8 @@ export default function GBLBudgetPresentation() {
                   </ul>
                 </div>
                 <div className="space-y-4">
-                  <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                    <span className="w-2 h-2 bg-violet-300 rounded-full animate-pulse" />
+                  <h3 className="flex items-center gap-2 text-lg font-bold text-white">
+                    <span className="h-2 w-2 animate-pulse rounded-full bg-violet-300" />
                     Vantagem Competitiva
                   </h3>
                   <ul className="space-y-3 text-sm leading-relaxed">

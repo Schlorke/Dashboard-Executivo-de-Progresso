@@ -1,0 +1,6 @@
+{
+  "plugins": [
+    "remark-preset-prettier",
+    "remark-preset-lint-markdown-style-guide"
+  ]
+}
