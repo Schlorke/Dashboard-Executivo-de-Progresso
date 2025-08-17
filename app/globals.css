@@ -3,8 +3,9 @@
 @tailwind utilities;
 
 :root {
-  --font-sans: "GeistSans", "GeistSans Fallback", system-ui, sans-serif;
-  --font-mono: "GeistMono", "GeistMono Fallback", monospace;
+  /* Updated font variables to match the new Next.js font configuration */
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), monospace;
 
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);

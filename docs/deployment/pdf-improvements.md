@@ -21,7 +21,7 @@
 
 ### **Sistema de Quebra Simples e Funcional**
 
-```typescript
+\`\`\`typescript
 // Sistema simples de quebra de páginas
 const imgWidth = 210 // A4 width em mm
 const pageHeight = 297 // A4 height em mm
@@ -49,11 +49,11 @@ if (totalPages === 1) {
     pdf.addImage(tempCanvas.toDataURL("image/jpeg", 1.0), "JPEG", 0, 0, imgWidth, pageImgHeight)
   }
 }
-```
+\`\`\`
 
 ### **Captura Simplificada**
 
-```typescript
+\`\`\`typescript
 onclone: clonedDoc => {
   // Garantir apenas estilos básicos necessários
   const clonedElement = clonedDoc.querySelector("[data-dashboard-clone]") as HTMLElement
@@ -64,7 +64,7 @@ onclone: clonedDoc => {
     `
   }
 }
-```
+\`\`\`
 
 ## 🎯 Benefícios das Melhorias
 
@@ -90,13 +90,13 @@ onclone: clonedDoc => {
 
 ### **1. Geração de PDF**
 
-```bash
+\`\`\`bash
 # Clique no botão "Exportar PDF"
 # O sistema automaticamente:
 # - Captura o dashboard completo
 # - Quebra as páginas de forma simples
 # - Gera PDF com visual preservado
-```
+\`\`\`
 
 ### **2. Verificação de Qualidade**
 
