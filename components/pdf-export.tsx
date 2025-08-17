@@ -10,174 +10,219 @@ import React, { useState, useEffect, useRef } from "react"
  *
  * Funcionalidades:
  * - Captura visual 1:1 do dashboard
- * - Alta resolução (scale: 2)
+ * - Alta resolução (scale: 1.2)
  * - Suporte a múltiplas páginas
  * - Fallback para método tradicional se html2canvas falhar
  * - Preserva todos os estilos CSS, Tailwind e customizações
  */
 
+// Constantes de configuração
+const PDF_CONFIG = {
+  SCALE: 1.2,
+  A4_WIDTH_MM: 210,
+  A4_HEIGHT_MM: 297,
+  IMAGE_QUALITY: 1.0,
+  TIMEOUT_MS: 15000,
+  FALLBACK_COLORS: {
+    PRIMARY: [139, 92, 246],
+    TEXT: [255, 255, 255],
+    SECONDARY: [200, 200, 200],
+    SUCCESS: [34, 197, 94],
+    GRAY: [100, 100, 100],
+    LIGHT_GRAY: [180, 180, 180],
+  },
+} as const
+
 // Interface para os dados do dashboard
 interface Module {
-  id: number
-  key: string
-  title: string
-  total: number
-  paid: number
-  substeps: Substep[]
+  readonly id: number
+  readonly key: string
+  readonly title: string
+  readonly total: number
+  readonly paid: number
+  readonly substeps: readonly Substep[]
 }
 
 interface Substep {
-  name: string
-  value: number
-  justification: string
+  readonly name: string
+  readonly value: number
+  readonly justification: string
 }
 
 interface PDFExportProps {
-  modules: Module[]
-  totalInvestment: number
-  totalPaid: number
-  totalRemaining: number
-  progressPercentage: number
-  dashboardRef?: React.RefObject<HTMLDivElement | null>
+  readonly modules: readonly Module[]
+  readonly totalInvestment: number
+  readonly totalPaid: number
+  readonly totalRemaining: number
+  readonly progressPercentage: number
+  readonly dashboardRef?: React.RefObject<HTMLDivElement | null>
+}
+
+interface CanvasConfig {
+  scale: number
+  useCORS: boolean
+  allowTaint: boolean
+  backgroundColor: string
+  width: number
+  height: number
+  scrollX: number
+  scrollY: number
+  windowWidth: number
+  windowHeight: number
+  logging: boolean
+  removeContainer: boolean
+  foreignObjectRendering: boolean
+  imageTimeout: number
+  onclone: (clonedDoc: Document) => void
+}
+
+interface PDFDimensions {
+  finalWidth: number
+  finalHeight: number
+  xOffset: number
+  yOffset: number
 }
 
 // Componente principal de exportação
 const PDFExport: React.FC<PDFExportProps> = props => {
-  const [isClient, setIsClient] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [isClient, setIsClient] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const dashboardRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     setIsClient(true)
   }, [])
 
-  const handleExportPDF = async () => {
-    if (!isClient) return
+  /**
+   * Calcula as dimensões finais da imagem no PDF
+   */
+  const calculatePDFDimensions = (
+    canvasWidth: number,
+    canvasHeight: number
+  ): PDFDimensions => {
+    const imgWidth = PDF_CONFIG.A4_WIDTH_MM
+    const pageHeight = PDF_CONFIG.A4_HEIGHT_MM
+    const imgHeight = (canvasHeight * imgWidth) / canvasWidth
 
-    // Usar a referência passada como prop ou a local
-    const targetRef = props.dashboardRef || dashboardRef
-    if (!targetRef.current) return
-
-    setIsLoading(true)
-
-    try {
-      // Dynamic imports
-      const html2canvas = (await import("html2canvas")).default
-      const jsPDF =
-        (await import("jspdf")).jsPDF || (await import("jspdf")).default
-
-      // Configurações do html2canvas EQUILIBRADAS para uma única página
-      const canvas = await html2canvas(targetRef.current, {
-        scale: 1.2, // Resolução equilibrada para visibilidade
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: "#000000",
-        width: targetRef.current.scrollWidth,
-        height: targetRef.current.scrollHeight,
-        scrollX: 0,
-        scrollY: 0,
-        windowWidth: targetRef.current.scrollWidth,
-        windowHeight: targetRef.current.scrollHeight,
-        logging: false,
-        removeContainer: false,
-        foreignObjectRendering: true,
-        imageTimeout: 15000,
-        onclone: clonedDoc => {
-          // SOLUÇÃO SIMPLES: apenas estilos básicos, sem compressões
-          const clonedElement = clonedDoc.querySelector(
-            "[data-dashboard-clone]"
-          ) as HTMLElement
-          if (clonedElement) {
-            // Apenas estilos essenciais para o PDF
-            clonedElement.style.cssText = `
-              color: white !important;
-              font-family: system-ui, -apple-system, sans-serif !important;
-            `
-          }
-        },
-      })
-
-      // SOLUÇÃO PERFEITA: preencher laterais com preto + centralizar dashboard
-      const imgWidth = 210 // A4 width em mm
-      const pageHeight = 297 // A4 height em mm
-
-      // Criar PDF com uma página
-      const pdf = new jsPDF("p", "mm", "a4")
-
-      // PREENCHER TODO O FUNDO COM PRETO
-      pdf.setFillColor(0, 0, 0) // Preto
-      pdf.rect(0, 0, imgWidth, pageHeight, "F")
-
-      // Calcular dimensões da imagem
-      const imgHeight = (canvas.height * imgWidth) / canvas.width
-
-      // SEMPRE centralizar o dashboard na página
-      let finalWidth, finalHeight, xOffset, yOffset
-
-      if (imgHeight <= pageHeight) {
-        // Se couber naturalmente, centralizar
-        finalWidth = imgWidth
-        finalHeight = imgHeight
-        xOffset = 0
-        yOffset = (pageHeight - imgHeight) / 2
-      } else {
-        // Se não couber, redimensionar e centralizar
-        const scaleFactor = pageHeight / imgHeight
-        finalWidth = imgWidth * scaleFactor
-        finalHeight = pageHeight
-        xOffset = (imgWidth - finalWidth) / 2
-        yOffset = 0
+    if (imgHeight <= pageHeight) {
+      // Se couber naturalmente, centralizar
+      return {
+        finalWidth: imgWidth,
+        finalHeight: imgHeight,
+        xOffset: 0,
+        yOffset: (pageHeight - imgHeight) / 2,
       }
-
-      // ADICIONAR O DASHBOARD CENTRALIZADO POR CIMA DO FUNDO PRETO
-      pdf.addImage(
-        canvas.toDataURL("image/jpeg", 1.0),
-        "JPEG",
-        xOffset,
-        yOffset,
-        finalWidth,
-        finalHeight
-      )
-
-      // Salvar o PDF
-      pdf.save(
-        `dashboard-executivo-${new Date().toISOString().split("T")[0]}.pdf`
-      )
-    } catch (error) {
-      console.error("Erro ao gerar PDF:", error)
-
-      // Fallback: tentar método alternativo se html2canvas falhar
-      try {
-        await generateFallbackPDF()
-      } catch (fallbackError) {
-        console.error("Erro no fallback:", fallbackError)
-        alert("Erro ao gerar PDF. Tente novamente.")
+    } else {
+      // Se não couber, redimensionar e centralizar
+      const scaleFactor = pageHeight / imgHeight
+      return {
+        finalWidth: imgWidth * scaleFactor,
+        finalHeight: pageHeight,
+        xOffset: (imgWidth - imgWidth * scaleFactor) / 2,
+        yOffset: 0,
       }
-    } finally {
-      setIsLoading(false)
     }
   }
 
-  // Método fallback que cria um PDF com estilos similares
-  const generateFallbackPDF = async () => {
-    const { jsPDF } = await import("jspdf")
+  /**
+   * Configura o html2canvas com as opções otimizadas
+   */
+  const getCanvasConfig = (targetElement: HTMLDivElement): CanvasConfig => ({
+    scale: PDF_CONFIG.SCALE,
+    useCORS: true,
+    allowTaint: true,
+    backgroundColor: "#000000",
+    width: targetElement.scrollWidth,
+    height: targetElement.scrollHeight,
+    scrollX: 0,
+    scrollY: 0,
+    windowWidth: targetElement.scrollWidth,
+    windowHeight: targetElement.scrollHeight,
+    logging: false,
+    removeContainer: false,
+    foreignObjectRendering: true,
+    imageTimeout: PDF_CONFIG.TIMEOUT_MS,
+    onclone: (clonedDoc: Document) => {
+      const clonedElement = clonedDoc.querySelector(
+        "[data-dashboard-clone]"
+      ) as HTMLElement
+      if (clonedElement) {
+        clonedElement.style.cssText = `
+          color: white !important;
+          font-family: system-ui, -apple-system, sans-serif !important;
+        `
+      }
+    },
+  })
 
+  /**
+   * Gera o nome do arquivo PDF com timestamp
+   */
+  const generateFileName = (): string => {
+    const date = new Date().toISOString().split("T")[0]
+    return `dashboard-executivo-${date}.pdf`
+  }
+
+  /**
+   * Cria um PDF com fundo preto e dashboard centralizado
+   */
+  const createMainPDF = async (canvas: HTMLCanvasElement): Promise<void> => {
+    const jsPDF =
+      (await import("jspdf")).jsPDF || (await import("jspdf")).default
+    const pdf = new jsPDF("p", "mm", "a4")
+
+    // Preencher todo o fundo com preto
+    pdf.setFillColor(0, 0, 0)
+    pdf.rect(0, 0, PDF_CONFIG.A4_WIDTH_MM, PDF_CONFIG.A4_HEIGHT_MM, "F")
+
+    // Calcular dimensões e posicionamento
+    const dimensions = calculatePDFDimensions(canvas.width, canvas.height)
+
+    // Adicionar o dashboard centralizado por cima do fundo preto
+    pdf.addImage(
+      canvas.toDataURL("image/jpeg", PDF_CONFIG.IMAGE_QUALITY),
+      "JPEG",
+      dimensions.xOffset,
+      dimensions.yOffset,
+      dimensions.finalWidth,
+      dimensions.finalHeight
+    )
+
+    // Salvar o PDF
+    pdf.save(generateFileName())
+  }
+
+  /**
+   * Método fallback que cria um PDF com estilos similares
+   */
+  const generateFallbackPDF = async (): Promise<void> => {
+    const { jsPDF } = await import("jspdf")
     const doc = new jsPDF()
 
     // Configurar cores similares ao dashboard
-    const primaryColor = [139, 92, 246] // #8b5cf6
-    const textColor = [255, 255, 255] // #ffffff
+    const { PRIMARY, TEXT, SECONDARY, SUCCESS, GRAY, LIGHT_GRAY } =
+      PDF_CONFIG.FALLBACK_COLORS
 
     // Header com gradiente simulado
-    doc.setFillColor(primaryColor[0], primaryColor[1], primaryColor[2])
-    doc.rect(0, 0, 210, 40, "F")
+    doc.setFillColor(PRIMARY[0], PRIMARY[1], PRIMARY[2])
+    doc.rect(0, 0, PDF_CONFIG.A4_WIDTH_MM, 40, "F")
 
     // Título principal
-    doc.setTextColor(textColor[0], textColor[1], textColor[2])
+    doc.setTextColor(TEXT[0], TEXT[1], TEXT[2])
     doc.setFontSize(24)
-    doc.text("Dashboard Executivo de Progresso", 105, 25, { align: "center" })
+    doc.text(
+      "Dashboard Executivo de Progresso",
+      PDF_CONFIG.A4_WIDTH_MM / 2,
+      25,
+      { align: "center" }
+    )
     doc.setFontSize(14)
-    doc.text("GB Locações - Relatório de Projeto", 105, 35, { align: "center" })
+    doc.text(
+      "GB Locações - Relatório de Projeto",
+      PDF_CONFIG.A4_WIDTH_MM / 2,
+      35,
+      { align: "center" }
+    )
 
     // Métricas principais com cards estilizados
     let yPos = 60
@@ -205,30 +250,26 @@ const PDFExport: React.FC<PDFExportProps> = props => {
       if (index > 0 && index % 2 === 0) yPos += 30
 
       // Card com gradiente simulado
-      doc.setFillColor(
-        primaryColor[0] - 50,
-        primaryColor[1] - 50,
-        primaryColor[2] - 50
-      )
+      doc.setFillColor(PRIMARY[0] - 50, PRIMARY[1] - 50, PRIMARY[2] - 50)
       doc.roundedRect(xPos, yPos - 20, 85, 25, 3, 3, "F")
-      doc.setDrawColor(primaryColor[0], primaryColor[1], primaryColor[2])
+      doc.setDrawColor(PRIMARY[0], PRIMARY[1], PRIMARY[2])
       doc.roundedRect(xPos, yPos - 20, 85, 25, 3, 3, "S")
 
       // Valor
       doc.setFontSize(16)
-      doc.setTextColor(textColor[0], textColor[1], textColor[2])
+      doc.setTextColor(TEXT[0], TEXT[1], TEXT[2])
       doc.text(metric.value, xPos + 42.5, yPos - 10, { align: "center" })
 
       // Label
       doc.setFontSize(10)
-      doc.setTextColor(200, 200, 200)
+      doc.setTextColor(SECONDARY[0], SECONDARY[1], SECONDARY[2])
       doc.text(metric.label, xPos + 42.5, yPos + 2, { align: "center" })
     })
 
     // Roadmap do projeto
     yPos += 50
     doc.setFontSize(16)
-    doc.setTextColor(textColor[0], textColor[1], textColor[2])
+    doc.setTextColor(TEXT[0], TEXT[1], TEXT[2])
     doc.text("🗺️ Roadmap do Projeto", 15, yPos)
     yPos += 20
 
@@ -237,7 +278,7 @@ const PDFExport: React.FC<PDFExportProps> = props => {
 
       // Título do módulo
       doc.setFontSize(12)
-      doc.setTextColor(textColor[0], textColor[1], textColor[2])
+      doc.setTextColor(TEXT[0], TEXT[1], TEXT[2])
       doc.text(`${index + 1}. ${module.title}`, 15, yPos)
 
       // Barra de progresso estilizada
@@ -246,11 +287,11 @@ const PDFExport: React.FC<PDFExportProps> = props => {
       const progressY = yPos + 5
 
       // Background da barra
-      doc.setFillColor(100, 100, 100)
+      doc.setFillColor(GRAY[0], GRAY[1], GRAY[2])
       doc.roundedRect(progressX, progressY, progressWidth, 10, 5, 5, "F")
 
       // Barra de progresso
-      doc.setFillColor(primaryColor[0], primaryColor[1], primaryColor[2])
+      doc.setFillColor(PRIMARY[0], PRIMARY[1], PRIMARY[2])
       doc.roundedRect(
         progressX,
         progressY,
@@ -263,7 +304,7 @@ const PDFExport: React.FC<PDFExportProps> = props => {
 
       // Texto de progresso
       doc.setFontSize(10)
-      doc.setTextColor(200, 200, 200)
+      doc.setTextColor(SECONDARY[0], SECONDARY[1], SECONDARY[2])
       doc.text(
         `${moduleProgress.toFixed(1)}%`,
         progressX + progressWidth + 15,
@@ -274,9 +315,9 @@ const PDFExport: React.FC<PDFExportProps> = props => {
       yPos += 30
       module.substeps.forEach(substep => {
         doc.setFontSize(10)
-        doc.setTextColor(180, 180, 180)
+        doc.setTextColor(LIGHT_GRAY[0], LIGHT_GRAY[1], LIGHT_GRAY[2])
         doc.text(`• ${substep.name}`, 25, yPos)
-        doc.setTextColor(34, 197, 94) // Verde
+        doc.setTextColor(SUCCESS[0], SUCCESS[1], SUCCESS[2])
         doc.text(`R$ ${substep.value.toLocaleString("pt-BR")}`, 150, yPos)
         yPos += 8
       })
@@ -286,27 +327,65 @@ const PDFExport: React.FC<PDFExportProps> = props => {
 
     // Footer
     const footerY = 280
-    doc.setDrawColor(primaryColor[0], primaryColor[1], primaryColor[2])
+    doc.setDrawColor(PRIMARY[0], PRIMARY[1], PRIMARY[2])
     doc.line(15, footerY, 195, footerY)
 
     doc.setFontSize(10)
-    doc.setTextColor(200, 200, 200)
+    doc.setTextColor(SECONDARY[0], SECONDARY[1], SECONDARY[2])
     doc.text(
       `Relatório gerado em ${new Date().toLocaleDateString("pt-BR")} às ${new Date().toLocaleTimeString("pt-BR")}`,
-      105,
+      PDF_CONFIG.A4_WIDTH_MM / 2,
       footerY + 10,
       { align: "center" }
     )
     doc.text(
       "GB Locações - Dashboard Executivo de Progresso",
-      105,
+      PDF_CONFIG.A4_WIDTH_MM / 2,
       footerY + 20,
       { align: "center" }
     )
 
-    doc.save(
-      `dashboard-executivo-${new Date().toISOString().split("T")[0]}.pdf`
-    )
+    doc.save(generateFileName())
+  }
+
+  /**
+   * Função principal para exportar o PDF
+   */
+  const handleExportPDF = async (): Promise<void> => {
+    if (!isClient) return
+
+    // Usar a referência passada como prop ou a local
+    const targetRef = props.dashboardRef || dashboardRef
+    if (!targetRef.current) {
+      console.warn("Referência do dashboard não encontrada")
+      return
+    }
+
+    setIsLoading(true)
+
+    try {
+      // Dynamic imports
+      const html2canvas = (await import("html2canvas")).default
+
+      // Configurações do html2canvas otimizadas
+      const canvasConfig = getCanvasConfig(targetRef.current)
+      const canvas = await html2canvas(targetRef.current, canvasConfig)
+
+      // Criar PDF principal
+      await createMainPDF(canvas)
+    } catch (error) {
+      console.error("Erro ao gerar PDF:", error)
+
+      // Fallback: tentar método alternativo se html2canvas falhar
+      try {
+        await generateFallbackPDF()
+      } catch (fallbackError) {
+        console.error("Erro no fallback:", fallbackError)
+        alert("Erro ao gerar PDF. Tente novamente.")
+      }
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   // Se não estiver no cliente, mostrar botão de carregamento

@@ -7,9 +7,9 @@ desenvolvimento.
 
 Antes de começar, certifique-se de ter instalado:
 
-- **Node.js** 18.17 ou superior
-- **pnpm** 8.0 ou superior (recomendado) ou **npm** 9.0+
-- **Git** para clonar o repositório
+* **Node.js** 18.17 ou superior
+* **pnpm** 8.0 ou superior (recomendado) ou **npm** 9.0+
+* **Git** para clonar o repositório
 
 ### Verificando as versões
 
@@ -155,11 +155,11 @@ Após a instalação bem-sucedida:
 
 Se encontrar problemas durante a instalação:
 
-- Verifique os [Issues](https://github.com/seu-usuario/dashboard-executivo-de-progresso/issues)
+* Verifique os [Issues](https://github.com/seu-usuario/dashboard-executivo-de-progresso/issues)
   existentes
-- Abra um novo [Issue](https://github.com/seu-usuario/dashboard-executivo-de-progresso/issues/new)
-- Entre em contato: suporte@gb-locacoes.com
+* Abra um novo [Issue](https://github.com/seu-usuario/dashboard-executivo-de-progresso/issues/new)
+* Entre em contato: suporte@gb-locacoes.com
 
----
+***
 
 **Próximo**: [Primeiros Passos](quick-start.md) →
