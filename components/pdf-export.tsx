@@ -97,43 +97,47 @@ const PDFExport: React.FC<PDFExportProps> = props => {
         },
       })
 
-      // SOLUÇÃO SIMPLES: uma única página A4
+      // SOLUÇÃO PERFEITA: preencher laterais com preto + centralizar dashboard
       const imgWidth = 210 // A4 width em mm
       const pageHeight = 297 // A4 height em mm
 
       // Criar PDF com uma página
       const pdf = new jsPDF("p", "mm", "a4")
 
+      // PREENCHER TODO O FUNDO COM PRETO
+      pdf.setFillColor(0, 0, 0) // Preto
+      pdf.rect(0, 0, imgWidth, pageHeight, "F")
+
       // Calcular dimensões da imagem
       const imgHeight = (canvas.height * imgWidth) / canvas.width
 
-      // Se couber naturalmente, usar tamanho normal
-      if (imgHeight <= pageHeight) {
-        pdf.addImage(
-          canvas.toDataURL("image/jpeg", 1.0),
-          "JPEG",
-          0,
-          0,
-          imgWidth,
-          imgHeight
-        )
-      } else {
-        // Se não couber, redimensionar para caber
-        const scaleFactor = pageHeight / imgHeight
-        const scaledWidth = imgWidth * scaleFactor
-        const scaledHeight = pageHeight
+      // SEMPRE centralizar o dashboard na página
+      let finalWidth, finalHeight, xOffset, yOffset
 
-        // Centralizar horizontalmente
-        const xOffset = (imgWidth - scaledWidth) / 2
-        pdf.addImage(
-          canvas.toDataURL("image/jpeg", 1.0),
-          "JPEG",
-          xOffset,
-          0,
-          scaledWidth,
-          scaledHeight
-        )
+      if (imgHeight <= pageHeight) {
+        // Se couber naturalmente, centralizar
+        finalWidth = imgWidth
+        finalHeight = imgHeight
+        xOffset = 0
+        yOffset = (pageHeight - imgHeight) / 2
+      } else {
+        // Se não couber, redimensionar e centralizar
+        const scaleFactor = pageHeight / imgHeight
+        finalWidth = imgWidth * scaleFactor
+        finalHeight = pageHeight
+        xOffset = (imgWidth - finalWidth) / 2
+        yOffset = 0
       }
+
+      // ADICIONAR O DASHBOARD CENTRALIZADO POR CIMA DO FUNDO PRETO
+      pdf.addImage(
+        canvas.toDataURL("image/jpeg", 1.0),
+        "JPEG",
+        xOffset,
+        yOffset,
+        finalWidth,
+        finalHeight
+      )
 
       // Salvar o PDF
       pdf.save(
