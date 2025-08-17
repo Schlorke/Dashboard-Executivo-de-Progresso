@@ -86,7 +86,7 @@
   }
 
   body {
-    @apply bg-white text-gray-900;
+    @apply bg-black text-white;
   }
 }
 
@@ -160,5 +160,211 @@
 
   .animate-very-slow-pulse {
     animation: very-slow-pulse 4s ease-in-out infinite;
+  }
+
+  /* ESTILOS MUITO FORTES PARA REMOVER O BRANCO DOS CHARTS */
+  .recharts-bar-rectangle,
+  .recharts-bar-rectangle:hover,
+  .recharts-bar-rectangle:focus,
+  .recharts-bar-rectangle:active,
+  .recharts-bar-rectangle:visited {
+    background-color: transparent !important;
+    background: transparent !important;
+    background-image: none !important;
+    background-blend-mode: normal !important;
+    fill-opacity: 1 !important;
+    transition: fill-opacity 0.3s ease-in-out;
+  }
+
+  /* Hover apenas muda a opacidade, SEM BACKGROUND */
+  .recharts-bar-rectangle:hover {
+    fill-opacity: 0.7 !important;
+    background-color: transparent !important;
+    background: transparent !important;
+    background-image: none !important;
+  }
+
+  /* REMOVENDO TODOS OS BACKGROUNDS BRANCOS */
+  .recharts-tooltip-wrapper,
+  .recharts-default-tooltip,
+  .recharts-tooltip-content,
+  .recharts-tooltip-content-wrapper {
+    background-color: transparent !important;
+    background: transparent !important;
+    background-image: none !important;
+  }
+
+  /* GARANTINDO QUE OS CHARTS SEJAM TRANSPARENTES */
+  .recharts-wrapper,
+  .recharts-surface,
+  .recharts-legend-wrapper,
+  .recharts-legend-item {
+    background-color: transparent !important;
+    background: transparent !important;
+  }
+
+  /* SOBRESCREVENDO QUALQUER CSS DO RECHARTS */
+  .recharts-bar-rectangle[style*="background"],
+  .recharts-bar-rectangle[style*="background-color"] {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+
+  /* ESTILOS INLINE MUITO FORTES */
+  .recharts-bar-rectangle {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+
+  /* REMOVENDO QUALQUER HOVER BRANCO */
+  .recharts-bar-rectangle:hover,
+  .recharts-bar-rectangle:hover * {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+
+  /* SOBRESCREVENDO COM CSS INLINE */
+  .recharts-bar-rectangle[style] {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+
+  /* ESTILOS PARA SVG - REMOVENDO BACKGROUND BRANCO */
+  .recharts-bar-rectangle svg,
+  .recharts-bar-rectangle svg * {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+
+  /* SOBRESCREVENDO QUALQUER ESTILO PADRÃO */
+  .recharts-bar-rectangle,
+  .recharts-bar-rectangle * {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+
+  /* FORÇANDO TRANSPARÊNCIA EM TODOS OS ESTADOS */
+  .recharts-bar-rectangle:before,
+  .recharts-bar-rectangle:after {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+
+  /* ESTILOS ESPECÍFICOS PARA TEMA DARK */
+  .dark .recharts-bar-rectangle,
+  .dark .recharts-bar-rectangle:hover,
+  .dark .recharts-bar-rectangle:focus,
+  .dark .recharts-bar-rectangle:active {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+
+  /* SOBRESCREVENDO QUALQUER CSS DO TEMA LIGHT */
+  html:not(.dark) .recharts-bar-rectangle,
+  html:not(.dark) .recharts-bar-rectangle:hover {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+
+  /* ESTILOS INLINE MUITO FORTES PARA TEMA DARK */
+  .dark .recharts-bar-rectangle[style] {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+
+  /* FORÇANDO TEMA DARK NO BODY */
+  body {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+  }
+
+  /* REMOVENDO QUALQUER BACKGROUND BRANCO DO BODY */
+  body,
+  html {
+    background: #000000 !important;
+    background-color: #000000 !important;
+  }
+
+  /* ESTILOS ESPECÍFICOS PARA O ELEMENTO QUE ESTÁ BRANCO */
+  .recharts-tooltip-cursor,
+  .recharts-tooltip-cursor:hover,
+  .recharts-tooltip-cursor:focus,
+  .recharts-tooltip-cursor:active {
+    fill: rgba(139, 92, 246, 0.2) !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    opacity: 1 !important;
+  }
+
+  /* REMOVENDO O FILL CINZA/BRANCO */
+  .recharts-tooltip-cursor[fill="#ccc"],
+  .recharts-tooltip-cursor[fill="#cccccc"],
+  .recharts-tooltip-cursor[fill="ccc"] {
+    fill: transparent !important;
+    background: transparent !important;
+  }
+
+  /* SOBRESCREVENDO QUALQUER ESTILO INLINE */
+  .recharts-tooltip-cursor[style] {
+    fill: transparent !important;
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+
+  /* REMOVENDO TODOS OS ELEMENTOS BRANCOS/CINZAS DOS CHARTS */
+  .recharts-rectangle,
+  .recharts-rectangle:hover,
+  .recharts-rectangle:focus,
+  .recharts-rectangle:active {
+    fill: rgba(139, 92, 246, 0.15) !important;
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+
+  /* ESPECIFICAMENTE PARA ELEMENTOS COM FILL CINZA */
+  .recharts-rectangle[fill="#ccc"],
+  .recharts-rectangle[fill="#cccccc"],
+  .recharts-rectangle[fill="ccc"],
+  .recharts-rectangle[fill="lightgray"],
+  .recharts-rectangle[fill="lightgrey"] {
+    fill: rgba(139, 92, 246, 0.2) !important;
+    background: transparent !important;
+  }
+
+  /* REMOVENDO QUALQUER ELEMENTO COM COR CLARA */
+  .recharts-rectangle[fill*="light"],
+  .recharts-rectangle[fill*="white"],
+  .recharts-rectangle[fill*="gray"] {
+    fill: transparent !important;
+    background: transparent !important;
+  }
+
+  /* SOBRESCREVENDO QUALQUER ELEMENTO SVG COM FILL CLARO */
+  svg .recharts-rectangle,
+  svg .recharts-tooltip-cursor,
+  svg .recharts-bar-rectangle {
+    fill: rgba(139, 92, 246, 0.15) !important;
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+
+  /* FORÇANDO TRANSPARÊNCIA EM TODOS OS ELEMENTOS RECTANGLE */
+  .recharts-rectangle[class*="recharts"],
+  .recharts-tooltip-cursor[class*="recharts"],
+  .recharts-bar-rectangle[class*="recharts"] {
+    fill: transparent !important;
+    background: transparent !important;
+  }
+
+  /* ESTILOS INLINE MUITO FORTES PARA SVG */
+  svg [fill="#ccc"],
+  svg [fill="#cccccc"],
+  svg [fill="ccc"] {
+    fill: rgba(139, 92, 246, 0.2) !important;
+    background: transparent !important;
   }
 }
