@@ -437,9 +437,9 @@ export default function GBLBudgetPresentation() {
     delay?: number
   }) => (
     <div
-      className={`group hover:shadow-3xl relative cursor-pointer overflow-hidden rounded-3xl border border-purple-300/15 bg-gradient-to-br from-purple-900/30 via-violet-900/20 to-purple-800/15 p-6 shadow-2xl backdrop-blur-3xl transition-all duration-500 ease-out hover:scale-105 hover:shadow-purple-400/20 ${isLoaded ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"} delay-${delay}`}
+      className={`hover:shadow-3xl group relative cursor-pointer overflow-hidden rounded-3xl border border-purple-300/15 bg-gradient-to-br from-purple-900/30 via-violet-900/20 to-purple-800/15 p-6 shadow-2xl backdrop-blur-3xl transition-all duration-500 ease-out hover:scale-105 hover:shadow-purple-400/20 ${isLoaded ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"} delay-${delay}`}
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-400/8 via-transparent to-violet-400/8 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+      <div className="from-purple-400/8 to-violet-400/8 absolute inset-0 bg-gradient-to-br via-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
       <div className="relative z-10">
         <div className="mb-2 text-sm font-medium text-purple-200">{label}</div>
         <div className="mb-1 bg-gradient-to-r from-white via-purple-100 to-violet-200 bg-clip-text text-3xl font-bold tracking-tight text-transparent">
@@ -449,7 +449,7 @@ export default function GBLBudgetPresentation() {
           <div className="text-xs text-purple-300 opacity-80">{hint}</div>
         )}
       </div>
-      <div className="absolute -top-4 -right-4 h-24 w-24 rounded-full bg-gradient-to-br from-purple-300/15 to-violet-300/15 blur-xl transition-transform duration-700 group-hover:scale-150" />
+      <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-gradient-to-br from-purple-300/15 to-violet-300/15 blur-xl transition-transform duration-700 group-hover:scale-150" />
     </div>
   )
 
@@ -493,14 +493,14 @@ export default function GBLBudgetPresentation() {
       className="relative min-h-screen w-full overflow-hidden bg-black"
     >
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 h-80 w-80 animate-pulse rounded-full bg-gradient-to-br from-purple-400/20 to-violet-500/15 blur-3xl" />
+        <div className="absolute -right-40 -top-40 h-80 w-80 animate-pulse rounded-full bg-gradient-to-br from-purple-400/20 to-violet-500/15 blur-3xl" />
         <div className="animation-delay-1s absolute -bottom-40 -left-40 h-80 w-80 animate-pulse rounded-full bg-gradient-to-br from-violet-400/15 to-purple-500/20 blur-3xl" />
-        <div className="animation-delay-2s absolute top-1/2 left-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 transform animate-pulse rounded-full bg-gradient-to-br from-purple-300/12 to-violet-300/8 blur-3xl" />
-        <div className="animation-delay-3s absolute top-20 left-20 h-60 w-60 animate-pulse rounded-full bg-gradient-to-br from-violet-500/18 to-purple-400/15 blur-2xl" />
-        <div className="animation-delay-4s absolute right-20 bottom-20 h-60 w-60 animate-pulse rounded-full bg-gradient-to-br from-violet-500/15 to-purple-400/12 blur-2xl" />
+        <div className="animation-delay-2s from-purple-300/12 to-violet-300/8 absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 transform animate-pulse rounded-full bg-gradient-to-br blur-3xl" />
+        <div className="animation-delay-3s from-violet-500/18 absolute left-20 top-20 h-60 w-60 animate-pulse rounded-full bg-gradient-to-br to-purple-400/15 blur-2xl" />
+        <div className="animation-delay-4s to-purple-400/12 absolute bottom-20 right-20 h-60 w-60 animate-pulse rounded-full bg-gradient-to-br from-violet-500/15 blur-2xl" />
       </div>
 
-      <header className="relative z-10 mx-auto max-w-7xl px-6 pt-12 pb-8">
+      <header className="relative z-10 mx-auto max-w-7xl px-6 pb-8 pt-12">
         <div
           className={`flex flex-col gap-6 transition-all duration-1000 ease-out sm:flex-row sm:items-end sm:justify-between ${isLoaded ? "translate-y-0 opacity-100" : "-translate-y-8 opacity-0"}`}
         >
@@ -838,11 +838,11 @@ export default function GBLBudgetPresentation() {
               return (
                 <div
                   key={m.id}
-                  className={`group hover:shadow-3xl relative cursor-pointer overflow-hidden rounded-3xl border border-purple-300/15 bg-gradient-to-br from-purple-900/30 via-violet-900/20 to-purple-800/15 p-8 shadow-2xl backdrop-blur-3xl transition-all duration-500 hover:scale-[1.02] ${isLoaded ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"} delay-${1000 + index * 100}`}
+                  className={`hover:shadow-3xl group relative cursor-pointer overflow-hidden rounded-3xl border border-purple-300/15 bg-gradient-to-br from-purple-900/30 via-violet-900/20 to-purple-800/15 p-8 shadow-2xl backdrop-blur-3xl transition-all duration-500 hover:scale-[1.02] ${isLoaded ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"} delay-${1000 + index * 100}`}
                   onMouseEnter={() => setActiveCard(m.id)}
                   onMouseLeave={() => setActiveCard(null)}
                 >
-                  <div className="absolute top-6 right-6 z-20">
+                  <div className="absolute right-6 top-6 z-20">
                     {isCompleted ? (
                       <div className="flex items-center gap-2 rounded-full border border-purple-300/35 bg-gradient-to-r from-purple-400/25 to-violet-500/25 px-3 py-1 backdrop-blur-xl">
                         <div className="h-2 w-2 animate-pulse rounded-full bg-green-400" />
@@ -872,10 +872,10 @@ export default function GBLBudgetPresentation() {
                       <div
                         className={`absolute inset-0 bg-gradient-to-br transition-opacity duration-500 ${
                           isCompleted
-                            ? "from-purple-400/12 via-transparent to-purple-400/8 opacity-100"
+                            ? "from-purple-400/12 to-purple-400/8 via-transparent opacity-100"
                             : isActive
-                              ? "from-violet-400/12 via-transparent to-violet-400/8 opacity-100"
-                              : "from-purple-400/8 via-transparent to-violet-400/8 opacity-100"
+                              ? "from-violet-400/12 to-violet-400/8 via-transparent opacity-100"
+                              : "from-purple-400/8 to-violet-400/8 via-transparent opacity-100"
                         }`}
                       />
                     )}
@@ -887,13 +887,13 @@ export default function GBLBudgetPresentation() {
                         <div className="text-sm font-bold tracking-wider text-purple-300">
                           {m.key}
                         </div>
-                        <h3 className="pr-4 text-xl leading-tight font-bold tracking-tight text-white">
+                        <h3 className="pr-4 text-xl font-bold leading-tight tracking-tight text-white">
                           {m.title}
                         </h3>
                       </div>
                     </div>
 
-                    <div className="absolute top-8 right-6 z-10">
+                    <div className="absolute right-6 top-8 z-10">
                       <div className="text-right">
                         <div className="bg-gradient-to-r from-white to-purple-100 bg-clip-text text-2xl font-bold text-transparent">
                           {brl.format(m.total)}
@@ -935,10 +935,14 @@ export default function GBLBudgetPresentation() {
                           className="group/substep flex items-start gap-4 rounded-2xl border border-transparent bg-gradient-to-r from-purple-800/15 to-transparent p-4 backdrop-blur-xl transition-all duration-300 hover:border-purple-400/25 hover:from-purple-700/25 hover:to-violet-800/15"
                         >
                           <div
-                            className="mt-2 h-3 w-3 flex-shrink-0 rounded-full shadow-lg"
-                            style={{
-                              background: `linear-gradient(135deg, ${["#a78bfa", "#c4b5fd", "#ddd6fe", "#ede9fe"][i % 4]}, ${["#8b5cf6", "#a855f7", "#c4b5fd", "#ddd6fe"][i % 4]})`,
-                            }}
+                            className={`mt-2 h-3 w-3 flex-shrink-0 rounded-full bg-gradient-to-br shadow-lg ${
+                              [
+                                "from-purple-400 to-purple-600",
+                                "from-violet-400 to-violet-600",
+                                "from-purple-300 to-purple-500",
+                                "from-violet-300 to-violet-500",
+                              ][i % 4]
+                            }`}
                           />
                           <div className="min-w-0 flex-1">
                             <div className="mb-1 text-sm font-semibold text-white">
@@ -948,7 +952,7 @@ export default function GBLBudgetPresentation() {
                               {s.justification}
                             </p>
                           </div>
-                          <div className="rounded-full border border-purple-400/25 bg-gradient-to-r from-purple-800/50 to-violet-800/50 px-3 py-1 text-sm font-bold whitespace-nowrap text-white backdrop-blur-xl">
+                          <div className="whitespace-nowrap rounded-full border border-purple-400/25 bg-gradient-to-r from-purple-800/50 to-violet-800/50 px-3 py-1 text-sm font-bold text-white backdrop-blur-xl">
                             {brl.format(s.value)}
                           </div>
                         </div>
@@ -956,7 +960,7 @@ export default function GBLBudgetPresentation() {
                     </div>
                   </div>
 
-                  <div className="absolute -top-6 -right-6 h-32 w-32 rounded-full bg-gradient-to-br from-purple-300/12 to-violet-300/12 blur-2xl transition-transform duration-700 group-hover:scale-150" />
+                  <div className="from-purple-300/12 to-violet-300/12 absolute -right-6 -top-6 h-32 w-32 rounded-full bg-gradient-to-br blur-2xl transition-transform duration-700 group-hover:scale-150" />
                 </div>
               )
             })}
