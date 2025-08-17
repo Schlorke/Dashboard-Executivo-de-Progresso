@@ -529,6 +529,7 @@ export default function GBLBudgetPresentation() {
               totalPaid={totalPaid}
               totalRemaining={totalRemaining}
               progressPercentage={percentPaid}
+              dashboardRef={dashboardRef}
             />
           </div>
         </div>

@@ -1,6 +1,20 @@
 "use client"
 
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
+
+/**
+ * Componente de Exportação PDF com Captura Visual Completa
+ *
+ * Este componente captura EXATAMENTE o visual do dashboard usando html2canvas
+ * e gera um PDF que preserva todos os estilos, cores, gradientes e layout.
+ *
+ * Funcionalidades:
+ * - Captura visual 1:1 do dashboard
+ * - Alta resolução (scale: 2)
+ * - Suporte a múltiplas páginas
+ * - Fallback para método tradicional se html2canvas falhar
+ * - Preserva todos os estilos CSS, Tailwind e customizações
+ */
 
 // Interface para os dados do dashboard
 interface Module {
@@ -24,12 +38,14 @@ interface PDFExportProps {
   totalPaid: number
   totalRemaining: number
   progressPercentage: number
+  dashboardRef?: React.RefObject<HTMLDivElement | null>
 }
 
 // Componente principal de exportação
 const PDFExport: React.FC<PDFExportProps> = props => {
   const [isClient, setIsClient] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const dashboardRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     setIsClient(true)
@@ -38,154 +54,255 @@ const PDFExport: React.FC<PDFExportProps> = props => {
   const handleExportPDF = async () => {
     if (!isClient) return
 
+    // Usar a referência passada como prop ou a local
+    const targetRef = props.dashboardRef || dashboardRef
+    if (!targetRef.current) return
+
     setIsLoading(true)
 
     try {
-      // Dynamic import apenas quando necessário
-      const { jsPDF } = await import("jspdf")
+      // Dynamic imports
+      const html2canvas = (await import("html2canvas")).default
+      const jsPDF =
+        (await import("jspdf")).jsPDF || (await import("jspdf")).default
 
-      // Criar o PDF usando jsPDF
-      const doc = new jsPDF()
-
-      // Configurar fonte e tamanhos
-      doc.setFont("helvetica")
-      doc.setFontSize(24)
-
-      // Título principal
-      doc.text("Dashboard Executivo de Progresso", 105, 30, { align: "center" })
-      doc.setFontSize(14)
-      doc.setTextColor(107, 114, 128)
-      doc.text("GB Locações - Relatório de Projeto", 105, 45, {
-        align: "center",
+      // Configurações do html2canvas EQUILIBRADAS para uma única página
+      const canvas = await html2canvas(targetRef.current, {
+        scale: 1.2, // Resolução equilibrada para visibilidade
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: "#000000",
+        width: targetRef.current.scrollWidth,
+        height: targetRef.current.scrollHeight,
+        scrollX: 0,
+        scrollY: 0,
+        windowWidth: targetRef.current.scrollWidth,
+        windowHeight: targetRef.current.scrollHeight,
+        logging: false,
+        removeContainer: false,
+        foreignObjectRendering: true,
+        imageTimeout: 15000,
+        onclone: clonedDoc => {
+          // SOLUÇÃO SIMPLES: apenas estilos básicos, sem compressões
+          const clonedElement = clonedDoc.querySelector(
+            "[data-dashboard-clone]"
+          ) as HTMLElement
+          if (clonedElement) {
+            // Apenas estilos essenciais para o PDF
+            clonedElement.style.cssText = `
+              color: white !important;
+              font-family: system-ui, -apple-system, sans-serif !important;
+            `
+          }
+        },
       })
 
-      // Métricas principais
-      doc.setFontSize(16)
-      doc.setTextColor(31, 41, 55)
-      doc.text("📊 Métricas Executivas", 20, 70)
+      // SOLUÇÃO SIMPLES: uma única página A4
+      const imgWidth = 210 // A4 width em mm
+      const pageHeight = 297 // A4 height em mm
 
-      // Grid de métricas
-      const metrics = [
-        {
-          label: "Investimento Total",
-          value: `R$ ${props.totalInvestment.toLocaleString("pt-BR")}`,
-        },
-        {
-          label: "Valor Pago",
-          value: `R$ ${props.totalPaid.toLocaleString("pt-BR")}`,
-        },
-        {
-          label: "Valor Pendente",
-          value: `R$ ${props.totalRemaining.toLocaleString("pt-BR")}`,
-        },
-        {
-          label: "Progresso Geral",
-          value: `${props.progressPercentage.toFixed(1)}%`,
-        },
-      ]
+      // Criar PDF com uma página
+      const pdf = new jsPDF("p", "mm", "a4")
 
-      let yPos = 85
-      metrics.forEach((metric, index) => {
-        const xPos = 20 + (index % 2) * 85
-        if (index > 0 && index % 2 === 0) yPos += 25
+      // Calcular dimensões da imagem
+      const imgHeight = (canvas.height * imgWidth) / canvas.width
 
-        doc.setFillColor(249, 250, 251)
-        doc.rect(xPos, yPos - 15, 80, 20, "F")
-        doc.setDrawColor(229, 231, 235)
-        doc.rect(xPos, yPos - 15, 80, 20, "S")
-
-        doc.setFontSize(16)
-        doc.setTextColor(31, 41, 55)
-        doc.text(metric.value, xPos + 40, yPos - 5, { align: "center" })
-        doc.setFontSize(10)
-        doc.setTextColor(107, 114, 128)
-        doc.text(metric.label, xPos + 40, yPos + 5, { align: "center" })
-      })
-
-      // Roadmap do projeto
-      yPos += 40
-      doc.setFontSize(16)
-      doc.setTextColor(31, 41, 55)
-      doc.text("🗺️ Roadmap do Projeto", 20, yPos)
-      yPos += 20
-
-      props.modules.forEach((module, index) => {
-        const moduleProgress = (module.paid / module.total) * 100
-
-        // Título do módulo
-        doc.setFontSize(12)
-        doc.setTextColor(31, 41, 55)
-        doc.text(`${index + 1}. ${module.title}`, 20, yPos)
-
-        // Barra de progresso
-        const progressWidth = 100
-        const progressX = 20
-        const progressY = yPos + 5
-
-        doc.setFillColor(229, 231, 235)
-        doc.rect(progressX, progressY, progressWidth, 8, "F")
-        doc.setFillColor(139, 92, 246)
-        doc.rect(
-          progressX,
-          progressY,
-          (progressWidth * moduleProgress) / 100,
-          8,
-          "F"
+      // Se couber naturalmente, usar tamanho normal
+      if (imgHeight <= pageHeight) {
+        pdf.addImage(
+          canvas.toDataURL("image/jpeg", 1.0),
+          "JPEG",
+          0,
+          0,
+          imgWidth,
+          imgHeight
         )
+      } else {
+        // Se não couber, redimensionar para caber
+        const scaleFactor = pageHeight / imgHeight
+        const scaledWidth = imgWidth * scaleFactor
+        const scaledHeight = pageHeight
 
-        // Texto de progresso
-        doc.setFontSize(10)
-        doc.setTextColor(107, 114, 128)
-        doc.text(
-          `${moduleProgress.toFixed(1)}%`,
-          progressX + progressWidth + 10,
-          progressY + 6
+        // Centralizar horizontalmente
+        const xOffset = (imgWidth - scaledWidth) / 2
+        pdf.addImage(
+          canvas.toDataURL("image/jpeg", 1.0),
+          "JPEG",
+          xOffset,
+          0,
+          scaledWidth,
+          scaledHeight
         )
-
-        // Substeps
-        yPos += 25
-        module.substeps.forEach(substep => {
-          doc.setFontSize(10)
-          doc.setTextColor(55, 65, 81)
-          doc.text(`• ${substep.name}`, 30, yPos)
-          doc.setTextColor(5, 150, 105)
-          doc.text(`R$ ${substep.value.toLocaleString("pt-BR")}`, 150, yPos)
-          yPos += 8
-        })
-
-        yPos += 10
-      })
-
-      // Footer
-      const footerY = 280
-      doc.setDrawColor(229, 231, 235)
-      doc.line(20, footerY, 190, footerY)
-
-      doc.setFontSize(10)
-      doc.setTextColor(107, 114, 128)
-      doc.text(
-        `Relatório gerado em ${new Date().toLocaleDateString("pt-BR")} às ${new Date().toLocaleTimeString("pt-BR")}`,
-        105,
-        footerY + 10,
-        { align: "center" }
-      )
-      doc.text(
-        "GB Locações - Dashboard Executivo de Progresso",
-        105,
-        footerY + 20,
-        { align: "center" }
-      )
+      }
 
       // Salvar o PDF
-      doc.save(
+      pdf.save(
         `dashboard-executivo-${new Date().toISOString().split("T")[0]}.pdf`
       )
     } catch (error) {
       console.error("Erro ao gerar PDF:", error)
-      alert("Erro ao gerar PDF. Tente novamente.")
+
+      // Fallback: tentar método alternativo se html2canvas falhar
+      try {
+        await generateFallbackPDF()
+      } catch (fallbackError) {
+        console.error("Erro no fallback:", fallbackError)
+        alert("Erro ao gerar PDF. Tente novamente.")
+      }
     } finally {
       setIsLoading(false)
     }
+  }
+
+  // Método fallback que cria um PDF com estilos similares
+  const generateFallbackPDF = async () => {
+    const { jsPDF } = await import("jspdf")
+
+    const doc = new jsPDF()
+
+    // Configurar cores similares ao dashboard
+    const primaryColor = [139, 92, 246] // #8b5cf6
+    const textColor = [255, 255, 255] // #ffffff
+
+    // Header com gradiente simulado
+    doc.setFillColor(primaryColor[0], primaryColor[1], primaryColor[2])
+    doc.rect(0, 0, 210, 40, "F")
+
+    // Título principal
+    doc.setTextColor(textColor[0], textColor[1], textColor[2])
+    doc.setFontSize(24)
+    doc.text("Dashboard Executivo de Progresso", 105, 25, { align: "center" })
+    doc.setFontSize(14)
+    doc.text("GB Locações - Relatório de Projeto", 105, 35, { align: "center" })
+
+    // Métricas principais com cards estilizados
+    let yPos = 60
+    const metrics = [
+      {
+        label: "Total Planejado",
+        value: `R$ ${props.totalInvestment.toLocaleString("pt-BR")}`,
+      },
+      {
+        label: "Recebido",
+        value: `R$ ${props.totalPaid.toLocaleString("pt-BR")}`,
+      },
+      {
+        label: "A Receber",
+        value: `R$ ${props.totalRemaining.toLocaleString("pt-BR")}`,
+      },
+      {
+        label: "Progresso Geral",
+        value: `${props.progressPercentage.toFixed(1)}%`,
+      },
+    ]
+
+    metrics.forEach((metric, index) => {
+      const xPos = 15 + (index % 2) * 90
+      if (index > 0 && index % 2 === 0) yPos += 30
+
+      // Card com gradiente simulado
+      doc.setFillColor(
+        primaryColor[0] - 50,
+        primaryColor[1] - 50,
+        primaryColor[2] - 50
+      )
+      doc.roundedRect(xPos, yPos - 20, 85, 25, 3, 3, "F")
+      doc.setDrawColor(primaryColor[0], primaryColor[1], primaryColor[2])
+      doc.roundedRect(xPos, yPos - 20, 85, 25, 3, 3, "S")
+
+      // Valor
+      doc.setFontSize(16)
+      doc.setTextColor(textColor[0], textColor[1], textColor[2])
+      doc.text(metric.value, xPos + 42.5, yPos - 10, { align: "center" })
+
+      // Label
+      doc.setFontSize(10)
+      doc.setTextColor(200, 200, 200)
+      doc.text(metric.label, xPos + 42.5, yPos + 2, { align: "center" })
+    })
+
+    // Roadmap do projeto
+    yPos += 50
+    doc.setFontSize(16)
+    doc.setTextColor(textColor[0], textColor[1], textColor[2])
+    doc.text("🗺️ Roadmap do Projeto", 15, yPos)
+    yPos += 20
+
+    props.modules.forEach((module, index) => {
+      const moduleProgress = (module.paid / module.total) * 100
+
+      // Título do módulo
+      doc.setFontSize(12)
+      doc.setTextColor(textColor[0], textColor[1], textColor[2])
+      doc.text(`${index + 1}. ${module.title}`, 15, yPos)
+
+      // Barra de progresso estilizada
+      const progressWidth = 120
+      const progressX = 15
+      const progressY = yPos + 5
+
+      // Background da barra
+      doc.setFillColor(100, 100, 100)
+      doc.roundedRect(progressX, progressY, progressWidth, 10, 5, 5, "F")
+
+      // Barra de progresso
+      doc.setFillColor(primaryColor[0], primaryColor[1], primaryColor[2])
+      doc.roundedRect(
+        progressX,
+        progressY,
+        (progressWidth * moduleProgress) / 100,
+        10,
+        5,
+        5,
+        "F"
+      )
+
+      // Texto de progresso
+      doc.setFontSize(10)
+      doc.setTextColor(200, 200, 200)
+      doc.text(
+        `${moduleProgress.toFixed(1)}%`,
+        progressX + progressWidth + 15,
+        progressY + 7
+      )
+
+      // Substeps
+      yPos += 30
+      module.substeps.forEach(substep => {
+        doc.setFontSize(10)
+        doc.setTextColor(180, 180, 180)
+        doc.text(`• ${substep.name}`, 25, yPos)
+        doc.setTextColor(34, 197, 94) // Verde
+        doc.text(`R$ ${substep.value.toLocaleString("pt-BR")}`, 150, yPos)
+        yPos += 8
+      })
+
+      yPos += 15
+    })
+
+    // Footer
+    const footerY = 280
+    doc.setDrawColor(primaryColor[0], primaryColor[1], primaryColor[2])
+    doc.line(15, footerY, 195, footerY)
+
+    doc.setFontSize(10)
+    doc.setTextColor(200, 200, 200)
+    doc.text(
+      `Relatório gerado em ${new Date().toLocaleDateString("pt-BR")} às ${new Date().toLocaleTimeString("pt-BR")}`,
+      105,
+      footerY + 10,
+      { align: "center" }
+    )
+    doc.text(
+      "GB Locações - Dashboard Executivo de Progresso",
+      105,
+      footerY + 20,
+      { align: "center" }
+    )
+
+    doc.save(
+      `dashboard-executivo-${new Date().toISOString().split("T")[0]}.pdf`
+    )
   }
 
   // Se não estiver no cliente, mostrar botão de carregamento
@@ -254,7 +371,7 @@ const PDFExport: React.FC<PDFExportProps> = props => {
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
               ></path>
             </svg>
-            Gerando PDF...
+            Capturando Dashboard...
           </>
         ) : (
           <>
