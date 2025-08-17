@@ -20,7 +20,7 @@ executivos.
 
 ### Comandos Principais (pnpm)
 
-```bash
+\`\`\`bash
 # Formatação e Qualidade
 pnpm format          # Formatar código
 pnpm quality:check   # Verificar qualidade
@@ -30,11 +30,11 @@ pnpm quality:fix     # Corrigir automaticamente
 pnpm build           # Build de produção
 pnpm dev             # Desenvolvimento local
 pnpm start           # Servidor de produção
-```
+\`\`\`
 
 ### Scripts PowerShell (Windows)
 
-```powershell
+\`\`\`powershell
 # Formatação
 .\scripts\format-all.ps1
 
@@ -43,17 +43,17 @@ pnpm start           # Servidor de produção
 
 # Verificação de qualidade
 .\scripts\quality-check.ps1
-```
+\`\`\`
 
 ### Scripts Bash (Linux/Mac)
 
-```bash
+\`\`\`bash
 # Formatação
 ./scripts/format-all.sh
 
 # Dar permissão (primeira vez)
 chmod +x ./scripts/*.sh
-```
+\`\`\`
 
 ## 🔧 Stack Tecnológica
 
@@ -74,7 +74,7 @@ chmod +x ./scripts/*.sh
 
 ### Estrutura de Camadas
 
-```
+\`\`\`
 ┌─────────────────────────────────────┐
 │           Presentation Layer        │
 │  ┌─────────────────────────────────┐ │
@@ -97,7 +97,7 @@ chmod +x ./scripts/*.sh
 │  │     + Data Transformations     │ │
 │  └─────────────────────────────────┘ │
 └─────────────────────────────────────┘
-```
+\`\`\`
 
 ## 🧩 Componentes Principais
 
@@ -141,7 +141,7 @@ chmod +x ./scripts/*.sh
 
 ### Responsividade
 
-```css
+\`\`\`css
 /* Mobile (default) */
 .container {
   width: 100%;
@@ -161,13 +161,13 @@ chmod +x ./scripts/*.sh
 @media (min-width: 1024px) {
   /* lg */
 }
-```
+\`\`\`
 
 ## 📊 Data Visualization
 
 ### Recharts
 
-```typescript
+\`\`\`typescript
 import {
   BarChart,
   Bar,
@@ -182,7 +182,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts"
-```
+\`\`\`
 
 **Tipos de Gráficos:**
 

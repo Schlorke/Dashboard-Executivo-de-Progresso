@@ -32,15 +32,15 @@ Este sistema de exportação PDF captura **EXATAMENTE** o visual do dashboard, p
 
 ## 📋 Requisitos
 
-```bash
+\`\`\`bash
 pnpm add html2canvas jspdf
-```
+\`\`\`
 
 ## 🔧 Implementação
 
 ### Componente PDF Export
 
-```tsx
+\`\`\`tsx
 import PDFExport from "./components/pdf-export"
 
 // No dashboard principal
@@ -52,11 +52,11 @@ import PDFExport from "./components/pdf-export"
   progressPercentage={percentPaid}
   dashboardRef={dashboardRef} // Referência para captura
 />
-```
+\`\`\`
 
 ### Configuração do Dashboard
 
-```tsx
+\`\`\`tsx
 const dashboardRef = useRef<HTMLDivElement>(null)
 
 return (
@@ -64,7 +64,7 @@ return (
     {/* Conteúdo do dashboard */}
   </div>
 )
-```
+\`\`\`
 
 ## 🎨 Personalização
 

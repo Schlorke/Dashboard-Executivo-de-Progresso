@@ -18,14 +18,14 @@ O projeto apresentou falha na renderização dos estilos Tailwind CSS, resultand
 
 #### Versões Problemáticas
 
-```json
+\`\`\`json
 {
   "devDependencies": {
     "postcss": "8.5.6", // ❌ Versão muito nova (2025)
     "tailwindcss": "3.4.17" // ❌ Versão mais antiga (dezembro 2023)
   }
 }
-```
+\`\`\`
 
 #### Incompatibilidade Identificada
 
@@ -38,26 +38,26 @@ O projeto apresentou falha na renderização dos estilos Tailwind CSS, resultand
 
 #### Versões Compatíveis
 
-```json
+\`\`\`json
 {
   "devDependencies": {
     "postcss": "8.4.31", // ✅ Versão compatível
     "tailwindcss": "3.4.17" // ✅ Mantida conforme solicitado
   }
 }
-```
+\`\`\`
 
 #### Comando de Correção
 
-```bash
+\`\`\`bash
 pnpm add -D postcss@8.4.31
-```
+\`\`\`
 
 ### Configuração PostCSS
 
 #### Arquivo: `postcss.config.mjs`
 
-```javascript
+\`\`\`javascript
 /** @type {import('postcss-load-config').Config} */
 const config = {
   plugins: {
@@ -67,13 +67,13 @@ const config = {
 }
 
 export default config
-```
+\`\`\`
 
 ### Arquivos CSS
 
 #### Arquivo: `app/globals.css`
 
-```css
+\`\`\`css
 @tailwind base;      // ✅ Diretiva funcionando
 @tailwind components; // ✅ Diretiva funcionando
 @tailwind utilities;  // ✅ Diretiva funcionando
@@ -84,28 +84,28 @@ export default config
   --foreground: oklch(0.145 0 0);
   /* ... outras variáveis CSS */
 }
-```
+\`\`\`
 
 ### Verificação de Funcionamento
 
 #### Build
 
-```bash
+\`\`\`bash
 pnpm build
 # ✅ Compiled successfully
 # ✅ Linting and checking validity of types
 # ✅ Collecting page data
 # ✅ Generating static pages
-```
+\`\`\`
 
 #### Desenvolvimento
 
-```bash
+\`\`\`bash
 pnpm dev
 # ✅ Starting...
 # ✅ Ready in 2.2s
 # ✅ Compiled / in 2s
-```
+\`\`\`
 
 ### Lições Aprendidas
 

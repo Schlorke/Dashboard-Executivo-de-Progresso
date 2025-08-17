@@ -20,7 +20,7 @@ O sistema é construído seguindo princípios de **arquitetura moderna**, **esca
 
 ### **Frontend Layer (React + Next.js)**
 
-```
+\`\`\`
 ┌─────────────────────────────────────┐
 │           User Interface            │ ← Componentes React
 ├─────────────────────────────────────┤
@@ -30,11 +30,11 @@ O sistema é construído seguindo princípios de **arquitetura moderna**, **esca
 ├─────────────────────────────────────┤
 │         API Integration             │ ← Comunicação com Backend
 └─────────────────────────────────────┘
-```
+\`\`\`
 
 ### **Backend Layer (Next.js API Routes)**
 
-```
+\`\`\`
 ┌─────────────────────────────────────┐
 │         API Endpoints               │ ← Rotas da API
 ├─────────────────────────────────────┤
@@ -44,7 +44,7 @@ O sistema é construído seguindo princípios de **arquitetura moderna**, **esca
 ├─────────────────────────────────────┤
 │         External Integrations      │ ← Integrações Externas
 └─────────────────────────────────────┘
-```
+\`\`\`
 
 ## 🚀 Stack Tecnológica
 
@@ -119,13 +119,13 @@ O sistema é construído seguindo princípios de **arquitetura moderna**, **esca
 
 **Implementação:**
 
-```css
+\`\`\`css
 :root {
   --primary: oklch(0.205 0 0);
   --secondary: oklch(0.97 0 0);
   --accent: oklch(0.97 0 0);
 }
-```
+\`\`\`
 
 **Vantagens:**
 
@@ -165,7 +165,7 @@ O sistema é construído seguindo princípios de **arquitetura moderna**, **esca
 
 ## 📁 Estrutura do Projeto
 
-```
+\`\`\`
 dashboard-executivo-de-progresso/
 ├── app/                          # App Router (Next.js 15)
 │   ├── globals.css              # Estilos globais
@@ -181,7 +181,7 @@ dashboard-executivo-de-progresso/
 ├── styles/                      # Estilos adicionais
 ├── docs/                        # Documentação
 └── scripts/                     # Scripts de automação
-```
+\`\`\`
 
 ## 📊 Componentes Principais
 
@@ -196,13 +196,13 @@ dashboard-executivo-de-progresso/
 
 **Arquitetura:**
 
-```typescript
+\`\`\`typescript
 interface DashboardProps {
   data: ProjectData[]
   theme: "light" | "dark"
   onExport: () => void
 }
-```
+\`\`\`
 
 ### **Chart Components**
 
@@ -235,13 +235,13 @@ interface DashboardProps {
 
 **Variáveis CSS:**
 
-```css
+\`\`\`css
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --primary: oklch(0.205 0 0);
 }
-```
+\`\`\`
 
 ### **Tipografia**
 
@@ -273,7 +273,7 @@ interface DashboardProps {
 
 **Mobile-First Approach:**
 
-```css
+\`\`\`css
 /* Mobile (default) */
 .container {
   width: 100%;
@@ -298,7 +298,7 @@ interface DashboardProps {
 @media (min-width: 1280px) {
   /* xl */
 }
-```
+\`\`\`
 
 ### **Componentes Responsivos**
 

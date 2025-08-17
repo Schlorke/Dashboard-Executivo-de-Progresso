@@ -13,7 +13,7 @@ Antes de começar, certifique-se de ter instalado:
 
 ### Verificando as versões
 
-```bash
+\`\`\`bash
 node --version
 # v18.17.0 ou superior
 
@@ -22,38 +22,38 @@ pnpm --version
 
 git --version
 # 2.30.0 ou superior
-```
+\`\`\`
 
 ## 🔧 Instalação
 
 ### 1. Clonar o repositório
 
-```bash
+\`\`\`bash
 git clone https://github.com/seu-usuario/dashboard-executivo-de-progresso.git
 cd dashboard-executivo-de-progresso
-```
+\`\`\`
 
 ### 2. Instalar dependências
 
-```bash
+\`\`\`bash
 # Usando pnpm (recomendado)
 pnpm install
 
 # Ou usando npm
 npm install
-```
+\`\`\`
 
 ### 3. Configurar variáveis de ambiente
 
 Crie um arquivo `.env.local` na raiz do projeto:
 
-```bash
+\`\`\`bash
 cp .env.example .env.local
-```
+\`\`\`
 
 Edite o arquivo `.env.local` com suas configurações:
 
-```env
+\`\`\`env
 # Configurações do Next.js
 NEXT_PUBLIC_APP_NAME="Dashboard Executivo de Progresso"
 NEXT_PUBLIC_APP_VERSION="0.1.0"
@@ -63,17 +63,17 @@ NEXT_PUBLIC_API_URL="http://localhost:3000/api"
 
 # Configurações de analytics (opcional)
 NEXT_PUBLIC_GA_ID=""
-```
+\`\`\`
 
 ### 4. Executar o projeto
 
-```bash
+\`\`\`bash
 # Modo desenvolvimento
 pnpm dev
 
 # Ou usando npm
 npm run dev
-```
+\`\`\`
 
 O projeto estará disponível em <http://localhost:3000>.
 
@@ -81,7 +81,7 @@ O projeto estará disponível em <http://localhost:3000>.
 
 ### Executar testes
 
-```bash
+\`\`\`bash
 # Verificar qualidade do código
 pnpm quality:check
 
@@ -90,17 +90,17 @@ pnpm lint
 
 # Verificar formatação
 pnpm format:check
-```
+\`\`\`
 
 ### Build de produção
 
-```bash
+\`\`\`bash
 # Construir para produção
 pnpm build
 
 # Iniciar servidor de produção
 pnpm start
-```
+\`\`\`
 
 ## 🔍 Solução de problemas
 
@@ -108,20 +108,20 @@ pnpm start
 
 Se encontrar problemas com dependências:
 
-```bash
+\`\`\`bash
 # Limpar cache
 pnpm store prune
 
 # Reinstalar dependências
 rm -rf node_modules pnpm-lock.yaml
 pnpm install
-```
+\`\`\`
 
 ### Erro de build
 
 Se o build falhar:
 
-```bash
+\`\`\`bash
 # Verificar versão do Node.js
 node --version
 
@@ -130,17 +130,17 @@ rm -rf .next
 
 # Tentar build novamente
 pnpm build
-```
+\`\`\`
 
 ### Problemas de permissão (Linux/macOS)
 
-```bash
+\`\`\`bash
 # Corrigir permissões
 sudo chown -R $USER:$USER .
 
 # Ou usando pnpm
 pnpm install --unsafe-perm
-```
+\`\`\`
 
 ## 📱 Próximos passos
 
