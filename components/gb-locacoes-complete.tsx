@@ -134,7 +134,6 @@ const BuildingIcon = () => (
 
 export default function GBLBudgetPresentation() {
   const [isLoaded, setIsLoaded] = useState(false)
-  const [activeCard, setActiveCard] = useState<number | null>(null)
   const dashboardRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -429,17 +428,15 @@ export default function GBLBudgetPresentation() {
     label,
     value,
     hint,
-    delay = 0,
   }: {
     label: string
     value: string
     hint?: string
-    delay?: number
   }) => (
     <div
-      className={`hover:shadow-3xl group relative cursor-pointer overflow-hidden rounded-3xl border border-purple-300/15 bg-gradient-to-br from-purple-900/30 via-violet-900/20 to-purple-800/15 p-6 shadow-2xl backdrop-blur-3xl transition-all duration-500 ease-out hover:scale-105 hover:shadow-purple-400/20 ${isLoaded ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"} delay-${delay}`}
+      className={`hover:shadow-3xl hover-scale-smooth duration-600 group relative cursor-pointer overflow-hidden rounded-3xl border border-purple-300/15 bg-gradient-to-br from-purple-900/30 via-violet-900/20 to-purple-800/15 p-6 shadow-2xl backdrop-blur-3xl transition-all ease-in-out will-change-transform hover:shadow-purple-400/20 ${isLoaded ? "translate-y-0 opacity-100" : "translate-y-8 opacity-100"}`}
     >
-      <div className="from-purple-400/8 to-violet-400/8 absolute inset-0 bg-gradient-to-br via-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+      <div className="from-purple-400/8 to-violet-400/8 duration-600 absolute inset-0 bg-gradient-to-br via-transparent opacity-0 transition-all ease-in-out group-hover:opacity-100" />
       <div className="relative z-10">
         <div className="mb-2 text-sm font-medium text-purple-200">{label}</div>
         <div className="mb-1 bg-gradient-to-r from-white via-purple-100 to-violet-200 bg-clip-text text-3xl font-bold tracking-tight text-transparent">
@@ -449,21 +446,19 @@ export default function GBLBudgetPresentation() {
           <div className="text-xs text-purple-300 opacity-80">{hint}</div>
         )}
       </div>
-      <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-gradient-to-br from-purple-300/15 to-violet-300/15 blur-xl transition-transform duration-700 group-hover:scale-150" />
+      <div className="hover-scale-smooth duration-600 animate-slow-pulse absolute -right-4 -top-4 h-24 w-24 rounded-full bg-gradient-to-br from-purple-300/30 to-violet-300/30 blur-xl transition-all ease-in-out will-change-transform group-hover:scale-150" />
     </div>
   )
 
   const Section = ({
     title,
     children,
-    delay = 0,
   }: {
     title: string | React.ReactNode
     children: React.ReactNode
-    delay?: number
   }) => (
     <section
-      className={`space-y-6 transition-all duration-700 ease-out ${isLoaded ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"} delay-${delay}`}
+      className={`space-y-6 ${isLoaded ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}
     >
       <h2 className="bg-gradient-to-r from-white via-purple-100 to-violet-200 bg-clip-text text-2xl font-bold tracking-tight text-transparent">
         {title}
@@ -480,7 +475,7 @@ export default function GBLBudgetPresentation() {
     className?: string
   }) => (
     <div
-      className={`hover:shadow-3xl relative h-80 overflow-hidden rounded-3xl border border-purple-300/15 bg-gradient-to-br from-purple-900/30 via-violet-900/20 to-purple-800/15 p-6 shadow-2xl backdrop-blur-3xl transition-all duration-500 hover:shadow-purple-400/20 ${className}`}
+      className={`hover:shadow-3xl will-change-shadow duration-600 relative h-80 overflow-hidden rounded-3xl border border-purple-300/15 bg-gradient-to-br from-purple-900/30 via-violet-900/20 to-purple-800/15 p-6 shadow-2xl backdrop-blur-3xl transition-all ease-in-out hover:shadow-purple-400/20 ${className}`}
     >
       <div className="absolute inset-0 bg-gradient-to-br from-purple-400/5 via-transparent to-violet-400/5" />
       <div className="relative z-10 h-full">{children}</div>
@@ -493,16 +488,27 @@ export default function GBLBudgetPresentation() {
       className="relative min-h-screen w-full overflow-hidden bg-black"
     >
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -right-40 -top-40 h-80 w-80 animate-pulse rounded-full bg-gradient-to-br from-purple-400/20 to-violet-500/15 blur-3xl" />
-        <div className="animation-delay-1s absolute -bottom-40 -left-40 h-80 w-80 animate-pulse rounded-full bg-gradient-to-br from-violet-400/15 to-purple-500/20 blur-3xl" />
-        <div className="animation-delay-2s from-purple-300/12 to-violet-300/8 absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 transform animate-pulse rounded-full bg-gradient-to-br blur-3xl" />
-        <div className="animation-delay-3s from-violet-500/18 absolute left-20 top-20 h-60 w-60 animate-pulse rounded-full bg-gradient-to-br to-purple-400/15 blur-2xl" />
-        <div className="animation-delay-4s to-purple-400/12 absolute bottom-20 right-20 h-60 w-60 animate-pulse rounded-full bg-gradient-to-br from-violet-500/15 blur-2xl" />
+        {/* Luz superior direita - GRANDE */}
+        <div className="animate-very-slow-pulse absolute -right-40 -top-40 z-0 h-80 w-80 rounded-full bg-gradient-to-br from-purple-400/50 to-violet-500/40 blur-3xl" />
+        {/* Luz inferior esquerda - GRANDE */}
+        <div className="animate-very-slow-pulse absolute -bottom-40 -left-40 z-0 h-80 w-80 rounded-full bg-gradient-to-br from-violet-400/40 to-purple-500/50 blur-3xl" />
+        {/* Luz central - MUITO GRANDE */}
+        <div className="animate-very-slow-pulse absolute left-1/2 top-1/2 z-0 h-96 w-96 -translate-x-1/2 -translate-y-1/2 transform rounded-full bg-gradient-to-br from-purple-300/40 to-violet-300/35 blur-3xl" />
+        {/* Luz superior esquerda - MÉDIA */}
+        <div className="animate-very-slow-pulse absolute left-20 top-20 z-0 h-60 w-60 rounded-full bg-gradient-to-br from-violet-500/40 to-purple-400/35 blur-2xl" />
+        {/* Luz inferior direita - MÉDIA */}
+        <div className="animate-very-slow-pulse absolute bottom-20 right-20 z-0 h-60 w-60 rounded-full bg-gradient-to-br from-purple-400/35 to-violet-500/40 blur-2xl" />
+
+        {/* Luzes adicionais para mais atmosfera */}
+        <div className="animate-very-slow-pulse absolute left-1/4 top-1/4 z-0 h-40 w-40 rounded-full bg-gradient-to-br from-purple-400/30 to-violet-400/25 blur-2xl" />
+        <div className="animate-very-slow-pulse absolute bottom-1/4 right-1/4 z-0 h-40 w-40 rounded-full bg-gradient-to-br from-violet-400/30 to-purple-400/25 blur-2xl" />
+        <div className="animate-very-slow-pulse absolute bottom-1/3 left-1/3 z-0 h-32 w-32 rounded-full bg-gradient-to-br from-purple-300/35 to-violet-300/30 blur-xl" />
+        <div className="animate-very-slow-pulse absolute right-1/3 top-1/3 z-0 h-32 w-32 rounded-full bg-gradient-to-br from-violet-300/35 to-purple-300/30 blur-xl" />
       </div>
 
       <header className="relative z-10 mx-auto max-w-7xl px-6 pb-8 pt-12">
         <div
-          className={`flex flex-col gap-6 transition-all duration-1000 ease-out sm:flex-row sm:items-end sm:justify-between ${isLoaded ? "translate-y-0 opacity-100" : "-translate-y-8 opacity-0"}`}
+          className={`flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between ${isLoaded ? "translate-y-0 opacity-100" : "-translate-y-8 opacity-0"}`}
         >
           <div className="space-y-3">
             <div className="inline-flex items-center gap-2 rounded-full border border-purple-300/25 bg-gradient-to-r from-purple-400/15 to-violet-400/15 px-4 py-2 backdrop-blur-2xl">
@@ -541,25 +547,21 @@ export default function GBLBudgetPresentation() {
             label="Total Planejado"
             value={brl.format(totalPlanned)}
             hint="Soma das 8 etapas"
-            delay={100}
           />
           <Stat
             label="Recebido"
             value={brl.format(totalPaid)}
             hint={`${percentPaid}% do total`}
-            delay={200}
           />
           <Stat
             label="A Receber"
             value={brl.format(totalRemaining)}
             hint={`${100 - percentPaid}% pendente`}
-            delay={300}
           />
           <Stat
             label="Concluído por Valor"
             value={`${percentCompletedByValue}%`}
             hint="Etapas quitadas vs total"
-            delay={400}
           />
         </div>
 
@@ -570,7 +572,6 @@ export default function GBLBudgetPresentation() {
                 <BarChartIcon /> Progresso por Etapa
               </div>
             }
-            delay={500}
           >
             <ChartContainer>
               <ResponsiveContainer width="100%" height="100%">
@@ -640,7 +641,6 @@ export default function GBLBudgetPresentation() {
                 <TrendingUpIcon /> Acumulado Planejado vs Recebido
               </div>
             }
-            delay={600}
           >
             <ChartContainer>
               <ResponsiveContainer width="100%" height="100%">
@@ -693,7 +693,6 @@ export default function GBLBudgetPresentation() {
                 <PieChartIcon /> Distribuição Geral
               </div>
             }
-            delay={700}
           >
             <ChartContainer>
               <ResponsiveContainer width="100%" height="100%">
@@ -735,7 +734,6 @@ export default function GBLBudgetPresentation() {
                 <BuildingIcon /> Comparativo de Mercado
               </div>
             }
-            delay={800}
           >
             <ChartContainer>
               <ResponsiveContainer width="100%" height="100%">
@@ -828,10 +826,9 @@ export default function GBLBudgetPresentation() {
               <MapIcon /> Roadmap Detalhado — Etapas & Investimento
             </div>
           }
-          delay={900}
         >
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-            {modules.map((m, index) => {
+            {modules.map(m => {
               const progress = Math.round((m.paid / m.total) * 100)
               const isCompleted = m.paid >= m.total
               const isActive = m.paid > 0 && m.paid < m.total
@@ -839,27 +836,25 @@ export default function GBLBudgetPresentation() {
               return (
                 <div
                   key={m.id}
-                  className={`hover:shadow-3xl group relative cursor-pointer overflow-hidden rounded-3xl border border-purple-300/15 bg-gradient-to-br from-purple-900/30 via-violet-900/20 to-purple-800/15 p-8 shadow-2xl backdrop-blur-3xl transition-all duration-500 hover:scale-[1.02] ${isLoaded ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"} delay-${1000 + index * 100}`}
-                  onMouseEnter={() => setActiveCard(m.id)}
-                  onMouseLeave={() => setActiveCard(null)}
+                  className={`hover:shadow-3xl hover-scale-smooth duration-600 group relative cursor-pointer overflow-hidden rounded-3xl border border-purple-300/15 bg-gradient-to-br from-purple-900/30 via-violet-900/20 to-purple-800/15 p-8 shadow-2xl backdrop-blur-3xl transition-all ease-in-out will-change-transform hover:scale-[1.02] ${isLoaded ? "translate-y-0 opacity-100" : "translate-y-8 opacity-100"}`}
                 >
                   <div className="absolute right-6 top-6 z-20">
                     {isCompleted ? (
-                      <div className="flex items-center gap-2 rounded-full border border-purple-300/35 bg-gradient-to-r from-purple-400/25 to-violet-500/25 px-3 py-1 backdrop-blur-xl">
+                      <div className="flex items-center gap-2 rounded-full border border-purple-300/35 bg-gradient-to-br from-purple-400/25 to-violet-500/25 px-3 py-1 backdrop-blur-xl">
                         <div className="h-2 w-2 animate-pulse rounded-full bg-green-400" />
                         <span className="text-xs font-medium text-white">
                           Concluída
                         </span>
                       </div>
                     ) : isActive ? (
-                      <div className="flex items-center gap-2 rounded-full border border-violet-300/35 bg-gradient-to-r from-violet-400/25 to-purple-500/25 px-3 py-1 backdrop-blur-xl">
+                      <div className="flex items-center gap-2 rounded-full border border-violet-300/35 bg-gradient-to-br from-violet-400/25 to-purple-500/25 px-3 py-1 backdrop-blur-xl">
                         <div className="h-2 w-2 animate-pulse rounded-full bg-blue-400" />
                         <span className="text-xs font-medium text-white">
                           Em Andamento
                         </span>
                       </div>
                     ) : (
-                      <div className="flex items-center gap-2 rounded-full border border-gray-400/35 bg-gradient-to-r from-gray-500/25 to-gray-600/25 px-3 py-1 backdrop-blur-xl">
+                      <div className="flex items-center gap-2 rounded-full border border-gray-400/35 bg-gradient-to-br from-gray-500/25 to-gray-600/25 px-3 py-1 backdrop-blur-xl">
                         <div className="h-2 w-2 rounded-full bg-red-400" />
                         <span className="text-xs font-medium text-white">
                           Pendente
@@ -868,18 +863,16 @@ export default function GBLBudgetPresentation() {
                     )}
                   </div>
 
-                  <div className="absolute inset-0 bg-gradient-to-br transition-opacity duration-500">
-                    {activeCard === m.id && (
-                      <div
-                        className={`absolute inset-0 bg-gradient-to-br transition-opacity duration-500 ${
-                          isCompleted
-                            ? "from-purple-400/12 to-purple-400/8 via-transparent opacity-100"
-                            : isActive
-                              ? "from-violet-400/12 to-violet-400/8 via-transparent opacity-100"
-                              : "from-purple-400/8 to-violet-400/8 via-transparent opacity-100"
-                        }`}
-                      />
-                    )}
+                  <div className="duration-600 absolute inset-0 bg-gradient-to-br opacity-0 transition-all ease-in-out group-hover:opacity-100">
+                    <div
+                      className={`absolute inset-0 bg-gradient-to-br ${
+                        isCompleted
+                          ? "from-purple-400/12 to-purple-400/8 via-transparent"
+                          : isActive
+                            ? "from-violet-400/12 to-violet-400/8 via-transparent"
+                            : "from-purple-400/8 to-violet-400/8 via-transparent"
+                      }`}
+                    />
                   </div>
 
                   <div className="relative z-10">
@@ -933,7 +926,7 @@ export default function GBLBudgetPresentation() {
                       {m.substeps.map((s, i) => (
                         <div
                           key={i}
-                          className="group/substep flex items-start gap-4 rounded-2xl border border-transparent bg-gradient-to-r from-purple-800/15 to-transparent p-4 backdrop-blur-xl transition-all duration-300 hover:border-purple-400/25 hover:from-purple-700/25 hover:to-violet-800/15"
+                          className="group/substep duration-600 flex items-start gap-4 rounded-2xl border border-transparent bg-gradient-to-r from-purple-800/15 to-transparent p-4 backdrop-blur-xl transition-all ease-in-out hover:border-purple-400/25 hover:from-purple-700/25 hover:to-violet-800/15"
                         >
                           <div
                             className={`mt-2 h-3 w-3 flex-shrink-0 rounded-full bg-gradient-to-br shadow-lg ${
@@ -961,7 +954,7 @@ export default function GBLBudgetPresentation() {
                     </div>
                   </div>
 
-                  <div className="from-purple-300/12 to-violet-300/12 absolute -right-6 -top-6 h-32 w-32 rounded-full bg-gradient-to-br blur-2xl transition-transform duration-700 group-hover:scale-150" />
+                  <div className="hover-scale-smooth duration-600 animate-slow-pulse absolute -right-6 -top-6 z-0 h-32 w-32 rounded-full bg-gradient-to-br from-purple-300/30 to-violet-300/30 blur-2xl transition-all ease-in-out will-change-transform group-hover:scale-150" />
                 </div>
               )
             })}
@@ -974,7 +967,6 @@ export default function GBLBudgetPresentation() {
               <ClipboardListIcon /> Resumo Executivo & Insights
             </div>
           }
-          delay={1800}
         >
           <div className="relative overflow-hidden rounded-3xl border border-purple-300/15 bg-gradient-to-br from-purple-900/30 via-violet-900/20 to-purple-800/15 p-8 shadow-2xl backdrop-blur-3xl">
             <div className="absolute inset-0 bg-gradient-to-br from-purple-400/5 via-transparent to-violet-400/5" />

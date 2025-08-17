@@ -6,15 +6,15 @@ executivos.
 
 ## 🚀 Quick Start
 
-* **[Instalação](getting-started/installation.md)** - Configure o projeto em minutos
-* **[Primeiros Passos](getting-started/quick-start.md)** - Comece a usar rapidamente
-* **[Arquitetura](getting-started/architecture.md)** - Entenda a estrutura do sistema
+- **[Instalação](getting-started/installation.md)** - Configure o projeto em minutos
+- **[Primeiros Passos](getting-started/quick-start.md)** - Comece a usar rapidamente
+- **[Arquitetura](getting-started/architecture.md)** - Entenda a estrutura do sistema
 
 ## 📖 Guias Principais
 
-* **[Componentes](components/)** - Explore todos os componentes disponíveis
-* **[Deploy](deployment/)** - Guias de implantação e CI/CD
-* **[Contribuindo](contributing/)** - Como contribuir para o projeto
+- **[Componentes](components/)** - Explore todos os componentes disponíveis
+- **[Deploy](deployment/)** - Guias de implantação e CI/CD
+- **[Contribuindo](contributing/)** - Como contribuir para o projeto
 
 ## 🛠️ Desenvolvimento e Scripts
 
@@ -57,20 +57,20 @@ chmod +x ./scripts/*.sh
 
 ## 🔧 Stack Tecnológica
 
-* ⚡ **Next.js 15** - Framework React moderno com App Router
-* 🎨 **Tailwind CSS 3.4** - Sistema de design utility-first
-* 📊 **Recharts** - Gráficos profissionais e interativos
-* 🔒 **TypeScript 5** - Tipagem estática e desenvolvimento seguro
-* 📱 **Responsivo** - Design mobile-first para todos os dispositivos
+- ⚡ **Next.js 15** - Framework React moderno com App Router
+- 🎨 **Tailwind CSS 3.4** - Sistema de design utility-first
+- 📊 **Recharts** - Gráficos profissionais e interativos
+- 🔒 **TypeScript 5** - Tipagem estática e desenvolvimento seguro
+- 📱 **Responsivo** - Design mobile-first para todos os dispositivos
 
 ## 🏗️ Arquitetura do Sistema
 
 ### Padrões Arquiteturais
 
-* **App Router (Next.js 15)**: Sistema de roteamento moderno baseado em diretórios
-* **Component-Based**: Arquitetura baseada em componentes reutilizáveis
-* **Type-Safe**: Desenvolvimento com TypeScript rigoroso
-* **Mobile-First**: Design responsivo desde o início
+- **App Router (Next.js 15)**: Sistema de roteamento moderno baseado em diretórios
+- **Component-Based**: Arquitetura baseada em componentes reutilizáveis
+- **Type-Safe**: Desenvolvimento com TypeScript rigoroso
+- **Mobile-First**: Design responsivo desde o início
 
 ### Estrutura de Camadas
 
@@ -103,41 +103,41 @@ chmod +x ./scripts/*.sh
 
 ### Dashboard Principal (`components/gb-locacoes-complete.tsx`)
 
-* **Renderização responsiva** do dashboard principal
-* **Gerenciamento de estado** dos projetos
-* **Integração com gráficos** e métricas
-* **Suporte a temas** claro/escuro
+- **Renderização responsiva** do dashboard principal
+- **Gerenciamento de estado** dos projetos
+- **Integração com gráficos** e métricas
+- **Suporte a temas** claro/escuro
 
 ### Theme Provider (`components/theme-provider.tsx`)
 
-* **Gerenciamento de tema global**
-* **Persistência de preferências**
-* **Transições suaves** entre temas
-* **Integração com CSS variables**
+- **Gerenciamento de tema global**
+- **Persistência de preferências**
+- **Transições suaves** entre temas
+- **Integração com CSS variables**
 
 ### PDF Export (`components/pdf-export.tsx`)
 
-* **Geração de PDF profissional**
-* **Captura de componentes HTML**
-* **Renderização em alta resolução**
-* **Suporte a múltiplas páginas**
+- **Geração de PDF profissional**
+- **Captura de componentes HTML**
+- **Renderização em alta resolução**
+- **Suporte a múltiplas páginas**
 
 ## 🎨 Design System
 
 ### Sistema de Cores
 
-* **Primary**: Tons de roxo (#8b5cf6)
-* **Secondary**: Tons de violeta (#a855f7)
-* **Accent**: Tons de azul (#3b82f6)
-* **Neutral**: Escala de cinzas
+- **Primary**: Tons de roxo (#8b5cf6)
+- **Secondary**: Tons de violeta (#a855f7)
+- **Accent**: Tons de azul (#3b82f6)
+- **Neutral**: Escala de cinzas
 
 ### Tipografia
 
-* **Heading 1**: 2.5rem (40px)
-* **Heading 2**: 2rem (32px)
-* **Heading 3**: 1.5rem (24px)
-* **Body**: 1rem (16px)
-* **Small**: 0.875rem (14px)
+- **Heading 1**: 2.5rem (40px)
+- **Heading 2**: 2rem (32px)
+- **Heading 3**: 1.5rem (24px)
+- **Body**: 1rem (16px)
+- **Small**: 0.875rem (14px)
 
 ### Responsividade
 
@@ -186,42 +186,42 @@ import {
 
 **Tipos de Gráficos:**
 
-* **BarChart**: Gráfico de barras empilhadas
-* **LineChart**: Gráfico de linha temporal
-* **PieChart**: Gráfico de pizza para distribuição
-* **AreaChart**: Gráfico de área para tendências
+- **BarChart**: Gráfico de barras empilhadas
+- **LineChart**: Gráfico de linha temporal
+- **PieChart**: Gráfico de pizza para distribuição
+- **AreaChart**: Gráfico de área para tendências
 
 ## 🚀 Deploy e CI/CD
 
 ### Ambientes Suportados
 
-* 🏠 **Development**: Ambiente local para desenvolvimento
-* 🧪 **Staging**: Ambiente de testes e validação
-* 🚀 **Production**: Ambiente de produção
-* 🔧 **Preview**: Deploys automáticos para branches
+- 🏠 **Development**: Ambiente local para desenvolvimento
+- 🧪 **Staging**: Ambiente de testes e validação
+- 🚀 **Production**: Ambiente de produção
+- 🔧 **Preview**: Deploys automáticos para branches
 
 ### Plataformas Suportadas
 
-* **Vercel**: Deploy automático do Next.js
-* **Netlify**: Deploy com build personalizado
-* **AWS Amplify**: Deploy na AWS
-* **Docker**: Containerização completa
+- **Vercel**: Deploy automático do Next.js
+- **Netlify**: Deploy com build personalizado
+- **AWS Amplify**: Deploy na AWS
+- **Docker**: Containerização completa
 
 ## 🧪 Qualidade de Código
 
 ### Ferramentas
 
-* **ESLint**: Análise estática de código
-* **Prettier**: Formatação automática
-* **TypeScript**: Verificação de tipos
-* **Remark**: Linting de Markdown
+- **ESLint**: Análise estática de código
+- **Prettier**: Formatação automática
+- **TypeScript**: Verificação de tipos
+- **Remark**: Linting de Markdown
 
 ### Padrões
 
-* **Conventional Commits**
-* **Semantic Versioning**
-* **Component naming conventions**
-* **File structure standards**
+- **Conventional Commits**
+- **Semantic Versioning**
+- **Component naming conventions**
+- **File structure standards**
 
 ## 📋 Changelog
 
@@ -229,40 +229,40 @@ import {
 
 #### 🚀 Adicionado
 
-* Sistema de documentação enterprise completo
-* README.md com documentação técnica detalhada
-* CHANGELOG.md para controle de versões
-* Arquivo de estilos dinâmicos para eliminar CSS inline
+- Sistema de documentação enterprise completo
+- README.md com documentação técnica detalhada
+- CHANGELOG.md para controle de versões
+- Arquivo de estilos dinâmicos para eliminar CSS inline
 
 #### 🔧 Corrigido
 
-* **TypeScript Errors**: Corrigidos todos os erros de compilação
-* **CSS Inline Styles**: Substituídos por classes CSS apropriadas
-* **ESLint Issues**: Resolvidos todos os warnings e erros
+- **TypeScript Errors**: Corrigidos todos os erros de compilação
+- **CSS Inline Styles**: Substituídos por classes CSS apropriadas
+- **ESLint Issues**: Resolvidos todos os warnings e erros
 
 #### 🎨 Melhorado
 
-* **Code Organization**: Melhor organização e estrutura do código
-* **Performance**: Otimizações de renderização e transições
-* **Developer Experience**: Melhor experiência para desenvolvedores
+- **Code Organization**: Melhor organização e estrutura do código
+- **Performance**: Otimizações de renderização e transições
+- **Developer Experience**: Melhor experiência para desenvolvedores
 
 ### \[0.1.0] - 2024-12-19
 
 #### 🎉 Lançamento Inicial
 
-* **Dashboard Executivo**: Interface principal para gestão de projetos
-* **Sistema de Gráficos**: Visualizações com Recharts
-* **Roadmap Detalhado**: 8 etapas estruturadas do projeto
-* **Exportação PDF**: Geração de relatórios executivos
+- **Dashboard Executivo**: Interface principal para gestão de projetos
+- **Sistema de Gráficos**: Visualizações com Recharts
+- **Roadmap Detalhado**: 8 etapas estruturadas do projeto
+- **Exportação PDF**: Geração de relatórios executivos
 
 ## 🤝 Contribuindo
 
 ### Tipos de Contribuição
 
-* 🐛 **Bug Reports**: Reportar bugs e problemas
-* 💡 **Feature Requests**: Sugerir novas funcionalidades
-* 📝 **Documentation**: Melhorar documentação
-* 🔧 **Code**: Implementar funcionalidades ou correções
+- 🐛 **Bug Reports**: Reportar bugs e problemas
+- 💡 **Feature Requests**: Sugerir novas funcionalidades
+- 📝 **Documentation**: Melhorar documentação
+- 🔧 **Code**: Implementar funcionalidades ou correções
 
 ### Como Contribuir
 
@@ -274,21 +274,21 @@ import {
 
 ### Padrões de Commit
 
-* **feat**: Nova funcionalidade
-* **fix**: Correção de bug
-* **docs**: Documentação
-* **style**: Formatação de código
-* **refactor**: Refatoração
-* **test**: Testes
-* **chore**: Tarefas de manutenção
+- **feat**: Nova funcionalidade
+- **fix**: Correção de bug
+- **docs**: Documentação
+- **style**: Formatação de código
+- **refactor**: Refatoração
+- **test**: Testes
+- **chore**: Tarefas de manutenção
 
 ## 📞 Suporte
 
-* **Issues**:
+- **Issues**:
   [GitHub Issues](https://github.com/seu-usuario/dashboard-executivo-de-progresso/issues)
-* **Discussions**:
+- **Discussions**:
   [GitHub Discussions](https://github.com/seu-usuario/dashboard-executivo-de-progresso/issues)
-* **Email**: suporte@gb-locacoes.com
+- **Email**: suporte@gb-locacoes.com
 
 ## 📄 Licença
 
@@ -297,18 +297,18 @@ detalhes.
 
 ## 🌟 Reconhecimentos
 
-* **Equipe GB Locações** - Visão e requisitos do projeto
-* **Next.js Team** - Framework React de ponta
-* **Vercel** - Plataforma de deploy e hosting
-* **Tailwind CSS** - Framework CSS utility-first
-* **Recharts** - Biblioteca de gráficos React
+- **Equipe GB Locações** - Visão e requisitos do projeto
+- **Next.js Team** - Framework React de ponta
+- **Vercel** - Plataforma de deploy e hosting
+- **Tailwind CSS** - Framework CSS utility-first
+- **Recharts** - Biblioteca de gráficos React
 
-***
+---
 
 <div align="center">
 
 ## ⭐ Se este projeto foi útil, considere dar uma estrela! ⭐
 
-*Construído com ❤️ pela equipe GB Locações*
+_Construído com ❤️ pela equipe GB Locações_
 
 </div>

@@ -7,10 +7,10 @@ Aprenda a usar o Dashboard Executivo de Progresso em poucos minutos.
 O Dashboard Executivo de Progresso é uma ferramenta poderosa para visualizar e acompanhar o
 progresso de projetos executivos. Ele oferece:
 
-* **Visão geral** do status dos projetos
-* **Gráficos interativos** para análise de dados
-* **Relatórios exportáveis** em PDF
-* **Interface responsiva** para todos os dispositivos
+- **Visão geral** do status dos projetos
+- **Gráficos interativos** para análise de dados
+- **Relatórios exportáveis** em PDF
+- **Interface responsiva** para todos os dispositivos
 
 ## 🏠 Página Inicial
 
@@ -25,25 +25,25 @@ Ao acessar o dashboard, você verá:
 
 ### Navegação
 
-* **Tema**: Alternar entre modo claro/escuro
-* **Exportar**: Gerar relatórios em PDF
-* **Responsivo**: Adapta-se automaticamente ao dispositivo
+- **Tema**: Alternar entre modo claro/escuro
+- **Exportar**: Gerar relatórios em PDF
+- **Responsivo**: Adapta-se automaticamente ao dispositivo
 
 ## 📊 Entendendo os Dados
 
 ### Status dos Projetos
 
-* 🟢 **Concluído** - Projeto finalizado com sucesso
-* 🟡 **Em Andamento** - Projeto em desenvolvimento
-* 🔴 **Pendente** - Projeto aguardando início
-* ⚠️ **Atrasado** - Projeto com prazo vencido
+- 🟢 **Concluído** - Projeto finalizado com sucesso
+- 🟡 **Em Andamento** - Projeto em desenvolvimento
+- 🔴 **Pendente** - Projeto aguardando início
+- ⚠️ **Atrasado** - Projeto com prazo vencido
 
 ### Métricas Importantes
 
-* **Progresso Geral**: Percentual de conclusão total
-* **Valor Investido**: Total investido nos projetos
-* **Prazo**: Tempo restante para conclusão
-* **ROI**: Retorno sobre investimento
+- **Progresso Geral**: Percentual de conclusão total
+- **Valor Investido**: Total investido nos projetos
+- **Prazo**: Tempo restante para conclusão
+- **ROI**: Retorno sobre investimento
 
 ## 🎨 Personalização
 
@@ -51,76 +51,76 @@ Ao acessar o dashboard, você verá:
 
 O dashboard suporta dois temas:
 
-* **Claro**: Ideal para ambientes com muita luz
-* **Escuro**: Perfeito para uso noturno ou baixa luminosidade
+- **Claro**: Ideal para ambientes com muita luz
+- **Escuro**: Perfeito para uso noturno ou baixa luminosidade
 
 ### Configurações
 
-* Ajuste de cores e contrastes
-* Personalização de gráficos
-* Configuração de notificações
+- Ajuste de cores e contrastes
+- Personalização de gráficos
+- Configuração de notificações
 
 ## 📱 Uso em Dispositivos Móveis
 
 ### Responsividade
 
-* **Mobile-first**: Otimizado para smartphones
-* **Touch-friendly**: Interface adaptada para toque
-* **Orientação**: Funciona em portrait e landscape
+- **Mobile-first**: Otimizado para smartphones
+- **Touch-friendly**: Interface adaptada para toque
+- **Orientação**: Funciona em portrait e landscape
 
 ### Funcionalidades Mobile
 
-* Swipe para navegar entre projetos
-* Pinch para zoom nos gráficos
-* Gestos para ações rápidas
+- Swipe para navegar entre projetos
+- Pinch para zoom nos gráficos
+- Gestos para ações rápidas
 
 ## 🔍 Funcionalidades Avançadas
 
 ### Filtros e Busca
 
-* **Filtrar por status**: Ver apenas projetos específicos
-* **Busca por nome**: Encontrar projetos rapidamente
-* **Ordenação**: Por data, valor, progresso
+- **Filtrar por status**: Ver apenas projetos específicos
+- **Busca por nome**: Encontrar projetos rapidamente
+- **Ordenação**: Por data, valor, progresso
 
 ### Exportação
 
-* **PDF**: Relatórios profissionais
-* **Imagens**: Capturas de gráficos
-* **Dados**: Exportação em CSV/JSON
+- **PDF**: Relatórios profissionais
+- **Imagens**: Capturas de gráficos
+- **Dados**: Exportação em CSV/JSON
 
 ## 🚨 Alertas e Notificações
 
 ### Sistema de Alertas
 
-* **Prazos**: Avisos sobre vencimentos
-* **Métricas**: Alertas de performance
-* **Status**: Mudanças no projeto
+- **Prazos**: Avisos sobre vencimentos
+- **Métricas**: Alertas de performance
+- **Status**: Mudanças no projeto
 
 ### Configuração de Notificações
 
-* Email para alertas importantes
-* Push notifications no navegador
-* Relatórios semanais automáticos
+- Email para alertas importantes
+- Push notifications no navegador
+- Relatórios semanais automáticos
 
 ## 💡 Dicas de Uso
 
 ### Para Executivos
 
-* Acompanhe o dashboard diariamente
-* Use os filtros para focar em projetos críticos
-* Exporte relatórios para reuniões
+- Acompanhe o dashboard diariamente
+- Use os filtros para focar em projetos críticos
+- Exporte relatórios para reuniões
 
 ### Para Equipes
 
-* Atualize o status regularmente
-* Use as métricas para identificar gargalos
-* Compartilhe insights com stakeholders
+- Atualize o status regularmente
+- Use as métricas para identificar gargalos
+- Compartilhe insights com stakeholders
 
 ### Para Desenvolvedores
 
-* Explore a API para integrações
-* Customize componentes conforme necessário
-* Contribua com melhorias
+- Explore a API para integrações
+- Customize componentes conforme necessário
+- Contribua com melhorias
 
 ## 🔧 Solução de Problemas Comuns
 
@@ -156,13 +156,13 @@ Agora que você conhece o básico:
 
 ## 🆘 Precisa de Ajuda?
 
-* **Documentação**: Explore as outras seções
-* **Issues**:
+- **Documentação**: Explore as outras seções
+- **Issues**:
   [GitHub Issues](https://github.com/seu-usuario/dashboard-executivo-de-progresso/issues)
-* **Suporte**: suporte@gb-locacoes.com
-* **Comunidade**:
+- **Suporte**: suporte@gb-locacoes.com
+- **Comunidade**:
   [GitHub Discussions](https://github.com/seu-usuario/dashboard-executivo-de-progresso/discussions)
 
-***
+---
 
 **Anterior**: [Instalação](installation.md) | **Próximo**: [Arquitetura](architecture.md) →

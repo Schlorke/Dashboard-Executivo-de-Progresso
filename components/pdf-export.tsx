@@ -392,10 +392,10 @@ const PDFExport: React.FC<PDFExportProps> = props => {
   if (!isClient) {
     return (
       <button
-        className="group relative overflow-hidden rounded-2xl border border-purple-300/25 bg-gradient-to-r from-purple-900/40 to-violet-900/30 px-6 py-3 text-sm font-medium text-white backdrop-blur-3xl transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-purple-400/20"
+        className="hover-scale-smooth duration-600 group relative overflow-hidden rounded-2xl border border-purple-300/25 bg-gradient-to-r from-purple-900/40 to-violet-900/30 px-6 py-3 text-sm font-medium text-white backdrop-blur-3xl transition-all ease-in-out hover:shadow-xl hover:shadow-purple-400/20"
         disabled
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-400/15 to-violet-400/15 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+        <div className="duration-600 absolute inset-0 bg-gradient-to-r from-purple-400/15 to-violet-400/15 opacity-0 transition-all ease-in-out group-hover:opacity-100" />
         <span className="relative z-10 flex items-center gap-2">
           <svg
             className="h-4 w-4 animate-spin text-white"
@@ -428,9 +428,9 @@ const PDFExport: React.FC<PDFExportProps> = props => {
     <button
       onClick={handleExportPDF}
       disabled={isLoading}
-      className="group relative overflow-hidden rounded-2xl border border-purple-300/25 bg-gradient-to-r from-purple-900/40 to-violet-900/30 px-6 py-3 text-sm font-medium text-white backdrop-blur-3xl transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-purple-400/20"
+      className="hover-scale-smooth duration-600 group relative overflow-hidden rounded-2xl border border-purple-300/25 bg-gradient-to-r from-purple-900/40 to-violet-900/30 px-6 py-3 text-sm font-medium text-white backdrop-blur-3xl transition-all ease-in-out hover:shadow-xl hover:shadow-purple-400/20"
     >
-      <div className="absolute inset-0 bg-gradient-to-r from-purple-400/15 to-violet-400/15 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+      <div className="duration-600 absolute inset-0 bg-gradient-to-r from-purple-400/15 to-violet-400/15 opacity-0 transition-all ease-in-out group-hover:opacity-100" />
       <span className="relative z-10 flex items-center gap-2">
         {isLoading ? (
           <>
