@@ -132,34 +132,45 @@ const BuildingIcon = () => (
   </svg>
 )
 
-// Hook para detectar quando elementos entram na viewport (uma vez)
+
+
+// Hook otimizado para detectar elementos na viewport (mobile-first) - SEM DEPENDÊNCIAS PROBLEMÁTICAS
 const useIntersectionObserver = (options: IntersectionObserverInit = {}) => {
   const [hasBeenVisible, setHasBeenVisible] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
+  const observerRef = useRef<IntersectionObserver | null>(null)
 
   useEffect(() => {
     const element = ref.current
-    if (!element) return
+    if (!element || hasBeenVisible) return
 
-    const observer = new IntersectionObserver(
+    // Detectar viewport mobile para ajustar threshold dinamicamente
+    const isMobile = window.innerWidth < 768
+    const defaultThreshold = isMobile ? 0.15 : 0.6
+    const defaultRootMargin = isMobile ? "50px 0px" : "0px"
+
+    observerRef.current = new IntersectionObserver(
       entries => {
         const [entry] = entries
-        if (entry.isIntersecting && !hasBeenVisible) {
+        if (entry.isIntersecting) {
           setHasBeenVisible(true)
           // Parar de observar após primeira intersecção
-          observer.unobserve(element)
+          observerRef.current?.unobserve(element)
         }
       },
       {
-        threshold: 0.6,
-        rootMargin: "0px",
+        threshold: defaultThreshold,
+        rootMargin: defaultRootMargin,
         ...options,
       }
     )
 
-    observer.observe(element)
-    return () => observer.disconnect()
-  }, [options, hasBeenVisible])
+    observerRef.current.observe(element)
+    
+    return () => {
+      observerRef.current?.disconnect()
+    }
+  }, []) // SEM DEPENDÊNCIAS QUE CAUSAM RE-RENDER!
 
   return [ref, hasBeenVisible] as const
 }
@@ -167,6 +178,8 @@ const useIntersectionObserver = (options: IntersectionObserverInit = {}) => {
 export default function GBLBudgetPresentation() {
   const dashboardRef = useRef<HTMLDivElement>(null)
   const [isClient, setIsClient] = useState(false)
+  
+
 
   useEffect(() => {
     setIsClient(true)
@@ -609,19 +622,16 @@ export default function GBLBudgetPresentation() {
     isActive: boolean
     brl: Intl.NumberFormat
   }) => {
-    const [ref, hasBeenVisible] = useIntersectionObserver({
-      threshold: 0.1,
-      rootMargin: "200px 0px",
-    })
+    const [ref, hasBeenVisible] = useIntersectionObserver()
 
     return (
       <div
         ref={ref}
-        className={`scroll-reveal-element hover:shadow-3xl hover-scale-smooth duration-600 group relative cursor-pointer overflow-hidden rounded-3xl border border-purple-300/15 bg-gradient-to-br from-purple-900/30 via-violet-900/20 to-purple-800/15 p-8 shadow-2xl backdrop-blur-3xl transition-all ease-in-out will-change-transform hover:scale-[1.02] ${
+        className={`scroll-reveal-element hover:shadow-3xl hover-scale-smooth duration-600 group relative cursor-pointer overflow-hidden rounded-2xl sm:rounded-3xl border border-purple-300/15 bg-gradient-to-br from-purple-900/30 via-violet-900/20 to-purple-800/15 p-6 sm:p-8 shadow-2xl backdrop-blur-3xl transition-all ease-in-out will-change-transform hover:scale-[1.02] ${
           hasBeenVisible ? "lens-focus-visible" : "lens-focus-initial"
         }`}
       >
-        <div className="absolute right-6 top-6 z-20">
+        <div className="absolute right-4 top-4 sm:right-6 sm:top-6 z-20">
           {isCompleted ? (
             <div className="flex items-center gap-2 rounded-full border border-purple-300/35 bg-gradient-to-br from-purple-400/25 to-violet-500/25 px-3 py-1 backdrop-blur-xl">
               <div className="h-2 w-2 animate-pulse rounded-full bg-green-400" />
@@ -666,16 +676,16 @@ export default function GBLBudgetPresentation() {
             </div>
           </div>
 
-          <div className="absolute right-6 top-8 z-10">
+          <div className="absolute right-4 top-12 sm:right-6 sm:top-8 z-10">
             <div className="text-right">
-              <div className="bg-gradient-to-r from-white to-purple-100 bg-clip-text text-2xl font-bold text-transparent">
+              <div className="bg-gradient-to-r from-white to-purple-100 bg-clip-text text-xl sm:text-2xl font-bold text-transparent">
                 {brl.format(m.total)}
               </div>
             </div>
           </div>
 
-          <div className="mb-6 grid grid-cols-3 gap-4">
-            <div className="rounded-2xl border border-purple-400/25 bg-gradient-to-br from-purple-800/30 to-purple-700/20 p-4 backdrop-blur-2xl">
+          <div className="mb-6 grid grid-cols-3 gap-3 sm:gap-4">
+            <div className="rounded-xl sm:rounded-2xl border border-purple-400/25 bg-gradient-to-br from-purple-800/30 to-purple-700/20 p-3 sm:p-4 backdrop-blur-2xl">
               <div className="mb-1 text-xs font-medium text-purple-200">
                 Recebido
               </div>
@@ -749,7 +759,7 @@ export default function GBLBudgetPresentation() {
       >
         <div className="absolute inset-0 bg-gradient-to-br from-purple-400/5 via-transparent to-violet-400/5" />
         <div className="relative z-10 space-y-6">
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-2">
             <div className="space-y-4">
               <h3 className="flex items-center gap-2 text-lg font-bold text-white">
                 <span className="h-2 w-2 animate-pulse rounded-full bg-purple-300" />
@@ -1136,29 +1146,26 @@ export default function GBLBudgetPresentation() {
           </Section>
         </div>
 
-        {/* Título da seção sem wrapper Section para não interferir */}
-        <div className="space-y-6">
-          <h2 className="bg-gradient-to-r from-white via-purple-100 to-violet-200 bg-clip-text text-2xl font-bold tracking-tight text-transparent">
+        {/* SEÇÃO ESPECIAL SÓ PARA O TÍTULO - COMO UMA SECTION INDEPENDENTE */}
+        <Section
+          title={
             <div className="flex items-center gap-2">
               <MapIcon /> Roadmap Detalhado — Etapas & Investimento (
               {modules?.length || 0} etapas)
             </div>
-          </h2>
+          }
+        >
+          {/* Conteúdo vazio para não quebrar a Section */}
+          <div></div>
+        </Section>
 
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+        {/* Grid dos cards - TOTALMENTE separado */}
+        <div className="grid grid-cols-1 gap-6 sm:gap-8 xl:grid-cols-2">
             {modules && modules.length > 0 ? (
               modules.map((m, index) => {
                 const progress = Math.round((m.paid / m.total) * 100)
                 const isCompleted = m.paid >= m.total
                 const isActive = m.paid > 0 && m.paid < m.total
-
-                // Debug: verificar se está renderizando
-                console.log(
-                  `Renderizando Etapa ${m.id}:`,
-                  m.title,
-                  "Index:",
-                  index
-                )
 
                 return (
                   <ModuleCard
@@ -1176,7 +1183,6 @@ export default function GBLBudgetPresentation() {
                 <p>⚠️ Nenhum módulo encontrado. Verificando dados...</p>
               </div>
             )}
-          </div>
         </div>
 
         <Section
