@@ -1,6 +1,6 @@
 "use client"
 import type React from "react"
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
 import {
   ResponsiveContainer,
   BarChart,
@@ -131,6 +131,39 @@ const BuildingIcon = () => (
     />
   </svg>
 )
+
+// Hook para detectar quando elementos entram na viewport
+const useIntersectionObserver = (options = {}) => {
+  const [isIntersecting, setIsIntersecting] = useState(false)
+  const [hasAnimated, setHasAnimated] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+
+  const callback = useCallback((entries: IntersectionObserverEntry[]) => {
+    const [entry] = entries
+    if (entry.isIntersecting && !hasAnimated) {
+      setIsIntersecting(true)
+      setHasAnimated(true)
+    }
+  }, [hasAnimated])
+
+  useEffect(() => {
+    const element = ref.current
+    if (!element) return
+
+    const observer = new IntersectionObserver(callback, {
+      threshold: 0.1,
+      rootMargin: '50px',
+      ...options,
+    })
+
+    observer.observe(element)
+    return () => observer.disconnect()
+  }, [callback, options])
+
+  return [ref, isIntersecting] as const
+}
+
+
 
 export default function GBLBudgetPresentation() {
   const [isLoaded, setIsLoaded] = useState(false)
@@ -424,6 +457,62 @@ export default function GBLBudgetPresentation() {
 
   const pieColors = ["#a78bfa", "#c4b5fd", "#ddd6fe", "#ede9fe"]
 
+  // Componente Header com animação
+  const HeaderContent = ({
+    modules,
+    totalPlanned,
+    totalPaid,
+    totalRemaining,
+    percentPaid,
+    dashboardRef,
+  }: {
+    modules: Module[]
+    totalPlanned: number
+    totalPaid: number
+    totalRemaining: number
+    percentPaid: number
+    dashboardRef: React.RefObject<HTMLDivElement | null>
+  }) => {
+    const [ref, isVisible] = useIntersectionObserver({ threshold: 0.1 })
+    
+    return (
+      <div
+        ref={ref}
+        className={`flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between ${
+          isVisible ? "lens-focus-visible" : "lens-focus-initial"
+        }`}
+      >
+        <div className="space-y-3">
+          <div className="inline-flex items-center gap-2 rounded-full border border-purple-300/25 bg-gradient-to-r from-purple-400/15 to-violet-400/15 px-4 py-2 backdrop-blur-2xl">
+            <div className="h-2 w-2 animate-pulse rounded-full bg-purple-300" />
+            <span className="text-sm font-medium text-purple-200">
+              Projeto em Andamento
+            </span>
+          </div>
+          <h1 className="bg-gradient-to-r from-white via-purple-200 to-violet-300 bg-clip-text text-4xl font-black tracking-tight text-transparent sm:text-5xl">
+            GB Locações
+          </h1>
+          <p className="text-lg font-medium text-gray-300">
+            Dashboard Executivo de Progresso
+          </p>
+          <p className="text-sm text-gray-400">
+            Atualizado em {new Date().toLocaleDateString("pt-BR")} • Versão 2.0
+          </p>
+        </div>
+        <div className="flex gap-3">
+          <PDFExport
+            modules={modules}
+            totalInvestment={totalPlanned}
+            totalPaid={totalPaid}
+            totalRemaining={totalRemaining}
+            progressPercentage={percentPaid}
+            dashboardRef={dashboardRef}
+          />
+        </div>
+      </div>
+    )
+  }
+
   const Stat = ({
     label,
     value,
@@ -432,10 +521,16 @@ export default function GBLBudgetPresentation() {
     label: string
     value: string
     hint?: string
-  }) => (
-    <div
-      className={`hover:shadow-3xl hover-scale-smooth duration-600 group relative cursor-pointer overflow-hidden rounded-3xl border border-purple-300/15 bg-gradient-to-br from-purple-900/30 via-violet-900/20 to-purple-800/15 p-6 shadow-2xl backdrop-blur-3xl transition-all ease-in-out will-change-transform hover:shadow-purple-400/20 ${isLoaded ? "translate-y-0 opacity-100" : "translate-y-8 opacity-100"}`}
-    >
+  }) => {
+    const [ref, isVisible] = useIntersectionObserver({ threshold: 0.2 })
+    
+    return (
+      <div
+        ref={ref}
+        className={`hover:shadow-3xl hover-scale-smooth duration-600 group relative cursor-pointer overflow-hidden rounded-3xl border border-purple-300/15 bg-gradient-to-br from-purple-900/30 via-violet-900/20 to-purple-800/15 p-6 shadow-2xl backdrop-blur-3xl transition-all ease-in-out will-change-transform hover:shadow-purple-400/20 ${
+          isVisible ? "lens-focus-visible" : "lens-focus-initial"
+        }`}
+      >
       <div className="from-purple-400/8 to-violet-400/8 duration-600 absolute inset-0 bg-gradient-to-br via-transparent opacity-0 transition-all ease-in-out group-hover:opacity-100" />
       <div className="relative z-10">
         <div className="mb-2 text-sm font-medium text-purple-200">{label}</div>
@@ -448,7 +543,8 @@ export default function GBLBudgetPresentation() {
       </div>
       <div className="hover-scale-smooth duration-600 animate-slow-pulse absolute -right-4 -top-4 h-24 w-24 rounded-full bg-gradient-to-br from-purple-300/30 to-violet-300/30 blur-xl transition-all ease-in-out will-change-transform group-hover:scale-150" />
     </div>
-  )
+    )
+  }
 
   const Section = ({
     title,
@@ -456,16 +552,23 @@ export default function GBLBudgetPresentation() {
   }: {
     title: string | React.ReactNode
     children: React.ReactNode
-  }) => (
-    <section
-      className={`space-y-6 ${isLoaded ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}
-    >
-      <h2 className="bg-gradient-to-r from-white via-purple-100 to-violet-200 bg-clip-text text-2xl font-bold tracking-tight text-transparent">
-        {title}
-      </h2>
-      {children}
-    </section>
-  )
+  }) => {
+    const [ref, isVisible] = useIntersectionObserver({ threshold: 0.1 })
+    
+    return (
+      <section
+        ref={ref}
+        className={`space-y-6 ${
+          isVisible ? "lens-focus-visible" : "lens-focus-initial"
+        }`}
+      >
+        <h2 className="bg-gradient-to-r from-white via-purple-100 to-violet-200 bg-clip-text text-2xl font-bold tracking-tight text-transparent">
+          {title}
+        </h2>
+        {children}
+      </section>
+    )
+  }
 
   const ChartContainer = ({
     children,
@@ -473,14 +576,249 @@ export default function GBLBudgetPresentation() {
   }: {
     children: React.ReactNode
     className?: string
-  }) => (
-    <div
-      className={`hover:shadow-3xl will-change-shadow duration-600 relative h-80 overflow-hidden rounded-3xl border border-purple-300/15 bg-gradient-to-br from-purple-900/30 via-violet-900/20 to-purple-800/15 p-6 shadow-2xl backdrop-blur-3xl transition-all ease-in-out hover:shadow-purple-400/20 ${className}`}
-    >
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-400/5 via-transparent to-violet-400/5" />
-      <div className="relative z-10 h-full">{children}</div>
-    </div>
-  )
+  }) => {
+    const [ref, isVisible] = useIntersectionObserver({ threshold: 0.2 })
+    
+    return (
+      <div
+        ref={ref}
+        className={`hover:shadow-3xl will-change-shadow duration-600 relative h-80 overflow-hidden rounded-3xl border border-purple-300/15 bg-gradient-to-br from-purple-900/30 via-violet-900/20 to-purple-800/15 p-6 shadow-2xl backdrop-blur-3xl transition-all ease-in-out hover:shadow-purple-400/20 ${className} ${
+          isVisible ? "lens-focus-visible" : "lens-focus-initial"
+        }`}
+      >
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-400/5 via-transparent to-violet-400/5" />
+        <div className="relative z-10 h-full">{children}</div>
+      </div>
+    )
+  }
+
+  // Componente ModuleCard com animação
+  const ModuleCard = ({
+    module: m,
+    progress,
+    isCompleted,
+    isActive,
+    brl,
+  }: {
+    module: Module
+    progress: number
+    isCompleted: boolean
+    isActive: boolean
+    brl: Intl.NumberFormat
+  }) => {
+    const [ref, isVisible] = useIntersectionObserver({ threshold: 0.1 })
+    
+    return (
+      <div
+        ref={ref}
+        className={`hover:shadow-3xl hover-scale-smooth duration-600 group relative cursor-pointer overflow-hidden rounded-3xl border border-purple-300/15 bg-gradient-to-br from-purple-900/30 via-violet-900/20 to-purple-800/15 p-8 shadow-2xl backdrop-blur-3xl transition-all ease-in-out will-change-transform hover:scale-[1.02] ${
+          isVisible ? "lens-focus-visible" : "lens-focus-initial"
+        }`}
+      >
+        <div className="absolute right-6 top-6 z-20">
+          {isCompleted ? (
+            <div className="flex items-center gap-2 rounded-full border border-purple-300/35 bg-gradient-to-br from-purple-400/25 to-violet-500/25 px-3 py-1 backdrop-blur-xl">
+              <div className="h-2 w-2 animate-pulse rounded-full bg-green-400" />
+              <span className="text-xs font-medium text-white">
+                Concluída
+              </span>
+            </div>
+          ) : isActive ? (
+            <div className="flex items-center gap-2 rounded-full border border-violet-300/35 bg-gradient-to-br from-violet-400/25 to-purple-500/25 px-3 py-1 backdrop-blur-xl">
+              <div className="h-2 w-2 animate-pulse rounded-full bg-blue-400" />
+              <span className="text-xs font-medium text-white">
+                Em Andamento
+              </span>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2 rounded-full border border-gray-400/35 bg-gradient-to-br from-gray-500/25 to-gray-600/25 px-3 py-1 backdrop-blur-xl">
+              <div className="h-2 w-2 rounded-full bg-red-400" />
+              <span className="text-xs font-medium text-white">
+                Pendente
+              </span>
+            </div>
+          )}
+        </div>
+
+        <div className="duration-600 absolute inset-0 bg-gradient-to-br opacity-0 transition-all ease-in-out group-hover:opacity-100">
+          <div
+            className={`absolute inset-0 bg-gradient-to-br ${
+              isCompleted
+                ? "from-purple-400/12 to-purple-400/8 via-transparent"
+                : isActive
+                  ? "from-violet-400/12 to-violet-400/8 via-transparent"
+                  : "from-purple-400/8 to-violet-400/8 via-transparent"
+            }`}
+          />
+        </div>
+
+        <div className="relative z-10">
+          <div className="mb-6 flex items-start justify-between gap-4 pr-32">
+            <div className="flex-1 space-y-2">
+              <div className="text-sm font-bold tracking-wider text-purple-300">
+                {m.key}
+              </div>
+              <h3 className="pr-4 text-xl font-bold leading-tight tracking-tight text-white">
+                {m.title}
+              </h3>
+            </div>
+          </div>
+
+          <div className="absolute right-6 top-8 z-10">
+            <div className="text-right">
+              <div className="bg-gradient-to-r from-white to-purple-100 bg-clip-text text-2xl font-bold text-transparent">
+                {brl.format(m.total)}
+              </div>
+            </div>
+          </div>
+
+          <div className="mb-6 grid grid-cols-3 gap-4">
+            <div className="rounded-2xl border border-purple-400/25 bg-gradient-to-br from-purple-800/30 to-purple-700/20 p-4 backdrop-blur-2xl">
+              <div className="mb-1 text-xs font-medium text-purple-200">
+                Recebido
+              </div>
+              <div className="text-lg font-bold text-white">
+                {brl.format(m.paid)}
+              </div>
+            </div>
+            <div className="rounded-2xl border border-violet-400/25 bg-gradient-to-br from-violet-800/30 to-violet-700/20 p-4 backdrop-blur-2xl">
+              <div className="mb-1 text-xs font-medium text-violet-200">
+                Restante
+              </div>
+              <div className="text-lg font-bold text-white">
+                {brl.format(Math.max(0, m.total - m.paid))}
+              </div>
+            </div>
+            <div className="rounded-2xl border border-purple-400/25 bg-gradient-to-br from-purple-800/30 to-purple-800/30 p-4 backdrop-blur-xl">
+              <div className="mb-1 text-xs font-medium text-purple-200">
+                Progresso
+              </div>
+              <div className="text-lg font-bold text-white">
+                {progress}%
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            {m.substeps.map((s, i) => (
+              <div
+                key={i}
+                className="group/substep duration-600 flex items-start gap-4 rounded-2xl border border-transparent bg-gradient-to-r from-purple-800/15 to-transparent p-4 backdrop-blur-xl transition-all ease-in-out hover:border-purple-400/25 hover:from-purple-700/25 hover:to-violet-800/15"
+              >
+                <div
+                  className={`mt-2 h-3 w-3 flex-shrink-0 rounded-full bg-gradient-to-br shadow-lg ${
+                    [
+                      "from-purple-400 to-purple-600",
+                      "from-violet-400 to-violet-600",
+                      "from-purple-300 to-purple-500",
+                      "from-violet-300 to-violet-500",
+                    ][i % 4]
+                  }`}
+                />
+                <div className="min-w-0 flex-1">
+                  <div className="mb-1 text-sm font-semibold text-white">
+                    {s.name}
+                  </div>
+                  <p className="text-xs leading-relaxed text-purple-200">
+                    {s.justification}
+                  </p>
+                </div>
+                <div className="whitespace-nowrap rounded-full border border-purple-400/25 bg-gradient-to-r from-purple-800/50 to-violet-800/50 px-3 py-1 text-sm font-bold text-white backdrop-blur-xl">
+                  {brl.format(s.value)}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="hover-scale-smooth duration-600 animate-slow-pulse absolute -right-6 -top-6 z-0 h-32 w-32 rounded-full bg-gradient-to-br from-purple-300/30 to-violet-300/30 blur-2xl transition-all ease-in-out will-change-transform group-hover:scale-150" />
+      </div>
+    )
+  }
+
+  // Componente ExecutiveSummary com animação
+  const ExecutiveSummary = ({ percentPaid }: { percentPaid: number }) => {
+    const [ref, isVisible] = useIntersectionObserver({ threshold: 0.1 })
+    
+    return (
+      <div 
+        ref={ref}
+        className={`relative overflow-hidden rounded-3xl border border-purple-300/15 bg-gradient-to-br from-purple-900/30 via-violet-900/20 to-purple-800/15 p-8 shadow-2xl backdrop-blur-3xl ${
+          isVisible ? "lens-focus-visible" : "lens-focus-initial"
+        }`}
+      >
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-400/5 via-transparent to-violet-400/5" />
+        <div className="relative z-10 space-y-6">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+            <div className="space-y-4">
+              <h3 className="flex items-center gap-2 text-lg font-bold text-white">
+                <span className="h-2 w-2 animate-pulse rounded-full bg-purple-300" />
+                Status Atual
+              </h3>
+              <ul className="space-y-3 text-sm leading-relaxed">
+                <li className="flex items-start gap-3">
+                  <CheckIcon />
+                  <span className="text-white">
+                    <span className="font-semibold">Etapa 1 concluída</span>{" "}
+                    — Portfólio funcional entregue e aprovado
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <ZapIcon />
+                  <span className="text-white">
+                    <span className="font-semibold">
+                      Etapa 2 em andamento
+                    </span>{" "}
+                    — Painel administrativo (67% concluído)
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-lg">📊</span>
+                  <span className="text-white">
+                    <span className="font-semibold">Progresso geral:</span>{" "}
+                    {percentPaid}% do investimento total recebido
+                  </span>
+                </li>
+              </ul>
+            </div>
+            <div className="space-y-4">
+              <h3 className="flex items-center gap-2 text-lg font-bold text-white">
+                <span className="h-2 w-2 animate-pulse rounded-full bg-violet-300" />
+                Vantagem Competitiva
+              </h3>
+              <ul className="space-y-3 text-sm leading-relaxed">
+                <li className="flex items-start gap-3">
+                  <span className="text-lg">💰</span>
+                  <span className="text-white">
+                    <span className="font-semibold">
+                      Preço competitivo:
+                    </span>{" "}
+                    50% menor que agências tradicionais
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-lg">🎯</span>
+                  <span className="text-white">
+                    <span className="font-semibold">Entrega modular:</span>{" "}
+                    Valor incremental a cada etapa
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-lg">🚀</span>
+                  <span className="text-white">
+                    <span className="font-semibold">
+                      Tecnologia moderna:
+                    </span>{" "}
+                    Next.js, TypeScript, arquitetura escalável
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div
@@ -507,38 +845,14 @@ export default function GBLBudgetPresentation() {
       </div>
 
       <header className="relative z-10 mx-auto max-w-7xl px-6 pb-8 pt-12">
-        <div
-          className={`flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between ${isLoaded ? "translate-y-0 opacity-100" : "-translate-y-8 opacity-0"}`}
-        >
-          <div className="space-y-3">
-            <div className="inline-flex items-center gap-2 rounded-full border border-purple-300/25 bg-gradient-to-r from-purple-400/15 to-violet-400/15 px-4 py-2 backdrop-blur-2xl">
-              <div className="h-2 w-2 animate-pulse rounded-full bg-purple-300" />
-              <span className="text-sm font-medium text-purple-200">
-                Projeto em Andamento
-              </span>
-            </div>
-            <h1 className="bg-gradient-to-r from-white via-purple-200 to-violet-300 bg-clip-text text-4xl font-black tracking-tight text-transparent sm:text-5xl">
-              GB Locações
-            </h1>
-            <p className="text-lg font-medium text-gray-300">
-              Dashboard Executivo de Progresso
-            </p>
-            <p className="text-sm text-gray-400">
-              Atualizado em {new Date().toLocaleDateString("pt-BR")} • Versão
-              2.0
-            </p>
-          </div>
-          <div className="flex gap-3">
-            <PDFExport
-              modules={modules}
-              totalInvestment={totalPlanned}
-              totalPaid={totalPaid}
-              totalRemaining={totalRemaining}
-              progressPercentage={percentPaid}
-              dashboardRef={dashboardRef}
-            />
-          </div>
-        </div>
+        <HeaderContent
+          modules={modules}
+          totalPlanned={totalPlanned}
+          totalPaid={totalPaid}
+          totalRemaining={totalRemaining}
+          percentPaid={percentPaid}
+          dashboardRef={dashboardRef}
+        />
       </header>
 
       <main className="relative z-10 mx-auto max-w-7xl space-y-12 px-6 pb-20">
@@ -834,128 +1148,14 @@ export default function GBLBudgetPresentation() {
               const isActive = m.paid > 0 && m.paid < m.total
 
               return (
-                <div
+                <ModuleCard
                   key={m.id}
-                  className={`hover:shadow-3xl hover-scale-smooth duration-600 group relative cursor-pointer overflow-hidden rounded-3xl border border-purple-300/15 bg-gradient-to-br from-purple-900/30 via-violet-900/20 to-purple-800/15 p-8 shadow-2xl backdrop-blur-3xl transition-all ease-in-out will-change-transform hover:scale-[1.02] ${isLoaded ? "translate-y-0 opacity-100" : "translate-y-8 opacity-100"}`}
-                >
-                  <div className="absolute right-6 top-6 z-20">
-                    {isCompleted ? (
-                      <div className="flex items-center gap-2 rounded-full border border-purple-300/35 bg-gradient-to-br from-purple-400/25 to-violet-500/25 px-3 py-1 backdrop-blur-xl">
-                        <div className="h-2 w-2 animate-pulse rounded-full bg-green-400" />
-                        <span className="text-xs font-medium text-white">
-                          Concluída
-                        </span>
-                      </div>
-                    ) : isActive ? (
-                      <div className="flex items-center gap-2 rounded-full border border-violet-300/35 bg-gradient-to-br from-violet-400/25 to-purple-500/25 px-3 py-1 backdrop-blur-xl">
-                        <div className="h-2 w-2 animate-pulse rounded-full bg-blue-400" />
-                        <span className="text-xs font-medium text-white">
-                          Em Andamento
-                        </span>
-                      </div>
-                    ) : (
-                      <div className="flex items-center gap-2 rounded-full border border-gray-400/35 bg-gradient-to-br from-gray-500/25 to-gray-600/25 px-3 py-1 backdrop-blur-xl">
-                        <div className="h-2 w-2 rounded-full bg-red-400" />
-                        <span className="text-xs font-medium text-white">
-                          Pendente
-                        </span>
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="duration-600 absolute inset-0 bg-gradient-to-br opacity-0 transition-all ease-in-out group-hover:opacity-100">
-                    <div
-                      className={`absolute inset-0 bg-gradient-to-br ${
-                        isCompleted
-                          ? "from-purple-400/12 to-purple-400/8 via-transparent"
-                          : isActive
-                            ? "from-violet-400/12 to-violet-400/8 via-transparent"
-                            : "from-purple-400/8 to-violet-400/8 via-transparent"
-                      }`}
-                    />
-                  </div>
-
-                  <div className="relative z-10">
-                    <div className="mb-6 flex items-start justify-between gap-4 pr-32">
-                      <div className="flex-1 space-y-2">
-                        <div className="text-sm font-bold tracking-wider text-purple-300">
-                          {m.key}
-                        </div>
-                        <h3 className="pr-4 text-xl font-bold leading-tight tracking-tight text-white">
-                          {m.title}
-                        </h3>
-                      </div>
-                    </div>
-
-                    <div className="absolute right-6 top-8 z-10">
-                      <div className="text-right">
-                        <div className="bg-gradient-to-r from-white to-purple-100 bg-clip-text text-2xl font-bold text-transparent">
-                          {brl.format(m.total)}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="mb-6 grid grid-cols-3 gap-4">
-                      <div className="rounded-2xl border border-purple-400/25 bg-gradient-to-br from-purple-800/30 to-purple-700/20 p-4 backdrop-blur-2xl">
-                        <div className="mb-1 text-xs font-medium text-purple-200">
-                          Recebido
-                        </div>
-                        <div className="text-lg font-bold text-white">
-                          {brl.format(m.paid)}
-                        </div>
-                      </div>
-                      <div className="rounded-2xl border border-violet-400/25 bg-gradient-to-br from-violet-800/30 to-violet-700/20 p-4 backdrop-blur-2xl">
-                        <div className="mb-1 text-xs font-medium text-violet-200">
-                          Restante
-                        </div>
-                        <div className="text-lg font-bold text-white">
-                          {brl.format(Math.max(0, m.total - m.paid))}
-                        </div>
-                      </div>
-                      <div className="rounded-2xl border border-purple-400/25 bg-gradient-to-br from-purple-800/30 to-purple-800/30 p-4 backdrop-blur-xl">
-                        <div className="mb-1 text-xs font-medium text-purple-200">
-                          Progresso
-                        </div>
-                        <div className="text-lg font-bold text-white">
-                          {progress}%
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="space-y-4">
-                      {m.substeps.map((s, i) => (
-                        <div
-                          key={i}
-                          className="group/substep duration-600 flex items-start gap-4 rounded-2xl border border-transparent bg-gradient-to-r from-purple-800/15 to-transparent p-4 backdrop-blur-xl transition-all ease-in-out hover:border-purple-400/25 hover:from-purple-700/25 hover:to-violet-800/15"
-                        >
-                          <div
-                            className={`mt-2 h-3 w-3 flex-shrink-0 rounded-full bg-gradient-to-br shadow-lg ${
-                              [
-                                "from-purple-400 to-purple-600",
-                                "from-violet-400 to-violet-600",
-                                "from-purple-300 to-purple-500",
-                                "from-violet-300 to-violet-500",
-                              ][i % 4]
-                            }`}
-                          />
-                          <div className="min-w-0 flex-1">
-                            <div className="mb-1 text-sm font-semibold text-white">
-                              {s.name}
-                            </div>
-                            <p className="text-xs leading-relaxed text-purple-200">
-                              {s.justification}
-                            </p>
-                          </div>
-                          <div className="whitespace-nowrap rounded-full border border-purple-400/25 bg-gradient-to-r from-purple-800/50 to-violet-800/50 px-3 py-1 text-sm font-bold text-white backdrop-blur-xl">
-                            {brl.format(s.value)}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="hover-scale-smooth duration-600 animate-slow-pulse absolute -right-6 -top-6 z-0 h-32 w-32 rounded-full bg-gradient-to-br from-purple-300/30 to-violet-300/30 blur-2xl transition-all ease-in-out will-change-transform group-hover:scale-150" />
-                </div>
+                  module={m}
+                  progress={progress}
+                  isCompleted={isCompleted}
+                  isActive={isActive}
+                  brl={brl}
+                />
               )
             })}
           </div>
@@ -968,77 +1168,9 @@ export default function GBLBudgetPresentation() {
             </div>
           }
         >
-          <div className="relative overflow-hidden rounded-3xl border border-purple-300/15 bg-gradient-to-br from-purple-900/30 via-violet-900/20 to-purple-800/15 p-8 shadow-2xl backdrop-blur-3xl">
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-400/5 via-transparent to-violet-400/5" />
-            <div className="relative z-10 space-y-6">
-              <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-                <div className="space-y-4">
-                  <h3 className="flex items-center gap-2 text-lg font-bold text-white">
-                    <span className="h-2 w-2 animate-pulse rounded-full bg-purple-300" />
-                    Status Atual
-                  </h3>
-                  <ul className="space-y-3 text-sm leading-relaxed">
-                    <li className="flex items-start gap-3">
-                      <CheckIcon />
-                      <span className="text-white">
-                        <span className="font-semibold">Etapa 1 concluída</span>{" "}
-                        — Portfólio funcional entregue e aprovado
-                      </span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <ZapIcon />
-                      <span className="text-white">
-                        <span className="font-semibold">
-                          Etapa 2 em andamento
-                        </span>{" "}
-                        — Painel administrativo (67% concluído)
-                      </span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="text-lg">📊</span>
-                      <span className="text-white">
-                        <span className="font-semibold">Progresso geral:</span>{" "}
-                        {percentPaid}% do investimento total recebido
-                      </span>
-                    </li>
-                  </ul>
-                </div>
-                <div className="space-y-4">
-                  <h3 className="flex items-center gap-2 text-lg font-bold text-white">
-                    <span className="h-2 w-2 animate-pulse rounded-full bg-violet-300" />
-                    Vantagem Competitiva
-                  </h3>
-                  <ul className="space-y-3 text-sm leading-relaxed">
-                    <li className="flex items-start gap-3">
-                      <span className="text-lg">💰</span>
-                      <span className="text-white">
-                        <span className="font-semibold">
-                          Preço competitivo:
-                        </span>{" "}
-                        50% menor que agências tradicionais
-                      </span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="text-lg">🎯</span>
-                      <span className="text-white">
-                        <span className="font-semibold">Entrega modular:</span>{" "}
-                        Valor incremental a cada etapa
-                      </span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="text-lg">🚀</span>
-                      <span className="text-white">
-                        <span className="font-semibold">
-                          Tecnologia moderna:
-                        </span>{" "}
-                        Next.js, TypeScript, arquitetura escalável
-                      </span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
+          <ExecutiveSummary 
+            percentPaid={percentPaid}
+          />
         </Section>
       </main>
     </div>

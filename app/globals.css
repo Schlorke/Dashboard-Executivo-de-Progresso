@@ -368,4 +368,83 @@
     fill: rgba(139, 92, 246, 0.2) !important;
     background: transparent !important;
   }
+
+  /* ======================================== */
+  /* ANIMAÇÃO DE INTRODUÇÃO "ABRINDO OS OLHOS" */
+  /* ======================================== */
+
+  /* Animação de foco de câmera - combina blur, scale e opacity */
+  @keyframes lens-focus {
+    0% {
+      filter: blur(8px);
+      transform: scale(1.15);
+      opacity: 0;
+    }
+    40% {
+      filter: blur(4px);
+      transform: scale(1.08);
+      opacity: 0.3;
+    }
+    100% {
+      filter: blur(0px);
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  /* Classe para aplicar a animação de entrada */
+  .animate-lens-focus {
+    animation: lens-focus 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    will-change: filter, transform, opacity;
+  }
+
+  /* Estado inicial antes da animação */
+  .lens-focus-initial {
+    filter: blur(8px);
+    transform: scale(1.15);
+    opacity: 0;
+    transition: none;
+  }
+
+  /* Estado final após a animação */
+  .lens-focus-visible {
+    filter: blur(0px);
+    transform: scale(1);
+    opacity: 1;
+    transition: filter 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                opacity 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* Respeitar preferências de movimento reduzido */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-lens-focus {
+      animation: none;
+      filter: blur(0px);
+      transform: scale(1);
+      opacity: 1;
+    }
+    
+    .lens-focus-initial {
+      filter: blur(0px);
+      transform: scale(1);
+      opacity: 0;
+    }
+    
+    .lens-focus-visible {
+      filter: blur(0px);
+      transform: scale(1);
+      opacity: 1;
+      transition: opacity 0.3s ease;
+    }
+  }
+
+  /* Otimização para GPU */
+  .lens-focus-initial,
+  .lens-focus-visible,
+  .animate-lens-focus {
+    backface-visibility: hidden;
+    perspective: 1000px;
+    transform-style: preserve-3d;
+  }
 }
