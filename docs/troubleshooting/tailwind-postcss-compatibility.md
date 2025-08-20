@@ -43,7 +43,7 @@ O projeto apresentou falha na renderização dos estilos Tailwind CSS, resultand
 
 #### Arquivo: `postcss.config.mjs`
 
-\`\`\`javascript /\*_ @type {import('postcss-load-config').Config} _/ const config = { plugins: {
+\`\`\`javascript /\*\_ @type {import('postcss-load-config').Config} \_/ const config = { plugins: {
 tailwindcss: {}, // ✅ Plugin funcionando autoprefixer: {}, // ✅ Autoprefixer funcionando }, }
 
 export default config \`\`\`
@@ -55,8 +55,8 @@ export default config \`\`\`
 \`\`\`css @tailwind base; // ✅ Diretiva funcionando @tailwind components; // ✅ Diretiva
 funcionando @tailwind utilities; // ✅ Diretiva funcionando
 
-/_ CSS customizado funcionando normalmente _/ :root { --background: oklch(1 0 0); --foreground:
-oklch(0.145 0 0); /_ ... outras variáveis CSS _/ } \`\`\`
+/\_ CSS customizado funcionando normalmente _/ :root { --background: oklch(1 0 0); --foreground:
+oklch(0.145 0 0); /_ ... outras variáveis CSS \_/ } \`\`\`
 
 ### Verificação de Funcionamento
 

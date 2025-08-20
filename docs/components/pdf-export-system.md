@@ -40,7 +40,7 @@ Este sistema de exportação PDF captura **EXATAMENTE** o visual do dashboard, p
 
 \`\`\`tsx import PDFExport from "./components/pdf-export"
 
-// No dashboard principal ;<PDFExport modules={modules} totalInvestment={totalPlanned}
+// No dashboard principal ;\<PDFExport modules={modules} totalInvestment={totalPlanned}
 totalPaid={totalPaid} totalRemaining={totalRemaining} progressPercentage={percentPaid}
 dashboardRef={dashboardRef} // Referência para captura /> \`\`\`
 

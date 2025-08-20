@@ -130,13 +130,13 @@ Static Data │ │ │ │ + State Management │ │ │ │ + Data Transforma
 
 ### Responsividade
 
-\`\`\`css /_ Mobile (default) _/ .container { width: 100%; }
+\`\`\`css /\_ Mobile (default) \_/ .container { width: 100%; }
 
-/_ Small devices _/ @media (min-width: 640px) { /_ sm _/ }
+/\_ Small devices _/ @media (min-width: 640px) { /_ sm \_/ }
 
-/_ Medium devices _/ @media (min-width: 768px) { /_ md _/ }
+/\_ Medium devices _/ @media (min-width: 768px) { /_ md \_/ }
 
-/_ Large devices _/ @media (min-width: 1024px) { /_ lg _/ } \`\`\`
+/\_ Large devices _/ @media (min-width: 1024px) { /_ lg \_/ } \`\`\`
 
 ## 📊 Data Visualization
 

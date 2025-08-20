@@ -32,20 +32,22 @@ pdf.addImage(canvas.toDataURL("image/jpeg", 1.0), "JPEG", 0, 0, imgWidth, imgHei
 Sistema simples de quebra de páginas for (let page = 0; page < totalPages; page++) { if (page > 0) {
 pdf.addPage() }
 
-    // Calcular posição para esta página
-    const sourceY = page * pageHeight * (canvas.height / imgHeight)
-    const sourceHeight = Math.min(pageHeight * (canvas.height / imgHeight), canvas.height - sourceY)
+```
+// Calcular posição para esta página
+const sourceY = page * pageHeight * (canvas.height / imgHeight)
+const sourceHeight = Math.min(pageHeight * (canvas.height / imgHeight), canvas.height - sourceY)
 
-    // Adicionar ao PDF
-    const pageImgHeight = (sourceHeight * imgWidth) / canvas.width
-    pdf.addImage(tempCanvas.toDataURL("image/jpeg", 1.0), "JPEG", 0, 0, imgWidth, pageImgHeight)
+// Adicionar ao PDF
+const pageImgHeight = (sourceHeight * imgWidth) / canvas.width
+pdf.addImage(tempCanvas.toDataURL("image/jpeg", 1.0), "JPEG", 0, 0, imgWidth, pageImgHeight)
+```
 
 } } \`\`\`
 
 ### **Captura Simplificada**
 
 \`\`\`typescript onclone: clonedDoc => { // Garantir apenas estilos básicos necessários const
-clonedElement = clonedDoc.querySelector("[data-dashboard-clone]") as HTMLElement if (clonedElement)
+clonedElement = clonedDoc.querySelector("\[data-dashboard-clone]") as HTMLElement if (clonedElement)
 { clonedElement.style.cssText =
 `       color: white !important;       font-family: system-ui, -apple-system, sans-serif !important;     `
 } } \`\`\`

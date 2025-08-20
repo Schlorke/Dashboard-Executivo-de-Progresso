@@ -108,7 +108,7 @@ O sistema é construído seguindo princípios de **arquitetura moderna**, **esca
 **Implementação:**
 
 \`\`\`css :root { --primary: oklch(0.205 0 0); --secondary: oklch(0.97 0 0); --accent: oklch(0.97 0
-0); } \`\`\`
+0\); } \`\`\`
 
 **Vantagens:**
 
@@ -168,8 +168,8 @@ adicionais ├── docs/ # Documentação └── scripts/ # Scripts de auto
 
 **Arquitetura:**
 
-\`\`\`typescript interface DashboardProps { data: ProjectData[] theme: "light" | "dark" onExport: ()
-=> void } \`\`\`
+\`\`\`typescript interface DashboardProps { data: ProjectData\[] theme: "light" | "dark" onExport:
+() => void } \`\`\`
 
 ### **Chart Components**
 
@@ -235,15 +235,15 @@ adicionais ├── docs/ # Documentação └── scripts/ # Scripts de auto
 
 **Mobile-First Approach:**
 
-\`\`\`css /_ Mobile (default) _/ .container { width: 100%; }
+\`\`\`css /\_ Mobile (default) \_/ .container { width: 100%; }
 
-/_ Small devices _/ @media (min-width: 640px) { /_ sm _/ }
+/\_ Small devices _/ @media (min-width: 640px) { /_ sm \_/ }
 
-/_ Medium devices _/ @media (min-width: 768px) { /_ md _/ }
+/\_ Medium devices _/ @media (min-width: 768px) { /_ md \_/ }
 
-/_ Large devices _/ @media (min-width: 1024px) { /_ lg _/ }
+/\_ Large devices _/ @media (min-width: 1024px) { /_ lg \_/ }
 
-/_ Extra large devices _/ @media (min-width: 1280px) { /_ xl _/ } \`\`\`
+/\_ Extra large devices _/ @media (min-width: 1280px) { /_ xl \_/ } \`\`\`
 
 ### **Componentes Responsivos**
 

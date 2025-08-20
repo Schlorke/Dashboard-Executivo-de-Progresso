@@ -1,6 +1,6 @@
 "use client"
 import type React from "react"
-import { useState, useEffect, useRef, useCallback } from "react"
+import { useState, useEffect, useRef } from "react"
 import {
   ResponsiveContainer,
   BarChart,
@@ -166,7 +166,6 @@ const useIntersectionObserver = (options: IntersectionObserverInit = {}) => {
 
 export default function GBLBudgetPresentation() {
   const dashboardRef = useRef<HTMLDivElement>(null)
-  const [debugMode, setDebugMode] = useState(true) // Debug temporário
   const [isClient, setIsClient] = useState(false)
 
   useEffect(() => {
