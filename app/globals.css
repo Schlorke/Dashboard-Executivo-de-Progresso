@@ -465,5 +465,18 @@
     transform: scale(1);
   }
 
+  /* ANIMAÇÃO BASEADA EM SCROLL PARA O TÍTULO */
+  .roadmap-title-css-animation {
+    opacity: 0;
+    filter: blur(8px);
+    transform: scale(1.15);
+    transition: all 0.8s ease-out;
+  }
 
+  /* Quando o elemento está visível na viewport */
+  .roadmap-title-css-animation.in-view {
+    opacity: 1;
+    filter: blur(0px);
+    transform: scale(1);
+  }
 }
