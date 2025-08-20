@@ -132,45 +132,45 @@ const BuildingIcon = () => (
   </svg>
 )
 
-// Hook para detectar quando elementos entram na viewport
-const useIntersectionObserver = (options = {}) => {
-  const [isIntersecting, setIsIntersecting] = useState(false)
-  const [hasAnimated, setHasAnimated] = useState(false)
+// Hook para detectar quando elementos entram na viewport (uma vez)
+const useIntersectionObserver = (options: IntersectionObserverInit = {}) => {
+  const [hasBeenVisible, setHasBeenVisible] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
-
-  const callback = useCallback((entries: IntersectionObserverEntry[]) => {
-    const [entry] = entries
-    if (entry.isIntersecting && !hasAnimated) {
-      setIsIntersecting(true)
-      setHasAnimated(true)
-    }
-  }, [hasAnimated])
 
   useEffect(() => {
     const element = ref.current
     if (!element) return
 
-    const observer = new IntersectionObserver(callback, {
-      threshold: 0.1,
-      rootMargin: '50px',
-      ...options,
-    })
+    const observer = new IntersectionObserver(
+      entries => {
+        const [entry] = entries
+        if (entry.isIntersecting && !hasBeenVisible) {
+          setHasBeenVisible(true)
+          // Parar de observar após primeira intersecção
+          observer.unobserve(element)
+        }
+      },
+      {
+        threshold: 0.6,
+        rootMargin: "0px",
+        ...options,
+      }
+    )
 
     observer.observe(element)
     return () => observer.disconnect()
-  }, [callback, options])
+  }, [options, hasBeenVisible])
 
-  return [ref, isIntersecting] as const
+  return [ref, hasBeenVisible] as const
 }
 
-
-
 export default function GBLBudgetPresentation() {
-  const [isLoaded, setIsLoaded] = useState(false)
   const dashboardRef = useRef<HTMLDivElement>(null)
+  const [debugMode, setDebugMode] = useState(true) // Debug temporário
+  const [isClient, setIsClient] = useState(false)
 
   useEffect(() => {
-    setIsLoaded(true)
+    setIsClient(true)
   }, [])
 
   type Substep = { name: string; value: number; justification: string }
@@ -409,13 +409,13 @@ export default function GBLBudgetPresentation() {
     maximumFractionDigits: 0,
   })
 
-  const totalPlanned = modules.reduce((s, m) => s + m.total, 0)
-  const totalPaid = modules.reduce((s, m) => s + m.paid, 0)
+  const totalPlanned = modules?.reduce((s, m) => s + m.total, 0) || 0
+  const totalPaid = modules?.reduce((s, m) => s + m.paid, 0) || 0
   const totalRemaining = totalPlanned - totalPaid
 
-  const completedValue = modules
-    .filter(m => m.paid >= m.total)
-    .reduce((s, m) => s + m.total, 0)
+  const completedValue =
+    modules?.filter(m => m.paid >= m.total)?.reduce((s, m) => s + m.total, 0) ||
+    0
 
   const percentPaid = Math.round((totalPaid / totalPlanned) * 100)
   const percentCompletedByValue = Math.round(
@@ -429,26 +429,28 @@ export default function GBLBudgetPresentation() {
     { label: "Software House", value: 40000 },
   ]
 
-  const perStageTotals = modules.map(m => ({
-    name: m.key,
-    Pago: m.paid,
-    Restante: Math.max(0, m.total - m.paid),
-  }))
+  const perStageTotals =
+    modules?.map(m => ({
+      name: m.key,
+      Pago: m.paid,
+      Restante: Math.max(0, m.total - m.paid),
+    })) || []
 
-  const cumulative = modules.reduce(
-    (acc: { name: string; Planejado: number; Recebido: number }[], m) => {
-      const prev = acc.length
-        ? acc[acc.length - 1]
-        : { Planejado: 0, Recebido: 0 }
-      acc.push({
-        name: m.key,
-        Planejado: prev.Planejado + m.total,
-        Recebido: prev.Recebido + m.paid,
-      })
-      return acc
-    },
-    []
-  )
+  const cumulative =
+    modules?.reduce(
+      (acc: { name: string; Planejado: number; Recebido: number }[], m) => {
+        const prev = acc.length
+          ? acc[acc.length - 1]
+          : { Planejado: 0, Recebido: 0 }
+        acc.push({
+          name: m.key,
+          Planejado: prev.Planejado + m.total,
+          Recebido: prev.Recebido + m.paid,
+        })
+        return acc
+      },
+      []
+    ) || []
 
   const piePaid = [
     { name: "Recebido", value: totalPaid },
@@ -473,13 +475,13 @@ export default function GBLBudgetPresentation() {
     percentPaid: number
     dashboardRef: React.RefObject<HTMLDivElement | null>
   }) => {
-    const [ref, isVisible] = useIntersectionObserver({ threshold: 0.1 })
-    
+    const [ref, hasBeenVisible] = useIntersectionObserver({ threshold: 0.3 })
+
     return (
       <div
         ref={ref}
-        className={`flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between ${
-          isVisible ? "lens-focus-visible" : "lens-focus-initial"
+        className={`scroll-reveal-element flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between ${
+          hasBeenVisible ? "lens-focus-visible" : "lens-focus-initial"
         }`}
       >
         <div className="space-y-3">
@@ -522,27 +524,29 @@ export default function GBLBudgetPresentation() {
     value: string
     hint?: string
   }) => {
-    const [ref, isVisible] = useIntersectionObserver({ threshold: 0.2 })
-    
+    const [ref, hasBeenVisible] = useIntersectionObserver({ threshold: 0.5 })
+
     return (
       <div
         ref={ref}
-        className={`hover:shadow-3xl hover-scale-smooth duration-600 group relative cursor-pointer overflow-hidden rounded-3xl border border-purple-300/15 bg-gradient-to-br from-purple-900/30 via-violet-900/20 to-purple-800/15 p-6 shadow-2xl backdrop-blur-3xl transition-all ease-in-out will-change-transform hover:shadow-purple-400/20 ${
-          isVisible ? "lens-focus-visible" : "lens-focus-initial"
+        className={`scroll-reveal-element hover:shadow-3xl hover-scale-smooth duration-600 group relative cursor-pointer overflow-hidden rounded-3xl border border-purple-300/15 bg-gradient-to-br from-purple-900/30 via-violet-900/20 to-purple-800/15 p-6 shadow-2xl backdrop-blur-3xl transition-all ease-in-out will-change-transform hover:shadow-purple-400/20 ${
+          hasBeenVisible ? "lens-focus-visible" : "lens-focus-initial"
         }`}
       >
-      <div className="from-purple-400/8 to-violet-400/8 duration-600 absolute inset-0 bg-gradient-to-br via-transparent opacity-0 transition-all ease-in-out group-hover:opacity-100" />
-      <div className="relative z-10">
-        <div className="mb-2 text-sm font-medium text-purple-200">{label}</div>
-        <div className="mb-1 bg-gradient-to-r from-white via-purple-100 to-violet-200 bg-clip-text text-3xl font-bold tracking-tight text-transparent">
-          {value}
+        <div className="from-purple-400/8 to-violet-400/8 duration-600 absolute inset-0 bg-gradient-to-br via-transparent opacity-0 transition-all ease-in-out group-hover:opacity-100" />
+        <div className="relative z-10">
+          <div className="mb-2 text-sm font-medium text-purple-200">
+            {label}
+          </div>
+          <div className="mb-1 bg-gradient-to-r from-white via-purple-100 to-violet-200 bg-clip-text text-3xl font-bold tracking-tight text-transparent">
+            {value}
+          </div>
+          {hint && (
+            <div className="text-xs text-purple-300 opacity-80">{hint}</div>
+          )}
         </div>
-        {hint && (
-          <div className="text-xs text-purple-300 opacity-80">{hint}</div>
-        )}
+        <div className="hover-scale-smooth duration-600 animate-slow-pulse absolute -right-4 -top-4 h-24 w-24 rounded-full bg-gradient-to-br from-purple-300/30 to-violet-300/30 blur-xl transition-all ease-in-out will-change-transform group-hover:scale-150" />
       </div>
-      <div className="hover-scale-smooth duration-600 animate-slow-pulse absolute -right-4 -top-4 h-24 w-24 rounded-full bg-gradient-to-br from-purple-300/30 to-violet-300/30 blur-xl transition-all ease-in-out will-change-transform group-hover:scale-150" />
-    </div>
     )
   }
 
@@ -553,13 +557,13 @@ export default function GBLBudgetPresentation() {
     title: string | React.ReactNode
     children: React.ReactNode
   }) => {
-    const [ref, isVisible] = useIntersectionObserver({ threshold: 0.1 })
-    
+    const [ref, hasBeenVisible] = useIntersectionObserver({ threshold: 0.3 })
+
     return (
       <section
         ref={ref}
-        className={`space-y-6 ${
-          isVisible ? "lens-focus-visible" : "lens-focus-initial"
+        className={`scroll-reveal-element space-y-6 ${
+          hasBeenVisible ? "lens-focus-visible" : "lens-focus-initial"
         }`}
       >
         <h2 className="bg-gradient-to-r from-white via-purple-100 to-violet-200 bg-clip-text text-2xl font-bold tracking-tight text-transparent">
@@ -577,13 +581,13 @@ export default function GBLBudgetPresentation() {
     children: React.ReactNode
     className?: string
   }) => {
-    const [ref, isVisible] = useIntersectionObserver({ threshold: 0.2 })
-    
+    const [ref, hasBeenVisible] = useIntersectionObserver({ threshold: 0.5 })
+
     return (
       <div
         ref={ref}
-        className={`hover:shadow-3xl will-change-shadow duration-600 relative h-80 overflow-hidden rounded-3xl border border-purple-300/15 bg-gradient-to-br from-purple-900/30 via-violet-900/20 to-purple-800/15 p-6 shadow-2xl backdrop-blur-3xl transition-all ease-in-out hover:shadow-purple-400/20 ${className} ${
-          isVisible ? "lens-focus-visible" : "lens-focus-initial"
+        className={`scroll-reveal-element hover:shadow-3xl will-change-shadow duration-600 relative h-80 overflow-hidden rounded-3xl border border-purple-300/15 bg-gradient-to-br from-purple-900/30 via-violet-900/20 to-purple-800/15 p-6 shadow-2xl backdrop-blur-3xl transition-all ease-in-out hover:shadow-purple-400/20 ${className} ${
+          hasBeenVisible ? "lens-focus-visible" : "lens-focus-initial"
         }`}
       >
         <div className="absolute inset-0 bg-gradient-to-br from-purple-400/5 via-transparent to-violet-400/5" />
@@ -606,22 +610,20 @@ export default function GBLBudgetPresentation() {
     isActive: boolean
     brl: Intl.NumberFormat
   }) => {
-    const [ref, isVisible] = useIntersectionObserver({ threshold: 0.1 })
-    
+    const [ref, hasBeenVisible] = useIntersectionObserver({ threshold: 0.6 })
+
     return (
       <div
         ref={ref}
-        className={`hover:shadow-3xl hover-scale-smooth duration-600 group relative cursor-pointer overflow-hidden rounded-3xl border border-purple-300/15 bg-gradient-to-br from-purple-900/30 via-violet-900/20 to-purple-800/15 p-8 shadow-2xl backdrop-blur-3xl transition-all ease-in-out will-change-transform hover:scale-[1.02] ${
-          isVisible ? "lens-focus-visible" : "lens-focus-initial"
+        className={`scroll-reveal-element hover:shadow-3xl hover-scale-smooth duration-600 group relative cursor-pointer overflow-hidden rounded-3xl border border-purple-300/15 bg-gradient-to-br from-purple-900/30 via-violet-900/20 to-purple-800/15 p-8 shadow-2xl backdrop-blur-3xl transition-all ease-in-out will-change-transform hover:scale-[1.02] ${
+          hasBeenVisible ? "lens-focus-visible" : "lens-focus-initial"
         }`}
       >
         <div className="absolute right-6 top-6 z-20">
           {isCompleted ? (
             <div className="flex items-center gap-2 rounded-full border border-purple-300/35 bg-gradient-to-br from-purple-400/25 to-violet-500/25 px-3 py-1 backdrop-blur-xl">
               <div className="h-2 w-2 animate-pulse rounded-full bg-green-400" />
-              <span className="text-xs font-medium text-white">
-                Concluída
-              </span>
+              <span className="text-xs font-medium text-white">Concluída</span>
             </div>
           ) : isActive ? (
             <div className="flex items-center gap-2 rounded-full border border-violet-300/35 bg-gradient-to-br from-violet-400/25 to-purple-500/25 px-3 py-1 backdrop-blur-xl">
@@ -633,9 +635,7 @@ export default function GBLBudgetPresentation() {
           ) : (
             <div className="flex items-center gap-2 rounded-full border border-gray-400/35 bg-gradient-to-br from-gray-500/25 to-gray-600/25 px-3 py-1 backdrop-blur-xl">
               <div className="h-2 w-2 rounded-full bg-red-400" />
-              <span className="text-xs font-medium text-white">
-                Pendente
-              </span>
+              <span className="text-xs font-medium text-white">Pendente</span>
             </div>
           )}
         </div>
@@ -693,9 +693,7 @@ export default function GBLBudgetPresentation() {
               <div className="mb-1 text-xs font-medium text-purple-200">
                 Progresso
               </div>
-              <div className="text-lg font-bold text-white">
-                {progress}%
-              </div>
+              <div className="text-lg font-bold text-white">{progress}%</div>
             </div>
           </div>
 
@@ -738,13 +736,13 @@ export default function GBLBudgetPresentation() {
 
   // Componente ExecutiveSummary com animação
   const ExecutiveSummary = ({ percentPaid }: { percentPaid: number }) => {
-    const [ref, isVisible] = useIntersectionObserver({ threshold: 0.1 })
-    
+    const [ref, hasBeenVisible] = useIntersectionObserver({ threshold: 0.5 })
+
     return (
-      <div 
+      <div
         ref={ref}
-        className={`relative overflow-hidden rounded-3xl border border-purple-300/15 bg-gradient-to-br from-purple-900/30 via-violet-900/20 to-purple-800/15 p-8 shadow-2xl backdrop-blur-3xl ${
-          isVisible ? "lens-focus-visible" : "lens-focus-initial"
+        className={`scroll-reveal-element relative overflow-hidden rounded-3xl border border-purple-300/15 bg-gradient-to-br from-purple-900/30 via-violet-900/20 to-purple-800/15 p-8 shadow-2xl backdrop-blur-3xl ${
+          hasBeenVisible ? "lens-focus-visible" : "lens-focus-initial"
         }`}
       >
         <div className="absolute inset-0 bg-gradient-to-br from-purple-400/5 via-transparent to-violet-400/5" />
@@ -759,16 +757,14 @@ export default function GBLBudgetPresentation() {
                 <li className="flex items-start gap-3">
                   <CheckIcon />
                   <span className="text-white">
-                    <span className="font-semibold">Etapa 1 concluída</span>{" "}
-                    — Portfólio funcional entregue e aprovado
+                    <span className="font-semibold">Etapa 1 concluída</span> —
+                    Portfólio funcional entregue e aprovado
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <ZapIcon />
                   <span className="text-white">
-                    <span className="font-semibold">
-                      Etapa 2 em andamento
-                    </span>{" "}
+                    <span className="font-semibold">Etapa 2 em andamento</span>{" "}
                     — Painel administrativo (67% concluído)
                   </span>
                 </li>
@@ -790,9 +786,7 @@ export default function GBLBudgetPresentation() {
                 <li className="flex items-start gap-3">
                   <span className="text-lg">💰</span>
                   <span className="text-white">
-                    <span className="font-semibold">
-                      Preço competitivo:
-                    </span>{" "}
+                    <span className="font-semibold">Preço competitivo:</span>{" "}
                     50% menor que agências tradicionais
                   </span>
                 </li>
@@ -806,9 +800,7 @@ export default function GBLBudgetPresentation() {
                 <li className="flex items-start gap-3">
                   <span className="text-lg">🚀</span>
                   <span className="text-white">
-                    <span className="font-semibold">
-                      Tecnologia moderna:
-                    </span>{" "}
+                    <span className="font-semibold">Tecnologia moderna:</span>{" "}
                     Next.js, TypeScript, arquitetura escalável
                   </span>
                 </li>
@@ -816,6 +808,14 @@ export default function GBLBudgetPresentation() {
             </div>
           </div>
         </div>
+      </div>
+    )
+  }
+
+  if (!isClient) {
+    return (
+      <div className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-black">
+        <div className="text-lg text-white">Carregando dashboard...</div>
       </div>
     )
   }
@@ -1137,27 +1137,36 @@ export default function GBLBudgetPresentation() {
         <Section
           title={
             <div className="flex items-center gap-2">
-              <MapIcon /> Roadmap Detalhado — Etapas & Investimento
+              <MapIcon /> Roadmap Detalhado — Etapas & Investimento (
+              {modules?.length || 0} etapas)
             </div>
           }
         >
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-            {modules.map(m => {
-              const progress = Math.round((m.paid / m.total) * 100)
-              const isCompleted = m.paid >= m.total
-              const isActive = m.paid > 0 && m.paid < m.total
+            {modules && modules.length > 0 ? (
+              modules.map(m => {
+                const progress = Math.round((m.paid / m.total) * 100)
+                const isCompleted = m.paid >= m.total
+                const isActive = m.paid > 0 && m.paid < m.total
 
-              return (
-                <ModuleCard
-                  key={m.id}
-                  module={m}
-                  progress={progress}
-                  isCompleted={isCompleted}
-                  isActive={isActive}
-                  brl={brl}
-                />
-              )
-            })}
+                // console.log('Renderizando módulo:', m.title) // Debug temporário
+
+                return (
+                  <ModuleCard
+                    key={m.id}
+                    module={m}
+                    progress={progress}
+                    isCompleted={isCompleted}
+                    isActive={isActive}
+                    brl={brl}
+                  />
+                )
+              })
+            ) : (
+              <div className="col-span-2 p-8 text-center text-white">
+                <p>⚠️ Nenhum módulo encontrado. Verificando dados...</p>
+              </div>
+            )}
           </div>
         </Section>
 
@@ -1168,9 +1177,7 @@ export default function GBLBudgetPresentation() {
             </div>
           }
         >
-          <ExecutiveSummary 
-            percentPaid={percentPaid}
-          />
+          <ExecutiveSummary percentPaid={percentPaid} />
         </Section>
       </main>
     </div>

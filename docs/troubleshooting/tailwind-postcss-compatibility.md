@@ -18,14 +18,8 @@ O projeto apresentou falha na renderização dos estilos Tailwind CSS, resultand
 
 #### Versões Problemáticas
 
-\`\`\`json
-{
-  "devDependencies": {
-    "postcss": "8.5.6", // ❌ Versão muito nova (2025)
-    "tailwindcss": "3.4.17" // ❌ Versão mais antiga (dezembro 2023)
-  }
-}
-\`\`\`
+\`\`\`json { "devDependencies": { "postcss": "8.5.6", // ❌ Versão muito nova (2025) "tailwindcss":
+"3.4.17" // ❌ Versão mais antiga (dezembro 2023) } } \`\`\`
 
 #### Incompatibilidade Identificada
 
@@ -38,73 +32,58 @@ O projeto apresentou falha na renderização dos estilos Tailwind CSS, resultand
 
 #### Versões Compatíveis
 
-\`\`\`json
-{
-  "devDependencies": {
-    "postcss": "8.4.31", // ✅ Versão compatível
-    "tailwindcss": "3.4.17" // ✅ Mantida conforme solicitado
-  }
-}
-\`\`\`
+\`\`\`json { "devDependencies": { "postcss": "8.4.31", // ✅ Versão compatível "tailwindcss":
+"3.4.17" // ✅ Mantida conforme solicitado } } \`\`\`
 
 #### Comando de Correção
 
-\`\`\`bash
-pnpm add -D postcss@8.4.31
-\`\`\`
+\`\`\`bash pnpm add -D postcss@8.4.31 \`\`\`
 
 ### Configuração PostCSS
 
 #### Arquivo: `postcss.config.mjs`
 
-\`\`\`javascript
-/** @type {import('postcss-load-config').Config} */
-const config = {
-  plugins: {
-    tailwindcss: {}, // ✅ Plugin funcionando
-    autoprefixer: {}, // ✅ Autoprefixer funcionando
-  },
-}
+\`\`\`javascript /\*_ @type {import('postcss-load-config').Config} _/ const config = { plugins: {
+tailwindcss: {}, // ✅ Plugin funcionando autoprefixer: {}, // ✅ Autoprefixer funcionando }, }
 
-export default config
-\`\`\`
+export default config \`\`\`
 
 ### Arquivos CSS
 
 #### Arquivo: `app/globals.css`
 
-\`\`\`css
-@tailwind base;      // ✅ Diretiva funcionando
-@tailwind components; // ✅ Diretiva funcionando
-@tailwind utilities;  // ✅ Diretiva funcionando
+\`\`\`css @tailwind base; // ✅ Diretiva funcionando @tailwind components; // ✅ Diretiva
+funcionando @tailwind utilities; // ✅ Diretiva funcionando
 
-/* CSS customizado funcionando normalmente */
-:root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  /* ... outras variáveis CSS */
-}
-\`\`\`
+/_ CSS customizado funcionando normalmente _/ :root { --background: oklch(1 0 0); --foreground:
+oklch(0.145 0 0); /_ ... outras variáveis CSS _/ } \`\`\`
 
 ### Verificação de Funcionamento
 
 #### Build
 
-\`\`\`bash
-pnpm build
+\`\`\`bash pnpm build
+
 # ✅ Compiled successfully
+
 # ✅ Linting and checking validity of types
+
 # ✅ Collecting page data
+
 # ✅ Generating static pages
+
 \`\`\`
 
 #### Desenvolvimento
 
-\`\`\`bash
-pnpm dev
+\`\`\`bash pnpm dev
+
 # ✅ Starting...
+
 # ✅ Ready in 2.2s
+
 # ✅ Compiled / in 2s
+
 \`\`\`
 
 ### Lições Aprendidas

@@ -44,33 +44,39 @@ de forma visual, intuitiva e executiva.
 ### ⚡ Instalação Rápida
 
 \`\`\`bash
+
 # 1. Clone o repositório
-git clone https://github.com/seu-usuario/dashboard-executivo-de-progresso.git
-cd dashboard-executivo-de-progresso
+
+git clone https://github.com/seu-usuario/dashboard-executivo-de-progresso.git cd
+dashboard-executivo-de-progresso
 
 # 2. Instale as dependências
+
 pnpm install
 
 # 3. Execute em modo desenvolvimento
+
 pnpm run dev
 
 # 4. Acesse a aplicação
-open http://localhost:3000
-\`\`\`
+
+open http://localhost:3000 \`\`\`
 
 ### 🏗️ Build de Produção
 
 \`\`\`bash
+
 # Build otimizado para produção
+
 pnpm run build
 
 # Iniciar servidor de produção
+
 pnpm run start
 
 # Verificar qualidade do código
-pnpm run lint
-pnpm run format:check
-\`\`\`
+
+pnpm run lint pnpm run format:check \`\`\`
 
 ## 🚨 Troubleshooting
 

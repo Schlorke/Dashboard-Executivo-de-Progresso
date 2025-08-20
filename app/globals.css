@@ -398,12 +398,12 @@
     will-change: filter, transform, opacity;
   }
 
-  /* Estado inicial antes da animação */
+  /* Estado inicial antes da animação - COMPLETAMENTE INVISÍVEL */
   .lens-focus-initial {
     filter: blur(8px);
     transform: scale(1.15);
     opacity: 0;
-    transition: none;
+    transition: all 0.8s ease-out;
   }
 
   /* Estado final após a animação */
@@ -411,9 +411,7 @@
     filter: blur(0px);
     transform: scale(1);
     opacity: 1;
-    transition: filter 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                opacity 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: all 0.8s ease-out;
   }
 
   /* Respeitar preferências de movimento reduzido */
@@ -424,13 +422,13 @@
       transform: scale(1);
       opacity: 1;
     }
-    
+
     .lens-focus-initial {
       filter: blur(0px);
       transform: scale(1);
       opacity: 0;
     }
-    
+
     .lens-focus-visible {
       filter: blur(0px);
       transform: scale(1);
@@ -446,5 +444,24 @@
     backface-visibility: hidden;
     perspective: 1000px;
     transform-style: preserve-3d;
+  }
+
+  /* Garantir que elementos começem sempre invisíveis */
+  .lens-focus-initial {
+    visibility: visible !important;
+  }
+
+  /* Evitar flash de conteúdo não estilizado */
+  .scroll-reveal-element {
+    opacity: 0;
+    filter: blur(8px);
+    transform: scale(1.15);
+    transition: all 0.8s ease-out;
+  }
+
+  .scroll-reveal-element.lens-focus-visible {
+    opacity: 1;
+    filter: blur(0px);
+    transform: scale(1);
   }
 }

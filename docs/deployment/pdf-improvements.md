@@ -21,24 +21,16 @@
 
 ### **Sistema de Quebra Simples e Funcional**
 
-\`\`\`typescript
-// Sistema simples de quebra de páginas
-const imgWidth = 210 // A4 width em mm
-const pageHeight = 297 // A4 height em mm
-const imgHeight = (canvas.height * imgWidth) / canvas.width
+\`\`\`typescript // Sistema simples de quebra de páginas const imgWidth = 210 // A4 width em mm
+const pageHeight = 297 // A4 height em mm const imgHeight = (canvas.height \* imgWidth) /
+canvas.width
 
-// Calcular quantas páginas são necessárias
-const totalPages = Math.ceil(imgHeight / pageHeight)
+// Calcular quantas páginas são necessárias const totalPages = Math.ceil(imgHeight / pageHeight)
 
-if (totalPages === 1) {
-  // Se couber em uma página, adicionar normalmente
-  pdf.addImage(canvas.toDataURL("image/jpeg", 1.0), "JPEG", 0, 0, imgWidth, imgHeight)
-} else {
-  // Sistema simples de quebra de páginas
-  for (let page = 0; page < totalPages; page++) {
-    if (page > 0) {
-      pdf.addPage()
-    }
+if (totalPages === 1) { // Se couber em uma página, adicionar normalmente
+pdf.addImage(canvas.toDataURL("image/jpeg", 1.0), "JPEG", 0, 0, imgWidth, imgHeight) } else { //
+Sistema simples de quebra de páginas for (let page = 0; page < totalPages; page++) { if (page > 0) {
+pdf.addPage() }
 
     // Calcular posição para esta página
     const sourceY = page * pageHeight * (canvas.height / imgHeight)
@@ -47,24 +39,16 @@ if (totalPages === 1) {
     // Adicionar ao PDF
     const pageImgHeight = (sourceHeight * imgWidth) / canvas.width
     pdf.addImage(tempCanvas.toDataURL("image/jpeg", 1.0), "JPEG", 0, 0, imgWidth, pageImgHeight)
-  }
-}
-\`\`\`
+
+} } \`\`\`
 
 ### **Captura Simplificada**
 
-\`\`\`typescript
-onclone: clonedDoc => {
-  // Garantir apenas estilos básicos necessários
-  const clonedElement = clonedDoc.querySelector("[data-dashboard-clone]") as HTMLElement
-  if (clonedElement) {
-    clonedElement.style.cssText = `
-      color: white !important;
-      font-family: system-ui, -apple-system, sans-serif !important;
-    `
-  }
-}
-\`\`\`
+\`\`\`typescript onclone: clonedDoc => { // Garantir apenas estilos básicos necessários const
+clonedElement = clonedDoc.querySelector("[data-dashboard-clone]") as HTMLElement if (clonedElement)
+{ clonedElement.style.cssText =
+`       color: white !important;       font-family: system-ui, -apple-system, sans-serif !important;     `
+} } \`\`\`
 
 ## 🎯 Benefícios das Melhorias
 
@@ -91,11 +75,17 @@ onclone: clonedDoc => {
 ### **1. Geração de PDF**
 
 \`\`\`bash
+
 # Clique no botão "Exportar PDF"
+
 # O sistema automaticamente:
+
 # - Captura o dashboard completo
+
 # - Quebra as páginas de forma simples
+
 # - Gera PDF com visual preservado
+
 \`\`\`
 
 ### **2. Verificação de Qualidade**

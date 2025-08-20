@@ -20,31 +20,19 @@ O sistema é construído seguindo princípios de **arquitetura moderna**, **esca
 
 ### **Frontend Layer (React + Next.js)**
 
-\`\`\`
-┌─────────────────────────────────────┐
-│           User Interface            │ ← Componentes React
-├─────────────────────────────────────┤
-│         Business Logic              │ ← Hooks e Lógica de Negócio
-├─────────────────────────────────────┤
-│         Data Management             │ ← Estado e Gerenciamento de Dados
-├─────────────────────────────────────┤
-│         API Integration             │ ← Comunicação com Backend
-└─────────────────────────────────────┘
-\`\`\`
+\`\`\` ┌─────────────────────────────────────┐ │ User Interface │ ← Componentes React
+├─────────────────────────────────────┤ │ Business Logic │ ← Hooks e Lógica de Negócio
+├─────────────────────────────────────┤ │ Data Management │ ← Estado e Gerenciamento de Dados
+├─────────────────────────────────────┤ │ API Integration │ ← Comunicação com Backend
+└─────────────────────────────────────┘ \`\`\`
 
 ### **Backend Layer (Next.js API Routes)**
 
-\`\`\`
-┌─────────────────────────────────────┐
-│         API Endpoints               │ ← Rotas da API
-├─────────────────────────────────────┤
-│         Business Services           │ ← Serviços de Negócio
-├─────────────────────────────────────┤
-│         Data Access Layer          │ ← Acesso a Dados
-├─────────────────────────────────────┤
-│         External Integrations      │ ← Integrações Externas
-└─────────────────────────────────────┘
-\`\`\`
+\`\`\` ┌─────────────────────────────────────┐ │ API Endpoints │ ← Rotas da API
+├─────────────────────────────────────┤ │ Business Services │ ← Serviços de Negócio
+├─────────────────────────────────────┤ │ Data Access Layer │ ← Acesso a Dados
+├─────────────────────────────────────┤ │ External Integrations │ ← Integrações Externas
+└─────────────────────────────────────┘ \`\`\`
 
 ## 🚀 Stack Tecnológica
 
@@ -119,13 +107,8 @@ O sistema é construído seguindo princípios de **arquitetura moderna**, **esca
 
 **Implementação:**
 
-\`\`\`css
-:root {
-  --primary: oklch(0.205 0 0);
-  --secondary: oklch(0.97 0 0);
-  --accent: oklch(0.97 0 0);
-}
-\`\`\`
+\`\`\`css :root { --primary: oklch(0.205 0 0); --secondary: oklch(0.97 0 0); --accent: oklch(0.97 0
+0); } \`\`\`
 
 **Vantagens:**
 
@@ -165,23 +148,12 @@ O sistema é construído seguindo princípios de **arquitetura moderna**, **esca
 
 ## 📁 Estrutura do Projeto
 
-\`\`\`
-dashboard-executivo-de-progresso/
-├── app/                          # App Router (Next.js 15)
-│   ├── globals.css              # Estilos globais
-│   ├── layout.tsx               # Layout principal
-│   └── page.tsx                 # Página inicial
-├── components/                   # Componentes React
-│   ├── gb-locacoes-complete.tsx # Dashboard principal
-│   ├── pdf-export.tsx           # Exportação PDF
-│   └── theme-provider.tsx       # Provedor de tema
-├── lib/                         # Utilitários e helpers
-│   └── utils.ts                 # Funções utilitárias
-├── public/                      # Assets estáticos
-├── styles/                      # Estilos adicionais
-├── docs/                        # Documentação
-└── scripts/                     # Scripts de automação
-\`\`\`
+\`\`\` dashboard-executivo-de-progresso/ ├── app/ # App Router (Next.js 15) │ ├── globals.css #
+Estilos globais │ ├── layout.tsx # Layout principal │ └── page.tsx # Página inicial ├──
+components/ # Componentes React │ ├── gb-locacoes-complete.tsx # Dashboard principal │ ├──
+pdf-export.tsx # Exportação PDF │ └── theme-provider.tsx # Provedor de tema ├── lib/ # Utilitários e
+helpers │ └── utils.ts # Funções utilitárias ├── public/ # Assets estáticos ├── styles/ # Estilos
+adicionais ├── docs/ # Documentação └── scripts/ # Scripts de automação \`\`\`
 
 ## 📊 Componentes Principais
 
@@ -196,13 +168,8 @@ dashboard-executivo-de-progresso/
 
 **Arquitetura:**
 
-\`\`\`typescript
-interface DashboardProps {
-  data: ProjectData[]
-  theme: "light" | "dark"
-  onExport: () => void
-}
-\`\`\`
+\`\`\`typescript interface DashboardProps { data: ProjectData[] theme: "light" | "dark" onExport: ()
+=> void } \`\`\`
 
 ### **Chart Components**
 
@@ -235,13 +202,8 @@ interface DashboardProps {
 
 **Variáveis CSS:**
 
-\`\`\`css
-:root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-}
-\`\`\`
+\`\`\`css :root { --background: oklch(1 0 0); --foreground: oklch(0.145 0 0); --primary: oklch(0.205
+0 0); } \`\`\`
 
 ### **Tipografia**
 
@@ -273,32 +235,15 @@ interface DashboardProps {
 
 **Mobile-First Approach:**
 
-\`\`\`css
-/* Mobile (default) */
-.container {
-  width: 100%;
-}
+\`\`\`css /_ Mobile (default) _/ .container { width: 100%; }
 
-/* Small devices */
-@media (min-width: 640px) {
-  /* sm */
-}
+/_ Small devices _/ @media (min-width: 640px) { /_ sm _/ }
 
-/* Medium devices */
-@media (min-width: 768px) {
-  /* md */
-}
+/_ Medium devices _/ @media (min-width: 768px) { /_ md _/ }
 
-/* Large devices */
-@media (min-width: 1024px) {
-  /* lg */
-}
+/_ Large devices _/ @media (min-width: 1024px) { /_ lg _/ }
 
-/* Extra large devices */
-@media (min-width: 1280px) {
-  /* xl */
-}
-\`\`\`
+/_ Extra large devices _/ @media (min-width: 1280px) { /_ xl _/ } \`\`\`
 
 ### **Componentes Responsivos**
 

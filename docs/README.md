@@ -21,39 +21,44 @@ executivos.
 ### Comandos Principais (pnpm)
 
 \`\`\`bash
+
 # Formatação e Qualidade
-pnpm format          # Formatar código
-pnpm quality:check   # Verificar qualidade
-pnpm quality:fix     # Corrigir automaticamente
+
+pnpm format # Formatar código pnpm quality:check # Verificar qualidade pnpm quality:fix # Corrigir
+automaticamente
 
 # Build e Deploy
-pnpm build           # Build de produção
-pnpm dev             # Desenvolvimento local
-pnpm start           # Servidor de produção
+
+pnpm build # Build de produção pnpm dev # Desenvolvimento local pnpm start # Servidor de produção
 \`\`\`
 
 ### Scripts PowerShell (Windows)
 
 \`\`\`powershell
+
 # Formatação
+
 .\scripts\format-all.ps1
 
 # Correção automática
+
 .\scripts\fix-all.ps1
 
 # Verificação de qualidade
-.\scripts\quality-check.ps1
-\`\`\`
+
+.\scripts\quality-check.ps1 \`\`\`
 
 ### Scripts Bash (Linux/Mac)
 
 \`\`\`bash
+
 # Formatação
+
 ./scripts/format-all.sh
 
 # Dar permissão (primeira vez)
-chmod +x ./scripts/*.sh
-\`\`\`
+
+chmod +x ./scripts/\*.sh \`\`\`
 
 ## 🔧 Stack Tecnológica
 
@@ -74,30 +79,14 @@ chmod +x ./scripts/*.sh
 
 ### Estrutura de Camadas
 
-\`\`\`
-┌─────────────────────────────────────┐
-│           Presentation Layer        │
-│  ┌─────────────────────────────────┐ │
-│  │        React Components         │ │
-│  │     + Tailwind CSS             │ │
-│  │     + Custom Hooks             │ │
-│  └─────────────────────────────────┘ │
-├─────────────────────────────────────┤
-│           Business Logic            │
-│  ┌─────────────────────────────────┐ │
-│  │      TypeScript Logic          │ │
-│  │     + Data Processing          │ │
-│  │     + Business Rules           │ │
-│  └─────────────────────────────────┘ │
-├─────────────────────────────────────┤
-│           Data Layer                │
-│  ┌─────────────────────────────────┐ │
-│  │      Static Data               │ │
-│  │     + State Management         │ │
-│  │     + Data Transformations     │ │
-│  └─────────────────────────────────┘ │
-└─────────────────────────────────────┘
-\`\`\`
+\`\`\` ┌─────────────────────────────────────┐ │ Presentation Layer │ │
+┌─────────────────────────────────┐ │ │ │ React Components │ │ │ │ + Tailwind CSS │ │ │ │ + Custom
+Hooks │ │ │ └─────────────────────────────────┘ │ ├─────────────────────────────────────┤ │ Business
+Logic │ │ ┌─────────────────────────────────┐ │ │ │ TypeScript Logic │ │ │ │ + Data Processing │ │ │
+│ + Business Rules │ │ │ └─────────────────────────────────┘ │
+├─────────────────────────────────────┤ │ Data Layer │ │ ┌─────────────────────────────────┐ │ │ │
+Static Data │ │ │ │ + State Management │ │ │ │ + Data Transformations │ │ │
+└─────────────────────────────────┘ │ └─────────────────────────────────────┘ \`\`\`
 
 ## 🧩 Componentes Principais
 
@@ -141,48 +130,20 @@ chmod +x ./scripts/*.sh
 
 ### Responsividade
 
-\`\`\`css
-/* Mobile (default) */
-.container {
-  width: 100%;
-}
+\`\`\`css /_ Mobile (default) _/ .container { width: 100%; }
 
-/* Small devices */
-@media (min-width: 640px) {
-  /* sm */
-}
+/_ Small devices _/ @media (min-width: 640px) { /_ sm _/ }
 
-/* Medium devices */
-@media (min-width: 768px) {
-  /* md */
-}
+/_ Medium devices _/ @media (min-width: 768px) { /_ md _/ }
 
-/* Large devices */
-@media (min-width: 1024px) {
-  /* lg */
-}
-\`\`\`
+/_ Large devices _/ @media (min-width: 1024px) { /_ lg _/ } \`\`\`
 
 ## 📊 Data Visualization
 
 ### Recharts
 
-\`\`\`typescript
-import {
-  BarChart,
-  Bar,
-  LineChart,
-  Line,
-  PieChart,
-  Pie,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts"
-\`\`\`
+\`\`\`typescript import { BarChart, Bar, LineChart, Line, PieChart, Pie, XAxis, YAxis,
+CartesianGrid, Tooltip, Legend, ResponsiveContainer, } from "recharts" \`\`\`
 
 **Tipos de Gráficos:**
 
