@@ -33,12 +33,12 @@
     "react": "^19",
     "react-dom": "^19",
     "recharts": "latest",
-    "tailwind-merge": "^2.5.5",
+    "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@prettier/plugin-xml": "^3.4.2",
-    "@types/node": "^22",
+    "@types/node": "^22.17.2",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "autoprefixer": "^10.4.21",

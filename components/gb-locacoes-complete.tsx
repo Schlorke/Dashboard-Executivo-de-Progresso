@@ -609,7 +609,10 @@ export default function GBLBudgetPresentation() {
     isActive: boolean
     brl: Intl.NumberFormat
   }) => {
-    const [ref, hasBeenVisible] = useIntersectionObserver({ threshold: 0.6 })
+    const [ref, hasBeenVisible] = useIntersectionObserver({
+      threshold: 0.1,
+      rootMargin: "200px 0px",
+    })
 
     return (
       <div
@@ -1133,22 +1136,29 @@ export default function GBLBudgetPresentation() {
           </Section>
         </div>
 
-        <Section
-          title={
+        {/* Título da seção sem wrapper Section para não interferir */}
+        <div className="space-y-6">
+          <h2 className="bg-gradient-to-r from-white via-purple-100 to-violet-200 bg-clip-text text-2xl font-bold tracking-tight text-transparent">
             <div className="flex items-center gap-2">
               <MapIcon /> Roadmap Detalhado — Etapas & Investimento (
               {modules?.length || 0} etapas)
             </div>
-          }
-        >
+          </h2>
+
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
             {modules && modules.length > 0 ? (
-              modules.map(m => {
+              modules.map((m, index) => {
                 const progress = Math.round((m.paid / m.total) * 100)
                 const isCompleted = m.paid >= m.total
                 const isActive = m.paid > 0 && m.paid < m.total
 
-                // console.log('Renderizando módulo:', m.title) // Debug temporário
+                // Debug: verificar se está renderizando
+                console.log(
+                  `Renderizando Etapa ${m.id}:`,
+                  m.title,
+                  "Index:",
+                  index
+                )
 
                 return (
                   <ModuleCard
@@ -1167,7 +1177,7 @@ export default function GBLBudgetPresentation() {
               </div>
             )}
           </div>
-        </Section>
+        </div>
 
         <Section
           title={
