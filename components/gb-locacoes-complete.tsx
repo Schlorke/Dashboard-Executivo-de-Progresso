@@ -183,7 +183,8 @@ export default function GBLBudgetPresentation() {
 
   // Observer SIMPLES apenas para adicionar classe CSS quando no centro
   useEffect(() => {
-    if (!isClient) return
+    if (!isClient) 
+      return
 
     const titleElement = document.querySelector(".roadmap-title-css-animation")
     if (!titleElement) return
@@ -251,7 +252,7 @@ export default function GBLBudgetPresentation() {
       key: "E2",
       title: "Etapa 2 — Painel Administrativo Completo",
       total: 1200,
-      paid: 800,
+      paid: 1200,
       substeps: [
         {
           name: "Autenticação & Proteção",
