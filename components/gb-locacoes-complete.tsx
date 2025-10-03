@@ -183,8 +183,7 @@ export default function GBLBudgetPresentation() {
 
   // Observer SIMPLES apenas para adicionar classe CSS quando no centro
   useEffect(() => {
-    if (!isClient) 
-      return
+    if (!isClient) return
 
     const titleElement = document.querySelector(".roadmap-title-css-animation")
     if (!titleElement) return
@@ -285,7 +284,7 @@ export default function GBLBudgetPresentation() {
       key: "E3",
       title: "Etapa 3 — Cadastro/Login de Clientes",
       total: 1000,
-      paid: 0,
+      paid: 1000,
       substeps: [
         {
           name: "Cadastro & Validação",
@@ -311,7 +310,7 @@ export default function GBLBudgetPresentation() {
       key: "E4",
       title: "Etapa 4 — Orçamentos + Notificações",
       total: 900,
-      paid: 0,
+      paid: 900,
       substeps: [
         {
           name: "Formulário Inteligente",
@@ -416,7 +415,7 @@ export default function GBLBudgetPresentation() {
       key: "E8",
       title: "Etapa 8 — IA de Recomendação + SEO Avançado",
       total: 1000,
-      paid: 0,
+      paid: 300,
       substeps: [
         {
           name: "Recomendação IA",
